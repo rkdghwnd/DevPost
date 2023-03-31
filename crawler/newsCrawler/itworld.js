@@ -4,8 +4,6 @@ dotenv.config();
 
 const itworld = async () => {
   try {
-    const browserFetcher = puppeteer.createBrowserFetcher();
-    const revisionInfo = await browserFetcher.download("756035");
     const browser = await puppeteer.launch({
       headless: process.env.STATUS === "production",
       args: [
