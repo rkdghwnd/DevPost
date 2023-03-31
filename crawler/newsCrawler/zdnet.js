@@ -4,6 +4,7 @@ dotenv.config();
 
 const zdnet = async () => {
   try {
+    const revisionInfo = await browserFetcher.download("756035");
     const browser = await puppeteer.launch({
       headless: process.env.STATUS === "production",
       executablePath: "/usr/bin/chromium-browser",
