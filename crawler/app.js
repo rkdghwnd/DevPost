@@ -9,8 +9,8 @@ const searchRouter = require("./routes/search");
 
 const axios = require("axios");
 const cors = require("cors");
-const cookieParser = require("cookie-parser"); // npm i cookie-parser
-const morgan = require("morgan"); // npm i morgan -D
+const cookieParser = require("cookie-parser");
+const morgan = require("morgan");
 const fs = require("fs");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -46,14 +46,14 @@ blogCrawling();
 setInterval(() => {
   blogCrawling();
 }, 1000 * 60 * 60 * 24);
-newsCrawling();
-setInterval(() => {
-  newsCrawling();
-}, 1000 * 60 * 60 * 24);
-hotdealCrawling();
-setInterval(() => {
-  hotdealCrawling();
-}, 1000 * 60 * 60 * 24);
+// newsCrawling();
+// setInterval(() => {
+//   newsCrawling();
+// }, 1000 * 60 * 60 * 24);
+// hotdealCrawling();
+// setInterval(() => {
+//   hotdealCrawling();
+// }, 1000 * 60 * 60 * 24);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
