@@ -9,7 +9,7 @@ module.exports = class Blog extends Sequelize.Model {
           allowNull: false,
         },
         title: {
-          type: Sequelize.STRING(100),
+          type: Sequelize.STRING(200),
           allowNull: true,
         },
         time: {

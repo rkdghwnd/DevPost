@@ -7,6 +7,7 @@ const fmkorea = async () => {
     const browser = await puppeteer.launch({
       headless: process.env.STATUS === "production",
       args: ["--window-size=1920,1080"],
+      executablePath: "/usr/bin/chromium-browser",
     });
     const page = await browser.newPage();
     await page.setViewport({

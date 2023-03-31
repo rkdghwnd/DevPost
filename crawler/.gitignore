@@ -106,6 +106,6 @@ dist
 post-moa.pem
 uploads/
 images/
-package-lock.json
+
 
 /front/build

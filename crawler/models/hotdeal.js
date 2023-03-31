@@ -9,7 +9,7 @@ module.exports = class HotDeal extends Sequelize.Model {
           allowNull: false,
         },
         title: {
-          type: Sequelize.STRING(100),
+          type: Sequelize.STRING(200),
           allowNull: false,
         },
         time: {

@@ -9,6 +9,7 @@ const jojoldu = async () => {
   try {
     const browser = await puppeteer.launch({
       headless: process.env.STATUS === "production",
+      executablePath: "/usr/bin/chromium-browser",
     });
     const page = await browser.newPage();
     await page.setUserAgent(
