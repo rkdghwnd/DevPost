@@ -7,6 +7,7 @@ const bloter = async () => {
     const browser = await puppeteer.launch({
       headless: process.env.STATUS === "production",
       executablePath: "/usr/bin/chromium-browser",
+      timeout: 0,
     });
     const page = await browser.newPage();
     await page.setUserAgent(

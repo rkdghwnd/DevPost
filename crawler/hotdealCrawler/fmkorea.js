@@ -8,6 +8,7 @@ const fmkorea = async () => {
       headless: process.env.STATUS === "production",
       args: ["--window-size=1920,1080"],
       executablePath: "/usr/bin/chromium-browser",
+      timeout: 0,
     });
     const page = await browser.newPage();
     await page.setViewport({
