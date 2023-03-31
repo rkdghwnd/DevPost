@@ -7,11 +7,10 @@ dotenv.config();
 
 const outsidersDev = async () => {
   try {
-    const revisionInfo = await browserFetcher.download("756035");
     const browser = await puppeteer.launch({
       headless: process.env.STATUS === "production",
       executablePath: "/usr/bin/chromium-browser",
-      timeout: 0,
+      timeout: 30000 * 10,
     });
     const page = await browser.newPage();
     await page.setUserAgent(
