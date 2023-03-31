@@ -9,8 +9,12 @@ const fmkorea = async () => {
     const browser = await puppeteer.launch({
       headless: process.env.STATUS === "production",
       args: ["--window-size=1920,1080"],
-      executablePath: "/usr/bin/chromium-browser",
-      timeout: 30000 * 10,
+      args: [
+        "--disable-gpu",
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--no-zygote",
+      ],
     });
     const page = await browser.newPage();
     await page.setViewport({

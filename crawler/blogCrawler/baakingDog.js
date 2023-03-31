@@ -7,11 +7,14 @@ dotenv.config();
 
 const baakingDog = async () => {
   try {
-    const revisionInfo = await browserFetcher.download("756035");
     const browser = await puppeteer.launch({
       headless: process.env.STATUS === "production",
-      executablePath: "/usr/bin/chromium-browser",
-      timeout: 30000 * 10,
+      args: [
+        "--disable-gpu",
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--no-zygote",
+      ],
     });
     const page = await browser.newPage();
     await page.setUserAgent(
