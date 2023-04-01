@@ -43,15 +43,11 @@ fs.readdir("images", (err) => {
 });
 
 blogCrawling();
-setInterval(() => {
-  blogCrawling();
-}, 1000 * 60 * 60 * 24);
 newsCrawling();
-setInterval(() => {
-  newsCrawling();
-}, 1000 * 60 * 60 * 24);
 hotdealCrawling();
 setInterval(() => {
+  blogCrawling();
+  newsCrawling();
   hotdealCrawling();
 }, 1000 * 60 * 60 * 24);
 

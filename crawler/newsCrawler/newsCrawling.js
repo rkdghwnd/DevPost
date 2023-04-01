@@ -1,14 +1,20 @@
-const bloter = require("./bloter");
-const itworld = require("./itworld");
-const techcrunch = require("./techcrunch");
-const techneedle = require("./techneedle");
-const zdnet = require("./zdnet");
 const { News } = require("../models");
 const axios = require("axios");
 const fs = require("fs");
+const bloter = require("./bloter");
+const techcrunch = require("./techcrunch");
+const itworld = require("./itworld");
+const techneedle = require("./techneedle");
+const zdnet = require("./zdnet");
 
 const newsCrawling = async () => {
   try {
+    const bloterPosts = await bloter();
+    const techcrunchPosts = await techcrunch();
+    const itworldPosts = await itworld();
+    const techneedlePosts = await techneedle();
+    const zdnetPosts = await zdnet();
+
     const allPosts = [
       ...bloterPosts,
       ...techcrunchPosts,
@@ -71,11 +77,6 @@ const newsCrawling = async () => {
   } catch (err) {
     console.error(err);
   }
-  const bloterPosts = await bloter();
-  const techcrunchPosts = await techcrunch();
-  const itworldPosts = await itworld();
-  const techneedlePosts = await techneedle();
-  const zdnetPosts = await zdnet();
 
   // const result = Promise.all([
   //   bloter(),
