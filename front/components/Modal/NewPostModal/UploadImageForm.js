@@ -103,7 +103,7 @@ const UploadImageForm = () => {
               />
               <RemoveIcon>
                 <img
-                  src="https://velog.velcdn.com/images/ghwnd6448/post/ca7b581b-f1d4-4821-8806-6bcc2c7893da/image.png"
+                  src={`${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/close-button.png`}
                   onClick={onRemoveImage(i)}
                 />
               </RemoveIcon>

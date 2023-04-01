@@ -107,7 +107,7 @@ const DesktopHeader = () => {
         {me && (
           <ProfileWrapper>
             <ProfileImage
-              src={`http://localhost:4000/${me.profile_img}`}
+              src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${me.profile_img}`}
               onClick={onClickOption}
             />
             {headerOptionVisible ? <HeaderOption /> : null}

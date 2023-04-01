@@ -64,9 +64,11 @@ const BlogCard = ({ post }) => {
       <Link href={post.link}>
         <a>
           <img
-            src={`${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/${
-              post.image || 'no-image-icon2.PNG'
-            }`}
+            src={
+              post.image
+                ? `${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/${post.image}`
+                : `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/no-image-icon2.PNG`
+            }
           />
         </a>
       </Link>

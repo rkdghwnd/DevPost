@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx next",
     "build": "cross-env ANALYZE=true NODE_ENV=production next build",
-    "start": "cross-env ANALYZE=true NODE_ENV=production next start"
+    "start": "cross-env ANALYZE=true NODE_ENV=production next start -p 80"
   },
   "author": "rkdghwnd",
   "license": "ISC",

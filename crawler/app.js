@@ -15,11 +15,21 @@ const fs = require("fs");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
-app.use(morgan("dev"));
+
+const hpp = require("hpp");
+const helmet = require("helmet");
 
 const blogCrawling = require("./blogCrawler/blogCrawling");
 const newsCrawling = require("./newsCrawler/newsCrawling");
 const hotdealCrawling = require("./hotdealCrawler/hotdealCrawling");
+
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan("combined"));
+  app.use(hpp());
+  app.use(helmet());
+} else {
+  app.use(morgan("dev"));
+}
 
 sequelize
   .sync()
@@ -71,6 +81,6 @@ app.use((req, res, next) => {
   next(error);
 });
 
-app.listen(process.env.PORT || 3001, () => {
+app.listen(4020, () => {
   console.log("서버 실행 중");
 });

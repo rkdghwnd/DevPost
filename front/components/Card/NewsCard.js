@@ -47,7 +47,7 @@ const NewsCard = ({ post }) => {
       <ul>
         <NewsCardHeader>
           <img
-            src={`${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/${post.news_name}.png`}
+            src={`${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/${post.news_name}.png`}
           />
           <span>{post.news_name}</span>
           <div>{currentTime}</div>

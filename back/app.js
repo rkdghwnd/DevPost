@@ -7,14 +7,23 @@ const postsRouter = require("./routes/posts");
 
 const cors = require("cors");
 const session = require("express-session");
-const cookieParser = require("cookie-parser"); // npm i cookie-parser
+const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const passportConfig = require("./passport");
-const morgan = require("morgan"); // npm i morgan
+const morgan = require("morgan");
+
+const hpp = require("hpp");
+const helmet = require("helmet");
 
 const app = express();
 
-app.use(morgan("dev"));
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan("combined"));
+  app.use(hpp());
+  app.use(helmet());
+} else {
+  app.use(morgan("dev"));
+}
 
 db.sequelize
   .sync()
@@ -43,7 +52,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      // secure:false -> https 적용할때 주석제거
+      secure: false,
+      domain: process.env.NODE_ENV === "production" && ".postmoa.shop",
     },
   })
 );
@@ -55,6 +65,6 @@ app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/posts", postsRouter);
 
-app.listen(4000, () => {
+app.listen(4010, () => {
   console.log("서버 실행 중");
 });
