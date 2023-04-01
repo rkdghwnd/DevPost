@@ -42,14 +42,17 @@ fs.readdir("images", (err) => {
   }
 });
 
-// blogCrawling();
-newsCrawling();
-// hotdealCrawling();
-setInterval(() => {
-  blogCrawling();
-  newsCrawling();
-  hotdealCrawling();
-}, 1000 * 60 * 60 * 24);
+const crawling = async () => {
+  await blogCrawling();
+  await newsCrawling();
+  await hotdealCrawling();
+  setInterval(async () => {
+    await blogCrawling();
+    await newsCrawling();
+    await hotdealCrawling();
+  }, 1000 * 60 * 60 * 24);
+};
+crawling();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
