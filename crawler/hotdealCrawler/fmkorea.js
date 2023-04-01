@@ -20,8 +20,7 @@ const fmkorea = async () => {
       height: 1080,
     });
     await page.goto(
-      "https://www.fmkorea.com/index.php?mid=hotdeal&category=1254381811",
-      { timeout: 0 }
+      "https://www.fmkorea.com/index.php?mid=hotdeal&category=1254381811"
     );
     const articles = await page.evaluate(async () => {
       window.scrollBy(0, 1000);

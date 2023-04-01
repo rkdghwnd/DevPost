@@ -42,9 +42,9 @@ fs.readdir("images", (err) => {
   }
 });
 
-blogCrawling();
+// blogCrawling();
 newsCrawling();
-hotdealCrawling();
+// hotdealCrawling();
 setInterval(() => {
   blogCrawling();
   newsCrawling();

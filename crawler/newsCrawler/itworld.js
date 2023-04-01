@@ -15,8 +15,7 @@ const itworld = async () => {
     });
     const page = await browser.newPage();
     await page.setUserAgent(
-      "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Mobile Safari/537.36",
-      { timeout: 0 }
+      "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Mobile Safari/537.36"
     );
     await page.goto("https://www.itworld.co.kr/news/?page=1");
     const articles = await page.evaluate(() => {
