@@ -2,7 +2,6 @@ const { News } = require("../models");
 const axios = require("axios");
 const fs = require("fs");
 const bloter = require("./bloter");
-const techcrunch = require("./techcrunch");
 const itworld = require("./itworld");
 const techneedle = require("./techneedle");
 const zdnet = require("./zdnet");
@@ -10,14 +9,12 @@ const zdnet = require("./zdnet");
 const newsCrawling = async () => {
   try {
     const bloterPosts = await bloter();
-    const techcrunchPosts = await techcrunch();
     const itworldPosts = await itworld();
     const techneedlePosts = await techneedle();
     const zdnetPosts = await zdnet();
 
     const allPosts = [
       ...bloterPosts,
-      ...techcrunchPosts,
       ...itworldPosts,
       ...techneedlePosts,
       ...zdnetPosts,
