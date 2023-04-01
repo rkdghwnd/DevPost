@@ -46,14 +46,14 @@ blogCrawling();
 setInterval(() => {
   blogCrawling();
 }, 1000 * 60 * 60 * 24);
-// newsCrawling();
-// setInterval(() => {
-//   newsCrawling();
-// }, 1000 * 60 * 60 * 24);
-// hotdealCrawling();
-// setInterval(() => {
-//   hotdealCrawling();
-// }, 1000 * 60 * 60 * 24);
+newsCrawling();
+setInterval(() => {
+  newsCrawling();
+}, 1000 * 60 * 60 * 24);
+hotdealCrawling();
+setInterval(() => {
+  hotdealCrawling();
+}, 1000 * 60 * 60 * 24);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

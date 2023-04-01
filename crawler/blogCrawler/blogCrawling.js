@@ -64,6 +64,7 @@ const blogCrawling = async () => {
         );
       }
     });
+    console.log("블로그 크롤링 끝!");
   } catch (err) {
     console.error(err);
   }
