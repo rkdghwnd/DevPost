@@ -89,8 +89,8 @@ const zdnet = async () => {
       return posts;
     });
 
-    // await page.close();
-    // await browser.close();
+    await page.close();
+    await browser.close();
     console.log(articles);
     return articles;
   } catch (err) {
