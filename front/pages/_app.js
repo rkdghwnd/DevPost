@@ -94,7 +94,7 @@ const Postmoa = ({ Component }) => {
         />
         <meta
           property="og:image"
-          content={`${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/open-graph-image`}
+          content={`https://velog.velcdn.com/images/ghwnd6448/post/5037dca3-629e-4343-ac14-72285a597a20/image.PNG`}
         />
         <meta
           property="og:url"
@@ -109,7 +109,7 @@ const Postmoa = ({ Component }) => {
         />
         <meta
           property="twitter:image"
-          content={`${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/open-graph-image.PNG`}
+          content={`https://velog.velcdn.com/images/ghwnd6448/post/5037dca3-629e-4343-ac14-72285a597a20/image.PNG`}
         />
         <meta
           property="twitter:url"
