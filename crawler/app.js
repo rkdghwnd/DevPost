@@ -81,6 +81,6 @@ app.use((req, res, next) => {
   next(error);
 });
 
-app.listen(4020, () => {
+app.listen(process.env.PORT || 4020, () => {
   console.log("서버 실행 중");
 });
