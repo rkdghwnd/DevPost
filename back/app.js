@@ -65,6 +65,6 @@ app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/posts", postsRouter);
 
-app.listen(4010, () => {
+app.listen(process.env.PORT || 4010, () => {
   console.log("서버 실행 중");
 });
