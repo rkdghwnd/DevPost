@@ -52,7 +52,7 @@ const NewsCardMainText = ({ post }) => {
                 src={
                   post.image
                     ? `${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/${post.image}`
-                    : `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/public/images/no-image-icon2.PNG`
+                    : `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/no-image-icon2.PNG`
                 }
               />
             </div>
