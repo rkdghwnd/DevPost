@@ -82,9 +82,11 @@ const HotDealCard = ({ post }) => {
   return (
     <HotDealCardForm>
       <img
-        src={`${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/${
-          post.image || 'no-image-icon2.png'
-        }`}
+        src={
+          post.image
+            ? `${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/${post.image}`
+            : `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/public/images/no-image-icon2.PNG`
+        }
       />
       <div>
         <HotDealCardHeader>

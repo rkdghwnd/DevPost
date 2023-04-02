@@ -109,7 +109,7 @@ const Postmoa = ({ Component }) => {
         />
         <meta
           property="twitter:image"
-          content={`${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/open-graph-image`}
+          content={`${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/open-graph-image.PNG`}
         />
         <meta
           property="twitter:url"
