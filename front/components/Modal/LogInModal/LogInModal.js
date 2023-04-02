@@ -80,7 +80,6 @@ const LogInForm = styled.form`
   @media (min-width: 765px) {
     position: static;
     width: 500px;
-    height: 410px;
   }
 `;
 
