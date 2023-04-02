@@ -6,8 +6,6 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const multerS3 = require("multer-s3");
-const AWS = require("aws-sdk");
 
 try {
   fs.accessSync("uploads");
@@ -16,21 +14,23 @@ try {
   fs.mkdirSync("uploads"); // 이미지 저장할 폴더가 만들어져 있지 않은 경우 폴더생성
 }
 
-AWS.config.update({
-  accessKeyId: process.env.S3_ACCESS_KEY_ID,
-  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-  region: "us-east-1",
-});
-
 const upload = multer({
-  storage: multerS3({
-    s3: new AWS.S3(),
-    bucket: "post-moa-s3",
-    key(req, file, cb) {
-      cb(null, `original/${Data.now()}_${path.basename(file.originalname)}`);
+  // storage : 파일을 저장할 장소 설정
+  // diskStorage : 하드 디스크에 저장
+  storage: multer.diskStorage({
+    destination(req, file, done) {
+      done(null, "uploads");
+    },
+    filename(req, file, done) {
+      // 제로초.png
+      const ext = path.extname(file.originalname); // 확장자 추출(.png)
+      const basename = path.basename(file.originalname, ext); // 제로초
+      done(null, basename + "_" + new Date().getTime() + ext); // 제로초125345235.png
+      // getTime은 파일을 덮어씌우는것을 방지하기 위해 설정한 것일 뿐임
     },
   }),
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+  // 20MB로 용량 제한(제한 안하면 해커공격에 이용될 수 있음)
+  limits: { fileSize: 20 * 1024 * 1024 },
 });
 
 // upload.none() -> 이미지가 없고 다른것(텍스트 등)이 있다
@@ -106,15 +106,18 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
 router.post(
   "/images",
   isLoggedIn,
-  upload.array("image"), // 이미지를 저장소에 업로드
+  upload.array("image"), // 이미지를 저장소에 업로드한다.
   async (req, res, next) => {
     // POST /post/images
-    res.json(req.files.map((y) => y.location));
+    // console.log(req.files); // 업로드한 이미지에 대한 정보
+    res.json(req.files.map((y) => y.filename));
   }
 );
 
 // 게시글 불러오기
 router.get("/free", async (req, res, next) => {
+  // 게시글 include로 작성자user, 댓글(대댓글 포함), 좋아요, 가져오기
+  // 게시글 없으면 없다고 응답
   // /post/free?postId=${postId}
   try {
     const previousViews = await Post.findOne({
