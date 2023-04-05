@@ -5,7 +5,7 @@ dotenv.config();
 const zdnet = async () => {
   try {
     const browser = await puppeteer.launch({
-      headless: process.env.STATUS === "productio",
+      headless: process.env.STATUS === "production",
       args: [
         "--disable-gpu",
         "--disable-setuid-sandbox",

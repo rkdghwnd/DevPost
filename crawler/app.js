@@ -68,7 +68,6 @@ const crawling = async () => {
   }, 1000 * 60 * 60 * 24);
 };
 crawling();
-// zdnet();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
