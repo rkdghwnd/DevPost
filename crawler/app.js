@@ -66,7 +66,7 @@ const crawling = async () => {
     await hotdealCrawling();
   }, 1000 * 60 * 60 * 24);
 };
-crawling();
+// crawling();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -86,5 +86,5 @@ app.use((req, res, next) => {
 });
 
 app.listen(process.env.PORT || 4020, () => {
-  console.log("서버 실행 중");
+  console.log(`${process.env.PORT} 서버 실행 중`);
 });

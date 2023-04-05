@@ -52,7 +52,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: false,
+      secure: true,
       domain: process.env.NODE_ENV === "production" && ".postmoa.shop",
     },
   })
@@ -66,5 +66,5 @@ app.use("/post", postRouter);
 app.use("/posts", postsRouter);
 
 app.listen(process.env.PORT || 4010, () => {
-  console.log("서버 실행 중");
+  console.log(`${process.env.PORT} 서버 실행 중`);
 });

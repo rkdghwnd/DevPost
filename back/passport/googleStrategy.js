@@ -10,7 +10,7 @@ module.exports = () => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "/user/google/callback",
+        callbackURL: `${process.env.BACK_END_DOMAIN}/user/google/callback`,
         scope: ["profile", "email"],
         state: true,
       },

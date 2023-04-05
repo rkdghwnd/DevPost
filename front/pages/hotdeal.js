@@ -47,10 +47,10 @@ const hotdeal = () => {
       }
     }
 
-    window.addEventListener('scroll', _.throttle(onScroll), 300);
+    window.addEventListener('scroll', onScroll);
     return () => {
-      window.removeEventListener('scroll', _.throttle(onScroll), 300);
-    }; // 해제 안하면 메모리에 쌓임
+      window.removeEventListener('scroll', onScroll);
+    };
   }, [hasMoreHotDealPosts, loadHotDealPostsLoading, hotDealPosts]);
 
   const rowRenderer = useCallback(

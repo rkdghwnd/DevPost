@@ -139,9 +139,9 @@ const search = () => {
           </SearchInputForm>
           <h4>검색어 추천</h4>
           <KeyWordWrapper>
-            <RecommendKeyword keyword={'이슈'} />
-            <RecommendKeyword keyword={'커뮤니티'} />
-            <RecommendKeyword keyword={'근황'} />
+            <RecommendKeyword keyword={'Chat GPT'} />
+            <RecommendKeyword keyword={'리액트'} />
+            <RecommendKeyword keyword={'개발자'} />
           </KeyWordWrapper>
 
           {searchPosts.length === 0 ? (

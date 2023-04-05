@@ -13,23 +13,21 @@ const hotdealCrawling = async () => {
       return b.time - a.time;
     });
     await HotDeal.destroy({ truncate: true });
-    allPosts.forEach(async (v, i) => {
-      const newsPost = await HotDeal.findOrCreate({
-        where: {
-          link: v.link,
-        },
-        defaults: {
-          site_name: v.site_name,
-          title: v.title,
-          time: v.time,
-          link: v.link,
-        },
+
+    for (let i = 0; i < allPosts.length; i++) {
+      const newsPost = await HotDeal.create({
+        site_name: allPosts[i].site_name,
+        title: allPosts[i].title,
+        time: allPosts[i].time,
+        link: allPosts[i].link,
       });
 
-      if (v.imageSource) {
+      if (allPosts[i].imageSource) {
         let imageExtension = "not extension";
         const lastString =
-          v.imageSource.split(".")[v.imageSource.split(".").length - 1];
+          allPosts[i].imageSource.split(".")[
+            allPosts[i].imageSource.split(".").length - 1
+          ];
         if (lastString.lastIndexOf(".jpg")) {
           imageExtension = ".jpg";
         } else if (lastString.lastIndexOf(".jpeg")) {
@@ -42,14 +40,14 @@ const hotdealCrawling = async () => {
           imageExtension = ".gif";
         }
 
-        const imageName = encodeURIComponent(v.imageSource)
+        const imageName = encodeURIComponent(allPosts[i].imageSource)
           .split(".")
           .join("")
           .split("?")
           .join("")
           .split("%")
           .join("");
-        const image = await axios.get(v.imageSource, {
+        const image = await axios.get(allPosts[i].imageSource, {
           responseType: "arraybuffer",
         });
         fs.writeFileSync(`images/${imageName}${imageExtension}`, image.data);
@@ -57,75 +55,15 @@ const hotdealCrawling = async () => {
           {
             image: `${imageName}${imageExtension}`,
           },
-          { where: { link: v.link } }
+          { where: { link: allPosts[i].link } }
         );
       }
-    });
+    }
+
     console.log("핫딜 크롤링 끝!");
   } catch (err) {
     console.error(err);
   }
-
-  // const result = Promise.all([fmkorea(), ruliweb()]).then(async (values) => {
-  //   const allPosts = values.flat();
-  //   allPosts.sort((a, b) => {
-  //     return b.time - a.time;
-  //   });
-  //   await HotDeal.destroy({ truncate: true });
-
-  //   allPosts.forEach(async (v, i) => {
-  //     const newsPost = await HotDeal.findOrCreate({
-  //       where: {
-  //         link: v.link,
-  //       },
-  //       defaults: {
-  //         site_name: v.site_name,
-  //         title: v.title,
-  //         time: v.time,
-  //         link: v.link,
-  //       },
-  //     });
-
-  //     if (v.imageSource) {
-  //       let imageExtension = "not extension";
-  //       const lastString =
-  //         v.imageSource.split(".")[v.imageSource.split(".").length - 1];
-  //       if (lastString.lastIndexOf(".jpg")) {
-  //         imageExtension = ".jpg";
-  //       } else if (lastString.lastIndexOf(".jpeg")) {
-  //         imageExtension = ".jpeg";
-  //       } else if (lastString.lastIndexOf(".webp")) {
-  //         imageExtension = ".webp";
-  //       } else if (lastString.lastIndexOf(".png")) {
-  //         imageExtension = ".png";
-  //       } else if (lastString.lastIndexOf(".gif")) {
-  //         imageExtension = ".gif";
-  //       }
-
-  //       const imageName = encodeURIComponent(v.imageSource)
-  //         .split(".")
-  //         .join("")
-  //         .split("?")
-  //         .join("")
-  //         .split("%")
-  //         .join("");
-  //       const image = await axios.get(v.imageSource, {
-  //         responseType: "arraybuffer",
-  //       });
-  //       fs.writeFileSync(`images/${imageName}${imageExtension}`, image.data);
-  //       await HotDeal.update(
-  //         {
-  //           image: `${imageName}${imageExtension}`,
-  //         },
-  //         { where: { link: v.link } }
-  //       );
-  //     }
-  //   });
-  //   console.log("뉴스 크롤링 끝 !");
-  // });
-  // result.catch((err) => {
-  //   console.error(err);
-  // });
 };
 
 module.exports = hotdealCrawling;

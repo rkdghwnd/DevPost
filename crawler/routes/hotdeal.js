@@ -13,7 +13,7 @@ router.get("/", async (req, res, next) => {
     }
     const posts = await HotDeal.findAll({
       where,
-      limit: 10, // 개수 제한
+      limit: 10,
     });
 
     res.status(200).json(posts);
