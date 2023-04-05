@@ -22,6 +22,7 @@ const helmet = require("helmet");
 const blogCrawling = require("./blogCrawler/blogCrawling");
 const newsCrawling = require("./newsCrawler/newsCrawling");
 const hotdealCrawling = require("./hotdealCrawler/hotdealCrawling");
+const zdnet = require("./newsCrawler/zdnet");
 
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
@@ -66,7 +67,8 @@ const crawling = async () => {
     await hotdealCrawling();
   }, 1000 * 60 * 60 * 24);
 };
-// crawling();
+crawling();
+// zdnet();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
