@@ -76,7 +76,7 @@ const Postmoa = ({ Component }) => {
       // 중복 initialization 방지
       if (!window.Kakao.isInitialized()) {
         // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
-        window.Kakao.init('492f590bda08587be4a8695686fb6937');
+        window.Kakao.init(process.env.NEXT_PUBLIC_JAVASCRIPT_KEY);
       }
     }
   }, [status]);

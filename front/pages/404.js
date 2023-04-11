@@ -4,7 +4,7 @@ export default function Custom404() {
   return (
     <>
       <Head>
-        <title>PostMoa - Page Not Found</title>
+        <title>DevPost - Page Not Found</title>
       </Head>
       <h1>죄송합니다 페이지 오류입니다</h1>
       <h4>페이지가 제거되었거나, 존재하지 않는 URL로 접속하셨습니다. </h4>

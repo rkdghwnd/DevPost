@@ -150,7 +150,7 @@ const post = () => {
   return (
     <>
       <Head>
-        <title>{currentPost.title} - PostMoa</title>
+        <title>{currentPost.title} - DevPost</title>
       </Head>
       <DesktopHeader />
       <PostForm>

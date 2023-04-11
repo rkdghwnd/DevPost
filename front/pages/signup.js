@@ -209,7 +209,7 @@ const signup = () => {
   return (
     <>
       <Head>
-        <title>회원가입 - PostMoa</title>
+        <title>회원가입 - DevPost</title>
       </Head>
       <AppLayout>
         <SignupWrapper>

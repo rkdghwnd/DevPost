@@ -20,7 +20,7 @@ const home = () => {
   return (
     <>
       <Head>
-        <title>PostMoa</title>
+        <title>DevPost</title>
       </Head>
       <AppLayout>
         <MainContentsWrapper>
