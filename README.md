@@ -10,10 +10,11 @@
 
 # 주요 기술스택
 프론트엔드
-- React.js
-- Redux
-- Styled-Component
+- react.js
+- redux
+- redux-saga
 - Next.js
+- Styled-Component
 
 
 백엔드
