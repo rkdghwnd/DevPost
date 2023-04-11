@@ -10,7 +10,7 @@ module.exports = () => {
       {
         clientID: process.env.FACEBOOK_APP_ID,
         clientSecret: process.env.FACEBOOK_APP_SECRET,
-        callbackURL: `${process.env.FRONT_END_DOMAIN}/user/facebook/callback`,
+        callbackURL: `${process.env.BACK_END_DOMAIN}/user/facebook/callback`,
         profileFields: ["id", "displayName", "email"],
       },
       async (accessToken, refreshToken, profile, done) => {
