@@ -100,7 +100,7 @@ const DesktopHeader = () => {
     <Header>
       <HeaderInner>
         <Link href="/">
-          <a>POST MOA</a>
+          <a>DEVPOST</a>
         </Link>
         <SearchInput />
         {me === null && <button onClick={onClickLogInModal}>로그인</button>}
