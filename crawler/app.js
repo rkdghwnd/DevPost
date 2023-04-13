@@ -22,7 +22,6 @@ const helmet = require("helmet");
 const blogCrawling = require("./blogCrawler/blogCrawling");
 const newsCrawling = require("./newsCrawler/newsCrawling");
 const hotdealCrawling = require("./hotdealCrawler/hotdealCrawling");
-const zdnet = require("./newsCrawler/zdnet");
 
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
@@ -59,13 +58,13 @@ fs.readdir("images", (err) => {
 
 const crawling = async () => {
   await blogCrawling();
-  await newsCrawling();
-  await hotdealCrawling();
-  setInterval(async () => {
-    await blogCrawling();
-    await newsCrawling();
-    await hotdealCrawling();
-  }, 1000 * 60 * 60 * 24);
+  // await newsCrawling();
+  // await hotdealCrawling();
+  // setInterval(async () => {
+  //   await blogCrawling();
+  //   await newsCrawling();
+  //   await hotdealCrawling();
+  // }, 1000 * 60 * 60 * 24);
 };
 crawling();
 

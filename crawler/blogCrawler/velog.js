@@ -26,7 +26,7 @@ const velog = async () => {
       const list = document.querySelectorAll("main > div > div");
       const posts = [];
       list.forEach((v, i) => {
-        const imageTag = v.querySelector(".sc-khQegj img");
+        const imageTag = v.querySelector("a > div > img");
         const imageSource = imageTag?.src;
         const title = v.querySelector("h4").textContent.trim();
         const time = v.querySelector("div.sub-info > span").textContent.trim();
@@ -65,8 +65,8 @@ const velog = async () => {
       });
       return posts;
     });
-    await page.close();
-    await browser.close();
+    // await page.close();
+    // await browser.close();
     return blogPosts;
   } catch (err) {
     console.error(err);

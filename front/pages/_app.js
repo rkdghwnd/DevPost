@@ -49,7 +49,7 @@ body {
 
 `;
 
-const Postmoa = ({ Component }) => {
+const DevPost = ({ Component }) => {
   const {
     commentModalVisual,
     infoModalVisual,
@@ -86,7 +86,7 @@ const Postmoa = ({ Component }) => {
       <Head>
         <meta charSet="utf-8"></meta>
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="PostMoa" />
+        <meta property="og:site_name" content="DevPost" />
         <meta property="og:title" content="collect dev articles" />
         <meta
           property="og:description"
@@ -101,7 +101,7 @@ const Postmoa = ({ Component }) => {
           content={process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}
         />
         <meta property="twitter:card" content="summary" />
-        <meta property="twitter:site" content="PostMoa" />
+        <meta property="twitter:site" content="DevPost" />
         <meta property="twitter:title" content="collect dev articles" />
         <meta
           property="twitter:description"
@@ -141,8 +141,8 @@ const Postmoa = ({ Component }) => {
   );
 };
 
-Postmoa.propTypes = {
+DevPost.propTypes = {
   Component: propTypes.elementType.isRequired,
 };
 
-export default wrapper.withRedux(Postmoa);
+export default wrapper.withRedux(DevPost);

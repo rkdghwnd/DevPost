@@ -54,7 +54,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: true,
-      domain: process.env.NODE_ENV === "production" && ".postmoa.shop",
+      domain: process.env.NODE_ENV === "production" && ".devpost.site",
     },
   })
 );
