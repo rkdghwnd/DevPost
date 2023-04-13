@@ -13,16 +13,16 @@
 - react.js
 - redux
 - redux-saga
-- Next.js
-- Styled-Component
+- next.js
+- styled-component
 
 
 백엔드
-- Node.js
-- Express
-- Sequelize(MYSQL)
-- Passport.js
+- node.js
+- express
+- sequelize(MYSQL)
+- passport.js
 - bcrypt
 - multer
-- Puppeteer.js
+- puppeteer.js
 
