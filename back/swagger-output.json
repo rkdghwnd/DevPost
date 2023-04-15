@@ -1,0 +1,1754 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "devpost backend API",
+    "description": "devpost backend API",
+    "version": "1.0.0"
+  },
+  "host": "https://back.devpost.site",
+  "basePath": "/",
+  "schemes": ["http", "https"],
+
+  "paths": {
+    "/user/me": {
+      "get": {
+        "tags": ["내 정보"],
+        "description": "내 정보 불러오기",
+        "responses": {
+          "200": {
+            "description": "내 정보 불러오기 성공",
+            "examples": {
+              "application/json": {
+                "id": 1,
+                "email": "astermarine@gmail.com",
+                "nickname": "강호중",
+                "provider": "local",
+                "snsId": null,
+                "profile_img": "basic-profile-image.png",
+                "Posts": [
+                  {
+                    "id": 1
+                  }
+                ],
+                "Liked": [],
+                "Bookmarked": [],
+                "Comments": [{ "id": 2 }]
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["내 정보"],
+        "description": "회원정보 수정",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nickname": {
+                  "example": "작은별"
+                },
+                "introduce": {
+                  "example": "반갑습니다."
+                },
+                "password": {
+                  "example": "asdfg123456@"
+                },
+                "image": {
+                  "example": "linestar_img.png"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "회원정보 수정 성공",
+            "examples": {
+              "application/json": {
+                "id": 2,
+                "email": "astermarine@gmail.com",
+                "nickname": "작은별",
+                "introduce": "반갑습니다.",
+                "provider": "local",
+                "snsId": null,
+                "profile_img": "linestar_img.png",
+                "Posts": [
+                  {
+                    "id": 2
+                  }
+                ],
+                "Comments": [
+                  {
+                    "id": 2
+                  }
+                ],
+                "Nested_Comments": [],
+                "Bookmarked": [
+                  {
+                    "id": 3,
+                    "Bookmark": {
+                      "createdAt": "2023-04-14T12:45:01.000Z",
+                      "updatedAt": "2023-04-14T12:45:01.000Z",
+                      "PostId": 3,
+                      "UserId": 2
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["내 정보"],
+        "description": "회원 탈퇴",
+        "responses": {
+          "201": {
+            "description": "회원탈퇴 완료"
+          },
+          "401": {
+            "description": "로그인 되어 있지 않음"
+          }
+        }
+      }
+    },
+    "/user/local/auth": {
+      "post": {
+        "tags": ["로그인"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "astermarine@gmail.com"
+                },
+                "password": {
+                  "example": "starspace12345@"
+                }
+              }
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "로그인 성공",
+            "examples": {
+              "application/json": {
+                "id": 1,
+                "email": "astermarine@gmail.com",
+                "nickname": "강호중",
+                "provider": "local",
+                "snsId": null,
+                "profile_img": "basic-profile-image.png",
+                "Posts": [
+                  {
+                    "id": 1
+                  }
+                ],
+                "Liked": [],
+                "Bookmarked": [],
+                "Comments": [{ "id": 2 }]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/kakao/auth": {
+      "get": {
+        "tags": ["로그인"],
+        "description": "카카오 로그인",
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/user/kakao/callback": {
+      "get": {
+        "tags": ["로그인"],
+        "description": "카카오 로그인 리다이렉트",
+        "responses": {
+          "200": {
+            "description": "리다이렉트 성공"
+          }
+        }
+      }
+    },
+    "/user/facebook/auth": {
+      "get": {
+        "tags": ["로그인"],
+        "description": "페이스북 로그인",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "페이스북 로그인 성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/user/facebook/callback": {
+      "get": {
+        "tags": ["로그인"],
+        "description": "페이스북 로그인 리다이렉트",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "리다이렉트 성공"
+          }
+        }
+      }
+    },
+    "/user/google/auth": {
+      "get": {
+        "tags": ["로그인"],
+        "description": "구글 로그인",
+        "parameters": [],
+        "responses": {
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/user/google/callback": {
+      "get": {
+        "tags": ["로그인"],
+        "description": "구글 로그인 리다이렉트",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "리다이렉트 성공"
+          }
+        }
+      }
+    },
+    "/user/auth": {
+      "delete": {
+        "tags": ["로그아웃"],
+        "description": "로그 아웃",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "로그 아웃 성공",
+            "examples": {
+              "application/json": "log out"
+            }
+          },
+          "401": {
+            "description": "로그 아웃 실패"
+          }
+        }
+      }
+    },
+    "/user/info": {
+      "post": {
+        "tags": ["회원가입"],
+        "description": "회원가입",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "astermarine@gmail.com"
+                },
+                "password": {
+                  "example": "starspace12345@"
+                },
+                "nickname": {
+                  "example": "큰별"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "회원가입 성공",
+            "examples": {
+              "application/json": "sign up success"
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "403": {
+            "description": "이미 사용중인 아이디",
+            "examples": {
+              "application/json": "이미 사용중인 아이디입니다."
+            }
+          }
+        }
+      }
+    },
+    "/user/posts": {
+      "get": {
+        "tags": ["내가 쓴 게시글, 댓글, 북마크"],
+        "description": "내가 쓴 글 불러오기",
+        "responses": {
+          "201": {
+            "examples": {
+              "application/json": [
+                {
+                  "id": 2,
+                  "title": "aws 배포시 비용 문제",
+                  "content": "인스턴스를 중지시켜놓은 상태인데도 비용이 청구되고 있어요.",
+                  "views": 0,
+                  "createdAt": "2023-04-13T06:19:53.000Z",
+                  "updatedAt": "2023-04-13T06:19:53.000Z",
+                  "UserId": 2,
+                  "User": {
+                    "id": 2,
+                    "nickname": "김경백",
+                    "profile_img": "basic-profile-image.png"
+                  },
+                  "Images": [],
+                  "Comments": [],
+                  "Likers": [],
+                  "Bookmarkers": []
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/user/comments": {
+      "get": {
+        "tags": ["내가 쓴 게시글, 댓글, 북마크"],
+        "description": "내가 쓴 댓글 불러오기",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "성공",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 2,
+                  "content": "댓글 내용",
+                  "createdAt": "2023-04-13T06:18:31.000Z",
+                  "updatedAt": "2023-04-13T06:18:31.000Z",
+                  "UserId": 2,
+                  "PostId": 1,
+                  "Post": {
+                    "id": 1,
+                    "title": "게시글 제목"
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/user/bookmark": {
+      "get": {
+        "tags": ["내가 쓴 게시글, 댓글, 북마크"],
+        "description": "내가 북마크한 게시글 불러오기",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "북마크 게시글 불러오기 성공",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 4,
+                  "title": "개발자 책 추천 ",
+                  "content": "코드 컴플리트",
+                  "views": 1,
+                  "createdAt": "2023-04-13T06:26:30.000Z",
+                  "updatedAt": "2023-04-14T12:55:49.000Z",
+                  "UserId": 3,
+                  "User": {
+                    "id": 3,
+                    "nickname": "바로",
+                    "profile_img": "ê³ ìì´_1681367000452.jpg"
+                  },
+                  "Comments": [],
+                  "Likers": [
+                    {
+                      "id": 2,
+                      "Like": {
+                        "createdAt": "2023-04-14T12:55:02.000Z",
+                        "updatedAt": "2023-04-14T12:55:02.000Z",
+                        "PostId": 4,
+                        "UserId": 2
+                      }
+                    }
+                  ],
+                  "Bookmarkers": [
+                    {
+                      "id": 2,
+                      "Bookmark": {
+                        "createdAt": "2023-04-14T12:55:40.000Z",
+                        "updatedAt": "2023-04-14T12:55:40.000Z",
+                        "PostId": 4,
+                        "UserId": 2
+                      }
+                    }
+                  ],
+                  "Images": [
+                    {
+                      "id": 2,
+                      "src": "ì½ë ì»´íë¦¬í¸_1681367181406.jpg",
+                      "createdAt": "2023-04-13T06:26:30.000Z",
+                      "updatedAt": "2023-04-13T06:26:30.000Z",
+                      "PostId": 4
+                    }
+                  ],
+                  "Bookmark": {
+                    "createdAt": "2023-04-14T12:55:40.000Z",
+                    "updatedAt": "2023-04-14T12:55:40.000Z",
+                    "PostId": 4,
+                    "UserId": 2
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+
+    "/user/you": {
+      "get": {
+        "tags": ["상대 프로필 정보"],
+        "description": "상대 프로필 정보 불러오기",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "상대 프로필 정보 불러오기 성공",
+            "examples": {
+              "application/json": {
+                "yourInfo": {
+                  "id": 2,
+                  "email": "zerocho@gmail.com",
+                  "nickname": "강호중",
+                  "introduce": "안녕하세요 반갑습니다.",
+                  "provider": "local",
+                  "snsId": null,
+                  "profile_img": "",
+                  "Posts": [
+                    {
+                      "id": 2,
+                      "title": "aws 배포시 비용 문제",
+                      "content": "인스턴스를 중지시켜놓은 상태인데도 비용이 청구되고 있네요. 무슨 이유인가요?",
+                      "views": 0,
+                      "createdAt": "2023-04-13T06:19:53.000Z",
+                      "updatedAt": "2023-04-13T06:19:53.000Z",
+                      "UserId": 2,
+                      "User": {
+                        "id": 2,
+                        "nickname": "강호중",
+                        "profile_img": ""
+                      },
+                      "Images": [],
+                      "Comments": [],
+                      "Likers": [],
+                      "Bookmarkers": []
+                    }
+                  ]
+                },
+                "fullComments": [
+                  {
+                    "id": 2,
+                    "content": "경로가 잘못된 것 같습니다.",
+                    "createdAt": "2023-04-13T06:18:31.000Z",
+                    "updatedAt": "2023-04-13T06:18:31.000Z",
+                    "UserId": 2,
+                    "PostId": 1,
+                    "Post": {
+                      "id": 1,
+                      "title": "npm start 시 에러가 뜹니다."
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/password/validate": {
+      "post": {
+        "tags": ["비밀번호 유효성 검증"],
+        "description": "비밀번호 유효성 검증(회원탈퇴 전 검증)",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "example": "asdf12345@"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "비밀번호 유효성 검증 성공"
+          },
+          "401": {
+            "description": "로그인 되어 있지 않음"
+          },
+          "404": {
+            "description": "비밀번호 다름"
+          }
+        }
+      }
+    },
+    "/post/": {
+      "post": {
+        "tags": ["게시글"],
+        "description": "게시글 작성",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "게시글 제목"
+                },
+                "content": {
+                  "example": "게시글 내용"
+                },
+                "image": {
+                  "example": "image.png"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "작성됨",
+            "examples": {
+              "application/json": {
+                "id": 6,
+                "title": "게시글 제목",
+                "content": "게시글 내용",
+                "views": 0,
+                "createdAt": "2023-04-15T05:17:16.000Z",
+                "updatedAt": "2023-04-15T05:17:16.000Z",
+                "UserId": 4,
+                "Images": [
+                  {
+                    "id": 17,
+                    "src": "image.png",
+                    "createdAt": "2023-04-15T05:17:16.000Z",
+                    "updatedAt": "2023-04-15T05:17:16.000Z",
+                    "PostId": 6
+                  }
+                ],
+                "Comments": [],
+                "User": {
+                  "id": 4,
+                  "nickname": "지메일"
+                },
+                "Likers": [],
+                "Bookmarkers": []
+              }
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["게시글"],
+        "description": "게시글 수정",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "수정된 게시글 제목"
+                },
+                "content": {
+                  "example": "수정된 게시글 내용"
+                },
+                "postId": {
+                  "example": "6"
+                },
+                "image": {
+                  "example": "updated_image.png"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "게시글 수정됨",
+            "examples": {
+              "application/json": {
+                "id": 6,
+                "title": "수정된게시글 제목",
+                "content": "수정된 게시글 내용",
+                "views": 0,
+                "createdAt": "2023-04-15T05:17:16.000Z",
+                "updatedAt": "2023-04-15T10:05:05.000Z",
+                "UserId": 4,
+                "Images": [
+                  {
+                    "id": 18,
+                    "src": "updated_image.png",
+                    "createdAt": "2023-04-15T10:05:05.000Z",
+                    "updatedAt": "2023-04-15T10:05:05.000Z",
+                    "PostId": 6
+                  }
+                ],
+                "Comments": [],
+                "User": {
+                  "id": 4,
+                  "nickname": "지메일"
+                },
+                "Likers": [],
+                "Bookmarkers": []
+              }
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/post/images": {
+      "post": {
+        "tags": ["게시글"],
+        "description": "이미지를 저장소에 업로드",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "FormData",
+              "properties": { "[[Prototype]]": { "example": "Formdata" } }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "이미지 업로드 성공",
+            "examples": {
+              "application/json": ["image.png"]
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/post/free": {
+      "get": {
+        "tags": ["게시글"],
+        "description": "게시글 불러오기",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "examples": {
+              "application/json": {
+                "id": 6,
+                "title": "게시글 제목",
+                "content": "게시글 내용",
+                "views": 3,
+                "createdAt": "2023-04-15T05:17:16.000Z",
+                "updatedAt": "2023-04-15T10:12:15.000Z",
+                "UserId": 4,
+                "Images": [],
+                "User": {
+                  "id": 4,
+                  "nickname": "닉네임",
+                  "profile_img": "basic-profile-image.png"
+                },
+                "Comments": [],
+                "Likers": [],
+                "Bookmarkers": []
+              }
+            }
+          },
+          "404": {
+            "description": "찾을 수 없음"
+          }
+        }
+      }
+    },
+    "/post/{postId}": {
+      "delete": {
+        "tags": ["게시글"],
+        "description": "게시글 삭제",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "examples": {
+              "application/json": { "PostId": 6 }
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/post/{postId}/comment": {
+      "post": {
+        "tags": ["댓글, 대댓글"],
+        "description": "댓글 추가",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "example": "댓글 내용"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "댓글 추가 성공",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 1,
+                  "content": "어렵네요;;",
+                  "createdAt": "2023-04-13T06:17:30.000Z",
+                  "updatedAt": "2023-04-13T06:17:30.000Z",
+                  "UserId": 1,
+                  "PostId": 1,
+                  "User": {
+                    "id": 1,
+                    "nickname": "강호중",
+                    "profile_img": "basic-profile-image.png"
+                  },
+                  "Nested_Comments": []
+                },
+                {
+                  "id": 3,
+                  "content": "그렇네요",
+                  "createdAt": "2023-04-13T07:03:16.000Z",
+                  "updatedAt": "2023-04-13T07:03:16.000Z",
+                  "UserId": 1,
+                  "PostId": 1,
+                  "User": {
+                    "id": 1,
+                    "nickname": "강호중",
+                    "profile_img": "basic-profile-image.png"
+                  },
+                  "Nested_Comments": []
+                },
+                {
+                  "id": 5,
+                  "content": "댓글 내용",
+                  "createdAt": "2023-04-15T10:28:04.000Z",
+                  "updatedAt": "2023-04-15T10:28:04.000Z",
+                  "UserId": 4,
+                  "PostId": 1,
+                  "User": {
+                    "id": 4,
+                    "nickname": "지메일",
+                    "profile_img": "basic-profile-image.png"
+                  },
+                  "Nested_Comments": []
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "403": {
+            "examples": {
+              "application/json": "존재하지 않는 게시글입니다."
+            }
+          }
+        }
+      }
+    },
+    "/post/{postId}/comment/{commentId}": {
+      "delete": {
+        "tags": ["댓글, 대댓글"],
+        "description": "댓글 삭제",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 1,
+                  "content": "어렵네요;;",
+                  "createdAt": "2023-04-13T06:17:30.000Z",
+                  "updatedAt": "2023-04-13T06:17:30.000Z",
+                  "UserId": 1,
+                  "PostId": 1,
+                  "User": {
+                    "id": 1,
+                    "nickname": "강호중",
+                    "profile_img": "basic-profile-image.png"
+                  },
+                  "Nested_Comments": []
+                },
+                {
+                  "id": 2,
+                  "content": "경로가 잘못된 것 같습니다.",
+                  "createdAt": "2023-04-13T06:18:31.000Z",
+                  "updatedAt": "2023-04-13T06:18:31.000Z",
+                  "UserId": 2,
+                  "PostId": 1,
+                  "User": {
+                    "id": 2,
+                    "nickname": "강호중",
+                    "profile_img": ""
+                  },
+                  "Nested_Comments": []
+                },
+                {
+                  "id": 3,
+                  "content": "그렇네요",
+                  "createdAt": "2023-04-13T07:03:16.000Z",
+                  "updatedAt": "2023-04-13T07:03:16.000Z",
+                  "UserId": 1,
+                  "PostId": 1,
+                  "User": {
+                    "id": 1,
+                    "nickname": "강호중",
+                    "profile_img": "basic-profile-image.png"
+                  },
+                  "Nested_Comments": []
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["댓글, 대댓글"],
+        "description": "댓글 수정",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "example": "수정한 댓글 내용"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "댓글 수정 성공",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 1,
+                  "content": "어렵네요;;",
+                  "createdAt": "2023-04-13T06:17:30.000Z",
+                  "updatedAt": "2023-04-13T06:17:30.000Z",
+                  "UserId": 1,
+                  "PostId": 1,
+                  "User": {
+                    "id": 1,
+                    "nickname": "강호중",
+                    "profile_img": "basic-profile-image.png"
+                  },
+                  "Nested_Comments": []
+                },
+                {
+                  "id": 2,
+                  "content": "경로가 잘못된 것 같습니다.",
+                  "createdAt": "2023-04-13T06:18:31.000Z",
+                  "updatedAt": "2023-04-13T06:18:31.000Z",
+                  "UserId": 2,
+                  "PostId": 1,
+                  "User": {
+                    "id": 2,
+                    "nickname": "강호중",
+                    "profile_img": ""
+                  },
+                  "Nested_Comments": []
+                },
+                {
+                  "id": 3,
+                  "content": "수정한 댓글 내용",
+                  "createdAt": "2023-04-13T07:03:16.000Z",
+                  "updatedAt": "2023-04-13T07:03:16.000Z",
+                  "UserId": 1,
+                  "PostId": 1,
+                  "User": {
+                    "id": 1,
+                    "nickname": "강호중",
+                    "profile_img": "basic-profile-image.png"
+                  },
+                  "Nested_Comments": []
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/post/{postId}/comment/{commentId}/nested_comment": {
+      "post": {
+        "tags": ["댓글, 대댓글"],
+        "description": "대댓글 추가",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "example": "대댓글 내용"
+                },
+                "target": {
+                  "example": "6"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "작성됨",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 6,
+                  "content": "댓글1",
+                  "createdAt": "2023-04-15T10:39:17.000Z",
+                  "updatedAt": "2023-04-15T10:39:17.000Z",
+                  "UserId": 1,
+                  "PostId": 6,
+                  "User": {
+                    "id": 1,
+                    "nickname": "강호중",
+                    "profile_img": "basic-profile-image.png"
+                  },
+                  "Nested_Comments": [
+                    {
+                      "id": 1,
+                      "content": "대댓글1",
+                      "target": "강호중",
+                      "createdAt": "2023-04-15T10:39:22.000Z",
+                      "updatedAt": "2023-04-15T10:39:22.000Z",
+                      "CommentId": 6,
+                      "PostId": 6,
+                      "UserId": 1,
+                      "User": {
+                        "id": 1,
+                        "nickname": "강호중",
+                        "profile_img": "basic-profile-image.png"
+                      }
+                    },
+                    {
+                      "id": 2,
+                      "content": "대댓글2",
+                      "target": "6",
+                      "createdAt": "2023-04-15T10:41:51.000Z",
+                      "updatedAt": "2023-04-15T10:41:51.000Z",
+                      "CommentId": 6,
+                      "PostId": 6,
+                      "UserId": 4,
+                      "User": {
+                        "id": 4,
+                        "nickname": "지메일",
+                        "profile_img": "basic-profile-image.png"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "403": {
+            "description": "금지됨",
+            "examples": {
+              "application/json": "존재하지 않는 게시글 입니다."
+            }
+          }
+        }
+      }
+    },
+    "/post/{postId}/comment/{commentId}/nested_comment/{nestedCommentId}": {
+      "delete": {
+        "tags": ["댓글, 대댓글"],
+        "description": "대댓글 삭제",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "nestedCommentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "대댓글 삭제 성공",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 6,
+                  "content": "댓글1",
+                  "createdAt": "2023-04-15T10:39:17.000Z",
+                  "updatedAt": "2023-04-15T10:39:17.000Z",
+                  "UserId": 1,
+                  "PostId": 6,
+                  "User": {
+                    "id": 1,
+                    "nickname": "강호중",
+                    "profile_img": "basic-profile-image.png"
+                  },
+                  "Nested_Comments": [
+                    {
+                      "id": 1,
+                      "content": "대댓글1",
+                      "target": "강호중",
+                      "createdAt": "2023-04-15T10:39:22.000Z",
+                      "updatedAt": "2023-04-15T10:39:22.000Z",
+                      "CommentId": 6,
+                      "PostId": 6,
+                      "UserId": 1,
+                      "User": {
+                        "id": 1,
+                        "nickname": "강호중",
+                        "profile_img": "basic-profile-image.png"
+                      }
+                    },
+                    {
+                      "id": 2,
+                      "content": "대댓글2",
+                      "target": "6",
+                      "createdAt": "2023-04-15T10:41:51.000Z",
+                      "updatedAt": "2023-04-15T10:41:51.000Z",
+                      "CommentId": 6,
+                      "PostId": 6,
+                      "UserId": 4,
+                      "User": {
+                        "id": 4,
+                        "nickname": "지메일",
+                        "profile_img": "basic-profile-image.png"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["댓글, 대댓글"],
+        "description": "대댓글 수정",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "nestedCommentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "example": "수정된 대댓글 내용"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "작성됨",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 6,
+                  "content": "댓글1",
+                  "createdAt": "2023-04-15T10:39:17.000Z",
+                  "updatedAt": "2023-04-15T10:39:17.000Z",
+                  "UserId": 1,
+                  "PostId": 6,
+                  "User": {
+                    "id": 1,
+                    "nickname": "강호중",
+                    "profile_img": "basic-profile-image.png"
+                  },
+                  "Nested_Comments": [
+                    {
+                      "id": 1,
+                      "content": "수정된 대댓글 내용",
+                      "target": "강호중",
+                      "createdAt": "2023-04-15T10:39:22.000Z",
+                      "updatedAt": "2023-04-15T10:39:22.000Z",
+                      "CommentId": 6,
+                      "PostId": 6,
+                      "UserId": 1,
+                      "User": {
+                        "id": 1,
+                        "nickname": "강호중",
+                        "profile_img": "basic-profile-image.png"
+                      }
+                    },
+                    {
+                      "id": 2,
+                      "content": "대댓글2",
+                      "target": "6",
+                      "createdAt": "2023-04-15T10:41:51.000Z",
+                      "updatedAt": "2023-04-15T10:41:51.000Z",
+                      "CommentId": 6,
+                      "PostId": 6,
+                      "UserId": 4,
+                      "User": {
+                        "id": 4,
+                        "nickname": "지메일",
+                        "profile_img": "basic-profile-image.png"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/post/{postId}/like": {
+      "patch": {
+        "tags": ["좋아요"],
+        "description": "좋아요 추가",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "좋아요 성공",
+            "examples": {
+              "application/json": {
+                "PostId": 6,
+                "UserId": 1
+              }
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "403": {
+            "description": "게시글이 존재하지 않음",
+            "examples": {
+              "application/json": "게시글이 존재하지 않습니다."
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["좋아요"],
+        "description": "좋아요 취소",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "examples": {
+              "application/json": {
+                "PostId": 6,
+                "UserId": 1
+              }
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "403": {
+            "description": "게시글이 존재하지 않음",
+            "examples": {
+              "application/json": "게시글이 존재하지 않습니다."
+            }
+          }
+        }
+      }
+    },
+    "/post/{postId}/bookmark": {
+      "patch": {
+        "tags": ["북마크"],
+        "description": "북마크 추가",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "examples": {
+              "application/json": { "PostId": 6, "UserId": 1 }
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "403": {
+            "description": "게시글 존재하지 않음",
+            "examples": {
+              "application/json": "게시글이 존재하지 않습니다."
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["북마크"],
+        "description": "북마크 취소",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "북마크 취소 성공",
+            "examples": {
+              "application/json": { "PostId": 6, "UserId": 1 }
+            }
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "403": {
+            "description": "금지됨",
+            "examples": {
+              "application/json": "게시글이 존재하지 않습니다."
+            }
+          }
+        }
+      }
+    },
+    "/posts/free": {
+      "get": {
+        "tags": ["자유게시판 목록"],
+        "description": "자유게시판 목록 불러오기",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공",
+            "examples": {
+              "application/json": [
+                [
+                  {
+                    "id": 6,
+                    "title": "수정된게시글 제목",
+                    "content": "수정된 게시글 내용",
+                    "views": 5,
+                    "createdAt": "2023-04-15T05:17:16.000Z",
+                    "updatedAt": "2023-04-15T10:39:11.000Z",
+                    "UserId": 4,
+                    "User": {
+                      "id": 4,
+                      "nickname": "지메일",
+                      "profile_img": "basic-profile-image.png"
+                    },
+                    "Images": [
+                      {
+                        "id": 18,
+                        "src": "updated_image.png",
+                        "createdAt": "2023-04-15T10:05:05.000Z",
+                        "updatedAt": "2023-04-15T10:05:05.000Z",
+                        "PostId": 6
+                      }
+                    ],
+                    "Comments": [
+                      {
+                        "id": 6,
+                        "User": {
+                          "id": 1
+                        },
+                        "Nested_Comments": [
+                          {
+                            "id": 2,
+                            "User": {
+                              "id": 4
+                            }
+                          },
+                          {
+                            "id": 1,
+                            "User": {
+                              "id": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "Likers": [],
+                    "Bookmarkers": []
+                  },
+                  {
+                    "id": 5,
+                    "title": "프론트엔드 개발자",
+                    "content": "참고하세요\r\n\r\n\r\n\r\nhttps://namu.wiki/w/%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C(%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D)",
+                    "views": 31,
+                    "createdAt": "2023-04-13T06:31:12.000Z",
+                    "updatedAt": "2023-04-15T10:10:46.000Z",
+                    "UserId": 3,
+                    "User": {
+                      "id": 3,
+                      "nickname": "바로",
+                      "profile_img": "ê³ ìì´_1681367000452.jpg"
+                    },
+                    "Images": [
+                      {
+                        "id": 8,
+                        "src": "íë¡ í¸ìëê°ë°_1681367470722.png",
+                        "createdAt": "2023-04-13T06:46:06.000Z",
+                        "updatedAt": "2023-04-13T06:46:06.000Z",
+                        "PostId": 5
+                      }
+                    ],
+                    "Comments": [
+                      {
+                        "id": 4,
+                        "User": {
+                          "id": 1
+                        },
+                        "Nested_Comments": []
+                      }
+                    ],
+                    "Likers": [
+                      {
+                        "id": 1,
+                        "Like": {
+                          "createdAt": "2023-04-13T07:22:28.000Z",
+                          "updatedAt": "2023-04-13T07:22:28.000Z",
+                          "PostId": 5,
+                          "UserId": 1
+                        }
+                      },
+                      {
+                        "id": 2,
+                        "Like": {
+                          "createdAt": "2023-04-14T10:31:00.000Z",
+                          "updatedAt": "2023-04-14T10:31:00.000Z",
+                          "PostId": 5,
+                          "UserId": 2
+                        }
+                      }
+                    ],
+                    "Bookmarkers": [
+                      {
+                        "id": 1,
+                        "Bookmark": {
+                          "createdAt": "2023-04-13T07:22:30.000Z",
+                          "updatedAt": "2023-04-13T07:22:30.000Z",
+                          "PostId": 5,
+                          "UserId": 1
+                        }
+                      },
+                      {
+                        "id": 2,
+                        "Bookmark": {
+                          "createdAt": "2023-04-14T12:55:42.000Z",
+                          "updatedAt": "2023-04-14T12:55:42.000Z",
+                          "PostId": 5,
+                          "UserId": 2
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "id": 4,
+                    "title": "개발자 책 추천 ",
+                    "content": "코드 컴플리트",
+                    "views": 1,
+                    "createdAt": "2023-04-13T06:26:30.000Z",
+                    "updatedAt": "2023-04-14T12:55:49.000Z",
+                    "UserId": 3,
+                    "User": {
+                      "id": 3,
+                      "nickname": "바로",
+                      "profile_img": "ê³ ìì´_1681367000452.jpg"
+                    },
+                    "Images": [
+                      {
+                        "id": 2,
+                        "src": "ì½ë ì»´íë¦¬í¸_1681367181406.jpg",
+                        "createdAt": "2023-04-13T06:26:30.000Z",
+                        "updatedAt": "2023-04-13T06:26:30.000Z",
+                        "PostId": 4
+                      }
+                    ],
+                    "Comments": [],
+                    "Likers": [
+                      {
+                        "id": 2,
+                        "Like": {
+                          "createdAt": "2023-04-14T12:55:02.000Z",
+                          "updatedAt": "2023-04-14T12:55:02.000Z",
+                          "PostId": 4,
+                          "UserId": 2
+                        }
+                      }
+                    ],
+                    "Bookmarkers": [
+                      {
+                        "id": 2,
+                        "Bookmark": {
+                          "createdAt": "2023-04-14T12:55:40.000Z",
+                          "updatedAt": "2023-04-14T12:55:40.000Z",
+                          "PostId": 4,
+                          "UserId": 2
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "title": "코딩테스트 별 언어 선택 비율",
+                    "content": "https://programmers.co.kr/pages/2022-trend-report\r\n\r\n한번 참고해보세요 !",
+                    "views": 1,
+                    "createdAt": "2023-04-13T06:21:12.000Z",
+                    "updatedAt": "2023-04-14T12:55:35.000Z",
+                    "UserId": 3,
+                    "User": {
+                      "id": 3,
+                      "nickname": "바로",
+                      "profile_img": "ê³ ìì´_1681367000452.jpg"
+                    },
+                    "Images": [],
+                    "Comments": [],
+                    "Likers": [
+                      {
+                        "id": 2,
+                        "Like": {
+                          "createdAt": "2023-04-14T10:31:07.000Z",
+                          "updatedAt": "2023-04-14T10:31:07.000Z",
+                          "PostId": 3,
+                          "UserId": 2
+                        }
+                      }
+                    ],
+                    "Bookmarkers": [
+                      {
+                        "id": 2,
+                        "Bookmark": {
+                          "createdAt": "2023-04-14T12:45:01.000Z",
+                          "updatedAt": "2023-04-14T12:45:01.000Z",
+                          "PostId": 3,
+                          "UserId": 2
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "title": "aws 배포시 비용 문제",
+                    "content": "인스턴스를 중지시켜놓은 상태인데도 비용이 청구되고 있네요. 무슨 이유인가요?",
+                    "views": 0,
+                    "createdAt": "2023-04-13T06:19:53.000Z",
+                    "updatedAt": "2023-04-13T06:19:53.000Z",
+                    "UserId": 2,
+                    "User": {
+                      "id": 2,
+                      "nickname": "강호중",
+                      "profile_img": ""
+                    },
+                    "Images": [],
+                    "Comments": [],
+                    "Likers": [],
+                    "Bookmarkers": []
+                  },
+                  {
+                    "id": 1,
+                    "title": "npm start 시 에러가 뜹니다.",
+                    "content": "npm start 시 에러가 떠서 부탁드립니다.\r\n\r\nkylelee@Kyleui-MacBookAir 공부폴더 % npm start                    npm ERR! code ENOENT\r\n\r\nnpm ERR! syscall open\r\n\r\nnpm ERR! path /Users/kylelee/Desktop/공부폴더/package.json\r\n\r\nnpm ERR! errno -2\r\n\r\nnpm ERR! enoent ENOENT: no such file or directory, open '/Users/kylelee/Desktop/공부폴더/package.json'\r\n\r\nnpm ERR! enoent This is related to npm not being able to find a file.\r\n\r\nnpm ERR! enoent \r\n\r\nnpm ERR! A complete log of this run can be found in:\r\n\r\nnpm ERR!     /Users/kylelee/.npm/_logs/2021-02-16T06_55_18_685Z-debug.log",
+                    "views": 39,
+                    "createdAt": "2023-04-13T06:16:36.000Z",
+                    "updatedAt": "2023-04-13T07:22:04.000Z",
+                    "UserId": 1,
+                    "User": {
+                      "id": 1,
+                      "nickname": "강호중",
+                      "profile_img": "basic-profile-image.png"
+                    },
+                    "Images": [
+                      {
+                        "id": 16,
+                        "src": "npme-error-img_1681369526587.png",
+                        "createdAt": "2023-04-13T07:20:11.000Z",
+                        "updatedAt": "2023-04-13T07:20:11.000Z",
+                        "PostId": 1
+                      }
+                    ],
+                    "Comments": [
+                      {
+                        "id": 1,
+                        "User": {
+                          "id": 1
+                        },
+                        "Nested_Comments": []
+                      },
+                      {
+                        "id": 2,
+                        "User": {
+                          "id": 2
+                        },
+                        "Nested_Comments": []
+                      },
+                      {
+                        "id": 3,
+                        "User": {
+                          "id": 1
+                        },
+                        "Nested_Comments": []
+                      }
+                    ],
+                    "Likers": [],
+                    "Bookmarkers": []
+                  }
+                ],
+                6
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/posts/search": {
+      "get": {
+        "tags": ["자유게시판 검색"],
+        "description": "자유게시판 게시글 검색",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "작성됨",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 3,
+                  "title": "코딩테스트 별 언어 선택 비율",
+                  "content": "https://programmers.co.kr/pages/2022-trend-report\r\n\r\n한번 참고해보세요 !",
+                  "views": 1,
+                  "createdAt": "2023-04-13T06:21:12.000Z",
+                  "updatedAt": "2023-04-14T12:55:35.000Z",
+                  "UserId": 3,
+                  "User": {
+                    "id": 3,
+                    "nickname": "바로",
+                    "profile_img": "ê³ ìì´_1681367000452.jpg"
+                  },
+                  "Images": [],
+                  "Comments": [],
+                  "Likers": [
+                    {
+                      "id": 2,
+                      "Like": {
+                        "createdAt": "2023-04-14T10:31:07.000Z",
+                        "updatedAt": "2023-04-14T10:31:07.000Z",
+                        "PostId": 3,
+                        "UserId": 2
+                      }
+                    }
+                  ],
+                  "Bookmarkers": [
+                    {
+                      "id": 2,
+                      "Bookmark": {
+                        "createdAt": "2023-04-14T12:45:01.000Z",
+                        "updatedAt": "2023-04-14T12:45:01.000Z",
+                        "PostId": 3,
+                        "UserId": 2
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

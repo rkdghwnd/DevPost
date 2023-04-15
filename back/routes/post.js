@@ -331,7 +331,7 @@ router.post("/:postId/comment", isLoggedIn, async (req, res, next) => {
 });
 
 router.delete("/:postId/comment/:commentId", isLoggedIn, async (req, res) => {
-  //DELETE /post/:postId/comment
+  //DELETE /post/:postId/comment/:commentId
   try {
     await Comment.destroy({
       // UserId를 추가한 이유는 보안(다른사람이 삭제하지 못하게 하기 위해)
@@ -441,7 +441,7 @@ router.post(
         PostId: parseInt(req.params.postId),
         UserId: req.user.id,
       });
-      console.log(nestedComment);
+
       await comment.addNested_Comments(nestedComment.id);
 
       const fullComments = await Comment.findAll({
@@ -582,7 +582,7 @@ router.patch("/:postId/like", isLoggedIn, async (req, res, next) => {
   }
 });
 
-// 좋아요 삭제
+// 좋아요 취소
 router.delete("/:postId/like", isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({
@@ -618,7 +618,7 @@ router.patch("/:postId/bookmark", isLoggedIn, async (req, res, next) => {
   }
 });
 
-// 북마크 삭제
+// 북마크 취소
 router.delete("/:postId/bookmark", isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({

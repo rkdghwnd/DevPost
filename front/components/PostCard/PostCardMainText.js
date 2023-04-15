@@ -14,6 +14,7 @@ const MainTextWrapper = styled.div`
 const MainTextForm = styled.li`
   display: flex;
   justify-content: space-between;
+  overflow: hidden;
   &:hover h4 {
     color: gray;
     transition: color 0.3s ease;
@@ -43,7 +44,7 @@ const MainTextForm = styled.li`
 const PostCardMainText = ({ post }) => {
   const dispatch = useDispatch();
   const cardContent = post?.content;
-  const longCardContent = `${post?.content.slice(0, 110)}...`;
+  const longCardContent = `${post?.content.slice(0, 90)}...`;
   const onModalClose = useCallback(() => {
     dispatch({ type: USER_INFO_MODAL_CLOSE_REQUEST });
   }, []);
@@ -55,9 +56,7 @@ const PostCardMainText = ({ post }) => {
           <MainTextForm>
             <div>
               <h4>{post?.title}</h4>
-              <p>
-                {cardContent?.length >= 100 ? longCardContent : cardContent}
-              </p>
+              <p>{cardContent?.length >= 90 ? longCardContent : cardContent}</p>
             </div>
             <div>
               {post?.Images.length === 0 ? null : (

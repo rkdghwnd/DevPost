@@ -65,8 +65,8 @@ const velog = async () => {
       });
       return posts;
     });
-    // await page.close();
-    // await browser.close();
+    await page.close();
+    await browser.close();
     return blogPosts;
   } catch (err) {
     console.error(err);

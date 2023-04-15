@@ -24,6 +24,7 @@ import wrapper from '../../store/configureStore';
 import { LOAD_MY_INFO_REQUEST } from '../../reducers/user';
 import Custom404 from '../404';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 const PostForm = styled.section`
   padding: 20px;
@@ -81,15 +82,12 @@ const LogInBox = styled.div`
 `;
 
 const post = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { postOptionVisible } = useSelector(state => state.option);
-  const {
-    currentPost,
-    loadPostLoading,
-    updatePostDone,
-    removePostDone,
-    loadPostError,
-  } = useSelector(state => state.post);
+  const { currentPost, loadPostLoading, loadPostError } = useSelector(
+    state => state.post,
+  );
   const { me } = useSelector(state => state.user);
 
   const isMyPost = me?.id === currentPost?.UserId;
@@ -136,14 +134,14 @@ const post = () => {
   }, [me, isAleredayBookmark, currentPost]);
 
   const onClickBack = useCallback(() => {
-    window.history.back();
-  }, []);
+    router.back();
+  }, [router]);
 
   if (loadPostError) {
     return <Custom404 />;
   }
 
-  if (loadPostLoading || updatePostDone || removePostDone || !currentPost) {
+  if (loadPostLoading || !currentPost) {
     return <PostLoading />;
   }
 

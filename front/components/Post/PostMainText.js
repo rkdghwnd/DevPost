@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const MainTextForm = styled.section`
   padding-top: 10px;
+  word-break: break-all;
 `;
 const PostUserInfo = styled.div`
   display: flex;
@@ -27,9 +28,17 @@ const PostTitle = styled.h3`
   font-weight: 400;
 `;
 
-const PostBody = styled.p`
+const PostBody = styled.article`
   line-height: 24px;
   margin-top: 20px;
+  & > div:first-child {
+    white-space: pre-wrap;
+  }
+  & > textarea {
+    all: unset;
+    width: 100%;
+    overflow: hidden;
+  }
 `;
 
 const ViewsCommentsLiked = styled.div`
@@ -65,7 +74,7 @@ const PostMainText = () => {
       </PostUserInfo>
       <PostTitle>{currentPost.title}</PostTitle>
       <PostBody>
-        {currentPost.content}
+        <div>{currentPost.content}</div>
         <br />
         {currentPost.Images.length !== 0 &&
           currentPost.Images.map(image => {
