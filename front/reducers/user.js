@@ -153,7 +153,6 @@ const reducer = (state = initialState, action) => {
         draft.logInDone = true;
         draft.logOutDone = false;
         draft.me = action.data;
-        window.location.reload();
         break;
       case LOG_IN_FAILURE:
         draft.logInLoading = false;
@@ -170,7 +169,6 @@ const reducer = (state = initialState, action) => {
         draft.logInDone = false;
         draft.logOutDone = true;
         draft.me = null;
-        window.location.reload();
         break;
       case LOG_OUT_FAILURE:
         draft.logOutLoading = false;
