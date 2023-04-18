@@ -25,6 +25,7 @@ import { LOAD_MY_INFO_REQUEST } from '../../reducers/user';
 import Custom404 from '../404';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import TopScroll from '../../components/TopScroll';
 
 const PostForm = styled.section`
   padding: 20px;
@@ -104,11 +105,10 @@ const post = () => {
     onClose: () => {},
   };
 
-  const onClickPostOpition = useCallback(() => {
-    if (isMyPost) {
-      dispatch({ type: POST_OPTION_TOGGLE_REQUEST });
-    }
-  }, [isMyPost]);
+  const onClickPostOption = useCallback(e => {
+    dispatch({ type: POST_OPTION_TOGGLE_REQUEST });
+    e.stopPropagation();
+  }, []);
 
   const onClickLogInBox = useCallback(() => {
     dispatch({ type: LOG_IN_MODAL_OPEN });
@@ -155,7 +155,7 @@ const post = () => {
         <PostMenu>
           <AiOutlineArrowLeft onClick={onClickBack} />
           <BsBookmark onClick={onClickBookmarkButton} style={bookmarkColor} />
-          {isMyPost ? <BsThreeDots onClick={onClickPostOpition} /> : null}
+          {isMyPost && <BsThreeDots onClick={onClickPostOption} />}
         </PostMenu>
         {postOptionVisible ? <PostOption /> : null}
         <PostMainText />
@@ -176,6 +176,7 @@ const post = () => {
           <LogInBox onClick={onClickLogInBox}>로그인이 필요합니다.</LogInBox>
         )}
       </PostForm>
+      <TopScroll />
     </>
   );
 };

@@ -75,6 +75,7 @@ const reducer = (state = initialState, action) => {
       case REMOVE_ACCOUNT_SUCCESS:
         draft.removeAccountLoading = false;
         draft.removeAccountDone = true;
+        window.location.href = process.env.NEXT_PUBLIC_FRONT_END_DOMAIN;
         break;
       case REMOVE_ACCOUNT_FAILURE:
         draft.removeAccountLoading = false;
@@ -153,7 +154,6 @@ const reducer = (state = initialState, action) => {
         draft.logInDone = true;
         draft.logOutDone = false;
         draft.me = action.data;
-        window.location.reload();
         break;
       case LOG_IN_FAILURE:
         draft.logInLoading = false;
@@ -170,7 +170,6 @@ const reducer = (state = initialState, action) => {
         draft.logInDone = false;
         draft.logOutDone = true;
         draft.me = null;
-        window.location.reload();
         break;
       case LOG_OUT_FAILURE:
         draft.logOutLoading = false;

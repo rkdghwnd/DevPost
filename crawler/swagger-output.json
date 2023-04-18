@@ -10,7 +10,7 @@
   "schemes": ["http", "https"],
   "tags": { "name": "Statistics", "description": "통계 기능을 제공합니다." },
   "paths": {
-    "/blog/": {
+    "/blog": {
       "get": {
         "tags": ["게시글 목록"],
         "description": "블로그 목록 불러오기",
@@ -135,7 +135,7 @@
         }
       }
     },
-    "/news/": {
+    "/news": {
       "get": {
         "tags": ["게시글 목록"],
         "description": "뉴스 목록 불러오기",
@@ -270,7 +270,7 @@
         }
       }
     },
-    "/hotdeal/": {
+    "/hotdeal": {
       "get": {
         "tags": ["게시글 목록"],
         "description": "핫딜 목록 불러오기",
@@ -392,7 +392,7 @@
         }
       }
     },
-    "/search/": {
+    "/search": {
       "get": {
         "tags": ["검색"],
         "description": "게시글 검색",

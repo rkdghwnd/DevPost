@@ -27,6 +27,7 @@ const PostCardHeader = styled.li`
 
   img {
     width: 25px;
+    height: 25px;
     border-radius: 50%;
     cursor: pointer;
   }

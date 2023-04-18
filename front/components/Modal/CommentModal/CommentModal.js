@@ -72,7 +72,7 @@ const CommentForm = styled.div`
   @media (min-width: 765px) {
     position: relative;
     width: 600px;
-    max-height: 800px;
+    max-height: 900px;
   }
 `;
 

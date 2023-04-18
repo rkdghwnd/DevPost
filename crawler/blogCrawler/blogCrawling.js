@@ -10,19 +10,19 @@ const fs = require("fs");
 
 const blogCrawling = async () => {
   try {
-    const jojolduPosts = await jojoldu();
-    const popeMachinePosts = await popeMachine();
-    const baakingDogPosts = await baakingDog();
-    const outsidersDevPosts = await outsidersDev();
-    const velopertPosts = await velopert();
+    // const jojolduPosts = await jojoldu();
+    // const popeMachinePosts = await popeMachine();
+    // const baakingDogPosts = await baakingDog();
+    // const outsidersDevPosts = await outsidersDev();
+    // const velopertPosts = await velopert();
     const velogPosts = await velog();
 
     const allPosts = [
-      ...jojolduPosts,
-      ...popeMachinePosts,
-      ...baakingDogPosts,
-      ...outsidersDevPosts,
-      ...velopertPosts,
+      // ...jojolduPosts,
+      // ...popeMachinePosts,
+      // ...baakingDogPosts,
+      // ...outsidersDevPosts,
+      // ...velopertPosts,
       ...velogPosts,
     ];
     allPosts.sort((a, b) => {

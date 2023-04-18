@@ -214,7 +214,6 @@ function* removeAccount(action) {
       type: REMOVE_ACCOUNT_SUCCESS,
       data: result.data,
     });
-    window.location.href = process.env.NEXT_PUBLIC_FRONT_END_DOMAIN;
   } catch (err) {
     yield put({
       type: REMOVE_ACCOUNT_FAILURE,

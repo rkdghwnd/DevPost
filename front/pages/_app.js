@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import propTypes from 'prop-types';
 import wrapper from '../store/configureStore';
 import { Normalize } from 'styled-normalize';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import InfoModal from '../components/Modal/InfoModal';
 import LogInModal from '../components/Modal/LogInModal/LogInModal';
 import MessageModal from '../components/Modal/MessageModal';
@@ -20,6 +20,13 @@ import ConfirmRemoveCommentModal from '../components/Modal/ConfirmRemoveCommentM
 import ConfirmRemovePostModal from '../components/Modal/ConfirmRemovePostModal';
 import ConfirmCancelPostModal from '../components/Modal/ConfirmCancelPostModal';
 import ConfirmRemoveAccountModal from '../components/Modal/ConfirmRemoveAccountModal';
+import {
+  HEADER_OPTION_CLOSE_REQUEST,
+  MY_PROFILE_OPTION_CLOSE_REQUEST,
+  MY_PROFILE_OPTION_TOGGLE_REQUEST,
+  POST_OPTION_CLOSE_REQUEST,
+  POST_OPTION_TOGGLE_REQUEST,
+} from '../reducers/option';
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -50,6 +57,7 @@ body {
 `;
 
 const DevPost = ({ Component }) => {
+  const dispatch = useDispatch();
   const {
     commentModalVisual,
     infoModalVisual,
@@ -80,6 +88,14 @@ const DevPost = ({ Component }) => {
       }
     }
   }, [status]);
+
+  useEffect(() => {
+    window.addEventListener('click', () => {
+      dispatch({ type: HEADER_OPTION_CLOSE_REQUEST });
+      dispatch({ type: POST_OPTION_CLOSE_REQUEST });
+      dispatch({ type: MY_PROFILE_OPTION_CLOSE_REQUEST });
+    });
+  }, []);
 
   return (
     <>

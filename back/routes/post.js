@@ -58,13 +58,16 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
       }
     }
 
-    const fullPost = await Post.findOne({
+    const newPost = await Post.findOne({
       where: { id: post.id },
       order: [
         [{ model: Comment }, "createdAt", "ASC"],
         [{ model: Comment }, { model: Nested_Comment }, "createdAt", "ASC"],
       ],
       include: [
+        {
+          model: User, // 게시글 작성자
+        },
         {
           model: Image,
         },
@@ -73,19 +76,12 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
           include: [
             {
               model: User,
-              attributes: ["id", "nickname"],
             },
             {
               model: Nested_Comment,
-              include: [
-                { model: User, attributes: ["id", "nickname", "profile_img"] },
-              ],
+              include: [{ model: User }],
             },
           ],
-        },
-        {
-          model: User, // 게시글 작성자
-          attributes: ["id", "nickname"],
         },
         {
           model: User, // 좋아요 누른 사람
@@ -96,7 +92,7 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
       ],
     });
 
-    res.status(201).json(fullPost);
+    res.status(201).json(newPost);
   } catch (error) {
     console.log(error);
     next(error);
@@ -217,6 +213,7 @@ router.patch("/", isLoggedIn, upload.none(), async (req, res, next) => {
         where: { id: req.body.postId, UserId: req.user.id },
       }
     );
+
     const post = await Post.findOne({
       where: { id: req.body.postId, UserId: req.user.id },
     });
@@ -227,20 +224,20 @@ router.patch("/", isLoggedIn, upload.none(), async (req, res, next) => {
 
     if (req.body.image) {
       if (Array.isArray(req.body.image)) {
-        // 이미지를 여러 개 올리면 image: [제로초.png, 부기초.png]
+        // 이미지를 여러 개 올리면 image: [image2.png, image2.png]
         // Image.create({}) 가 promise 객체이기 때문에 Promise.all 사용 가능
         const images = await Promise.all(
           req.body.image.map((image) => Image.create({ src: image }))
         );
         await post.addImages(images); // foreign key 설정
       } else {
-        // 이미지를 하나만 올리면 image: 제로초.png
+        // 이미지를 하나만 올리면 image: image1.png
         const image = await Image.create({ src: req.body.image });
         await post.addImages(image);
       }
     }
 
-    const fullPost = await Post.findOne({
+    const currentPost = await Post.findOne({
       where: { id: post.id },
       order: [
         [{ model: Comment }, "createdAt", "ASC"],
@@ -248,26 +245,22 @@ router.patch("/", isLoggedIn, upload.none(), async (req, res, next) => {
       ],
       include: [
         {
+          model: User, // 게시글 작성자
+        },
+        {
           model: Image,
         },
         {
-          model: Comment, // 댓글 작성자
+          model: Comment,
           include: [
             {
-              model: User,
-              attributes: ["id", "nickname"],
+              model: User, // 댓글 작성자
             },
             {
               model: Nested_Comment,
-              include: [
-                { model: User, attributes: ["id", "nickname", "profile_img"] },
-              ],
+              include: [{ model: User }],
             },
           ],
-        },
-        {
-          model: User, // 게시글 작성자
-          attributes: ["id", "nickname"],
         },
         {
           model: User, // 좋아요 누른 사람
@@ -278,7 +271,7 @@ router.patch("/", isLoggedIn, upload.none(), async (req, res, next) => {
       ],
     });
 
-    res.status(201).json(fullPost);
+    res.status(201).json(currentPost);
   } catch (error) {
     console.log(error);
     next(error);

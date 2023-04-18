@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOG_OUT_REQUEST } from '../../reducers/user';
 import Link from 'next/link';
-import { HEADER_OPTION_TOGGLE_REQUEST } from '../../reducers/option';
+import {
+  HEADER_OPTION_CLOSE_REQUEST,
+  HEADER_OPTION_TOGGLE_REQUEST,
+} from '../../reducers/option';
 
 const MyProfileOptionForm = styled.div`
   @keyframes slideDown {
@@ -19,6 +22,7 @@ const MyProfileOptionForm = styled.div`
   animation-duration: 0.3s;
   animation-delay: 0s;
 
+  display: ${props => (props.headerOptionVisible ? 'block' : 'none')};
   width: 150px;
   height: 100px;
   box-shadow: -2px 2px 8px hsl(0deg 0% 0% / 0.38);
@@ -55,6 +59,8 @@ const HeaderOption = () => {
 
   return (
     <MyProfileOptionForm
+      tabIndex={1}
+      autoFocus
       headerOptionVisible={headerOptionVisible}
       onClick={onClickOption}
     >

@@ -89,6 +89,7 @@ router.post("/local/auth", isNotLoggedIn, (req, res, next) => {
         console.error(loginErr);
         return next(loginErr);
       }
+
       const fullUserWithoutPassword = await User.findOne({
         where: { id: user.id }, // 조건
         // 가져올 속성
@@ -459,7 +460,12 @@ router.delete("/me", async (req, res, next) => {
   // DELETE `/user/me
   try {
     if (req.user) {
-      await User.destroy({ where: { id: req.user.id } });
+      await User.update(
+        {
+          withdraw: true,
+        },
+        { where: { id: req.user.id } }
+      );
       req.logout(() => {
         req.session.destroy();
       });

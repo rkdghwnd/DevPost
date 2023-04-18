@@ -655,13 +655,12 @@ const reducer = (state = initialState, action) => {
         break;
       case UPDATE_POST_SUCCESS:
         draft.imagePaths = []; // 게시글 올린뒤 이미지업로드 부분 초기화
-        draft.freePosts = draft.freePosts.map(post =>
-          post.id === action.data.id ? action.data : post,
-        );
+        // draft.freePosts = draft.freePosts.map(post =>
+        //   post.id === action.data.id ? action.data : post,
+        // );
         draft.currentPost = action.data;
         draft.updatePostLoading = false;
         draft.updatePostDone = true;
-        window.location.reload();
         break;
       case UPDATE_POST_FAILURE:
         draft.updatePostLoading = false;
@@ -727,7 +726,7 @@ const reducer = (state = initialState, action) => {
         draft.addPostLoading = false;
         draft.addPostDone = true;
         draft.imagePaths = []; // 게시글 올린뒤 이미지업로드 부분 초기화
-        window.location.href = `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/free`;
+        window.location.href = `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/post/${action.data.id}`;
         break;
       case ADD_POST_FAILURE:
         draft.addPostLoading = false;

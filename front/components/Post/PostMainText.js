@@ -34,11 +34,6 @@ const PostBody = styled.article`
   & > div:first-child {
     white-space: pre-wrap;
   }
-  & > textarea {
-    all: unset;
-    width: 100%;
-    overflow: hidden;
-  }
 `;
 
 const ViewsCommentsLiked = styled.div`

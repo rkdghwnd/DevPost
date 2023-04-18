@@ -19,7 +19,13 @@ module.exports = () => {
             where: { email },
           });
           if (!user) {
-            done(null, false, { message: "존재하지 않는 사용자입니다." });
+            return done(null, false, {
+              message: "존재하지 않는 사용자입니다.",
+            });
+          }
+          // 탈퇴 여부
+          if (user.withdraw) {
+            return done(null, false, { message: "회원 탈퇴한 사용자입니다." });
           }
           // 비밀번호 일치 여부
           const result = await bcrypt.compare(password, user.password);

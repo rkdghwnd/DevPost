@@ -55,7 +55,7 @@ const LogInForm = styled.form`
     margin: 0 50px 0 auto;
   }
 
-  @keyframes slideUp {
+  @keyframes logInSlideUp {
     from {
       transform: translateY(1000px);
     }
@@ -63,7 +63,7 @@ const LogInForm = styled.form`
       transform: translateY(0);
     }
   }
-  @keyframes slideDown {
+  @keyframes logInSlideDown {
     from {
       transform: translateY(0);
     }
@@ -73,7 +73,7 @@ const LogInForm = styled.form`
   }
 
   animation-name: ${props =>
-    props.logInModalSlideUp ? 'slideUp' : 'slideDown'};
+    props.logInModalSlideUp ? 'logInSlideUp' : 'logInSlideDown'};
   animation-duration: 0.3s;
   animation-delay: 0s;
   animation-timing-function: ease-in-out;
