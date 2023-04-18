@@ -4,7 +4,6 @@ const { User, Post, Comment, Nested_Comment, Image } = require("../models");
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 const router = express.Router(); // express 라우터 기능 가져오기
 const passport = require("passport");
-const db = require("../models");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
@@ -45,6 +44,7 @@ router.get("/me", async (req, res, next) => {
         // 가져올 속성
         attributes: { exclude: ["password", "createdAt", "updatedAt"] }, // password 제외하고 가져오기
         include: [
+          { model: Post, as: "Liked", attributes: ["id"] },
           { model: Post, attributes: ["id"] },
           {
             model: Comment,
@@ -89,6 +89,7 @@ router.post("/local/auth", isNotLoggedIn, (req, res, next) => {
         console.error(loginErr);
         return next(loginErr);
       }
+
       const fullUserWithoutPassword = await User.findOne({
         where: { id: user.id }, // 조건
         // 가져올 속성
@@ -184,7 +185,7 @@ router.post("/info", isNotLoggedIn, async (req, res, next) => {
       provider: "local",
     });
 
-    res.status(200).send("signup success");
+    res.status(200).send("sign up success");
   } catch (error) {
     console.error(error);
     next(error); // 상태코드 500
@@ -285,7 +286,6 @@ router.get("/bookmark", isLoggedIn, async (req, res, next) => {
       });
 
       const bookmark = await me.getBookmarked({
-        where: { UserId: req.user.id },
         order: [["createdAt", "DESC"]],
         include: [
           { model: User, attributes: ["id", "nickname", "profile_img"] },
@@ -317,15 +317,16 @@ router.get("/bookmark", isLoggedIn, async (req, res, next) => {
 });
 
 // 회원정보 수정
-router.patch("/", upload.none(), isLoggedIn, async (req, res, next) => {
-  // PATCH /user
+router.patch("/me", upload.none(), isLoggedIn, async (req, res, next) => {
+  // PATCH /user/me
   try {
     if (req.user) {
+      const hashedPassword = await bcrypt.hash(req.body.password, 13);
       await User.update(
         {
           nickname: req.body.nickname,
           introduce: req.body.introduce,
-          password: req.body.password,
+          password: hashedPassword,
           profile_img: req.body.image,
         },
         {
@@ -455,11 +456,16 @@ router.post("/password/validate", async (req, res, next) => {
 });
 
 // 회원 탈퇴
-router.delete("/", async (req, res, next) => {
-  // DELETE `/user
+router.delete("/me", async (req, res, next) => {
+  // DELETE `/user/me
   try {
     if (req.user) {
-      await User.destroy({ where: { id: req.user.id } });
+      await User.update(
+        {
+          withdraw: true,
+        },
+        { where: { id: req.user.id } }
+      );
       req.logout(() => {
         req.session.destroy();
       });

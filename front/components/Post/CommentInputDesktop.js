@@ -104,6 +104,7 @@ const CommentInputDesktop = ({ info }) => {
         },
       });
       setCommentText('');
+      textarea.current.style.height = 'auto'; //height 초기화
     } else if (info.purpose === 'update') {
       dispatch({
         type: UPDATE_COMMENT_REQUEST,
@@ -152,7 +153,7 @@ const CommentInputDesktop = ({ info }) => {
         <textarea
           placeholder="댓글을 입력하세요"
           ref={textarea}
-          rows={1}
+          rows={2}
           value={commentText}
           onChange={onChangeTextarea}
         ></textarea>

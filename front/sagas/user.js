@@ -19,7 +19,6 @@ import {
   UPDATE_MY_INFO_FAILURE,
   UPDATE_MY_INFO_REQUEST,
   UPDATE_MY_INFO_SUCCESS,
-  VALIDATE_PASSWORD_REQUEST,
   VERIFY_PASSWORD_FAILURE,
   VERIFY_PASSWORD_REQUEST,
   VERIFY_PASSWORD_SUCCESS,
@@ -28,7 +27,6 @@ import {
   CONFIRM_REMOVE_ACCOUNT_MODAL_OPEN,
   LOG_IN_MODAL_CLOSE_REQUEST,
   MESSAGE_MODAL_TOGGLE_REQUEST,
-  REMOVE_ACCOUNT_MODAL_CLOSE,
   VERIFY_PASSWORD_MODAL_CLOSE,
 } from '../reducers/modal';
 import { HEADER_OPTION_TOGGLE_REQUEST } from '../reducers/option';
@@ -141,7 +139,10 @@ function* loadMyInfo() {
 }
 
 function updateMyInfoAPI(data) {
-  return axios.patch(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user`, data);
+  return axios.patch(
+    `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/me`,
+    data,
+  );
 }
 
 function* updateMyInfo(action) {
@@ -200,7 +201,10 @@ function* verifyPassword(action) {
 }
 
 function removeAccountAPI(data) {
-  return axios.delete(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user`, data);
+  return axios.delete(
+    `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/me`,
+    data,
+  );
 }
 
 function* removeAccount(action) {
@@ -210,7 +214,6 @@ function* removeAccount(action) {
       type: REMOVE_ACCOUNT_SUCCESS,
       data: result.data,
     });
-    window.location.href = process.env.NEXT_PUBLIC_FRONT_END_DOMAIN;
   } catch (err) {
     yield put({
       type: REMOVE_ACCOUNT_FAILURE,

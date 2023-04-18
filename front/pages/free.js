@@ -21,7 +21,7 @@ const free = () => {
   return (
     <>
       <Head>
-        <title>자유 게시판 - PostMoa</title>
+        <title>자유 게시판 - DevPost</title>
       </Head>
       <AppLayout>
         <MainContentsWrapper>

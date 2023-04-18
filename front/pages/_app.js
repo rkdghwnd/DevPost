@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import propTypes from 'prop-types';
 import wrapper from '../store/configureStore';
 import { Normalize } from 'styled-normalize';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import InfoModal from '../components/Modal/InfoModal';
 import LogInModal from '../components/Modal/LogInModal/LogInModal';
 import MessageModal from '../components/Modal/MessageModal';
@@ -20,6 +20,13 @@ import ConfirmRemoveCommentModal from '../components/Modal/ConfirmRemoveCommentM
 import ConfirmRemovePostModal from '../components/Modal/ConfirmRemovePostModal';
 import ConfirmCancelPostModal from '../components/Modal/ConfirmCancelPostModal';
 import ConfirmRemoveAccountModal from '../components/Modal/ConfirmRemoveAccountModal';
+import {
+  HEADER_OPTION_CLOSE_REQUEST,
+  MY_PROFILE_OPTION_CLOSE_REQUEST,
+  MY_PROFILE_OPTION_TOGGLE_REQUEST,
+  POST_OPTION_CLOSE_REQUEST,
+  POST_OPTION_TOGGLE_REQUEST,
+} from '../reducers/option';
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -49,7 +56,8 @@ body {
 
 `;
 
-const Postmoa = ({ Component }) => {
+const DevPost = ({ Component }) => {
+  const dispatch = useDispatch();
   const {
     commentModalVisual,
     infoModalVisual,
@@ -76,17 +84,25 @@ const Postmoa = ({ Component }) => {
       // 중복 initialization 방지
       if (!window.Kakao.isInitialized()) {
         // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
-        window.Kakao.init('492f590bda08587be4a8695686fb6937');
+        window.Kakao.init(process.env.NEXT_PUBLIC_JAVASCRIPT_KEY);
       }
     }
   }, [status]);
+
+  useEffect(() => {
+    window.addEventListener('click', () => {
+      dispatch({ type: HEADER_OPTION_CLOSE_REQUEST });
+      dispatch({ type: POST_OPTION_CLOSE_REQUEST });
+      dispatch({ type: MY_PROFILE_OPTION_CLOSE_REQUEST });
+    });
+  }, []);
 
   return (
     <>
       <Head>
         <meta charSet="utf-8"></meta>
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="PostMoa" />
+        <meta property="og:site_name" content="DevPost" />
         <meta property="og:title" content="collect dev articles" />
         <meta
           property="og:description"
@@ -101,7 +117,7 @@ const Postmoa = ({ Component }) => {
           content={process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}
         />
         <meta property="twitter:card" content="summary" />
-        <meta property="twitter:site" content="PostMoa" />
+        <meta property="twitter:site" content="DevPost" />
         <meta property="twitter:title" content="collect dev articles" />
         <meta
           property="twitter:description"
@@ -141,8 +157,8 @@ const Postmoa = ({ Component }) => {
   );
 };
 
-Postmoa.propTypes = {
+DevPost.propTypes = {
   Component: propTypes.elementType.isRequired,
 };
 
-export default wrapper.withRedux(Postmoa);
+export default wrapper.withRedux(DevPost);

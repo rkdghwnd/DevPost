@@ -71,6 +71,7 @@ const UserProfile = styled.article`
   & > img {
     width: 100px;
     height: 100px;
+    border-radius: 5px;
   }
 
   & > h4 {

@@ -20,7 +20,7 @@ const news = () => {
   return (
     <>
       <Head>
-        <title>뉴스 - PostMoa</title>
+        <title>뉴스 - DevPost</title>
       </Head>
       <AppLayout>
         <MainContentsWrapper>

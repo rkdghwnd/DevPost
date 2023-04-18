@@ -122,7 +122,7 @@ const search = () => {
   return (
     <>
       <Head>
-        <title>검색 - PostMoa</title>
+        <title>검색 - DevPost</title>
       </Head>
       <AppLayout>
         <SearchWrapper>

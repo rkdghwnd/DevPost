@@ -182,7 +182,7 @@ const edit = () => {
   return (
     <>
       <Head>
-        <title>내 정보 수정 - PostMoa</title>
+        <title>내 정보 수정 - DevPost</title>
       </Head>
       <AppLayout>
         {me && (

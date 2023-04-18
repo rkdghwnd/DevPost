@@ -104,6 +104,6 @@ dist
 .tern-port
 
 post-moa.pem
-
-
+crawler/images
+back/uploads
 /front/build

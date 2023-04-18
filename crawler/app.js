@@ -7,7 +7,6 @@ const newsRouter = require("./routes/news");
 const hotdealRouter = require("./routes/hotdeal");
 const searchRouter = require("./routes/search");
 
-const axios = require("axios");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
@@ -22,6 +21,9 @@ const helmet = require("helmet");
 const blogCrawling = require("./blogCrawler/blogCrawling");
 const newsCrawling = require("./newsCrawler/newsCrawling");
 const hotdealCrawling = require("./hotdealCrawler/hotdealCrawling");
+
+const swaggerFile = require("./swagger-output.json");
+const swaggerUi = require("swagger-ui-express");
 
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
@@ -78,6 +80,13 @@ app.use("/hotdeal", hotdealRouter);
 app.use("/search", searchRouter);
 
 app.use("/", express.static(path.join(__dirname, "images")));
+
+//Swagger
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerFile, { explorer: true })
+);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

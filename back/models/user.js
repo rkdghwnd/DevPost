@@ -31,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(200),
         defaultValue: "basic-profile-image.png",
       },
+      withdraw: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       chaset: "utf8",

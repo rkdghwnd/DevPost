@@ -55,6 +55,7 @@ const HeaderInner = styled.div`
 const ProfileImage = styled.img`
   width: 40px;
   height: 40px;
+  border-radius: 50%;
   cursor: pointer;
 `;
 
@@ -100,7 +101,7 @@ const DesktopHeader = () => {
     <Header>
       <HeaderInner>
         <Link href="/">
-          <a>POST MOA</a>
+          <a>DEVPOST</a>
         </Link>
         <SearchInput />
         {me === null && <button onClick={onClickLogInModal}>로그인</button>}
@@ -108,9 +109,10 @@ const DesktopHeader = () => {
           <ProfileWrapper>
             <ProfileImage
               src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${me.profile_img}`}
+              tabIndex={1}
               onClick={onClickOption}
             />
-            {headerOptionVisible ? <HeaderOption /> : null}
+            {headerOptionVisible && <HeaderOption />}
           </ProfileWrapper>
         )}
         {me && <button onClick={onClickNewPostModal}>글쓰기</button>}

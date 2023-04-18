@@ -18,7 +18,6 @@ import wrapper from '../store/configureStore';
 import axios from 'axios';
 import { END } from 'redux-saga';
 import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
-import _ from 'underscore';
 const Spinner = styled(Spin)`
   text-align: center;
   color: #46a6ff;
@@ -64,7 +63,7 @@ const hotdeal = () => {
   return (
     <>
       <Head>
-        <title>핫딜 - PostMoa</title>
+        <title>핫딜 - DevPost</title>
       </Head>
       <AppLayout>
         <MainContentsWrapper>

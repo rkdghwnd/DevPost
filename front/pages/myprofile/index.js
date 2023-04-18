@@ -187,7 +187,7 @@ const myprofile = () => {
   return (
     <>
       <Head>
-        <title>내 정보 - PostMoa</title>
+        <title>내 정보 - DevPost</title>
       </Head>
       <AppLayout>
         <MyProfileForm>

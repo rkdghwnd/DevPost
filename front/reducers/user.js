@@ -75,6 +75,7 @@ const reducer = (state = initialState, action) => {
       case REMOVE_ACCOUNT_SUCCESS:
         draft.removeAccountLoading = false;
         draft.removeAccountDone = true;
+        window.location.href = process.env.NEXT_PUBLIC_FRONT_END_DOMAIN;
         break;
       case REMOVE_ACCOUNT_FAILURE:
         draft.removeAccountLoading = false;

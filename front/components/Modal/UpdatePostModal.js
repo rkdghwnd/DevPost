@@ -4,7 +4,7 @@ import useInput from '../../hooks/input';
 import { AiOutlineClose, AiOutlineCheck } from 'react-icons/ai';
 import { Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { CANCEL_POST_MODAL_OPEN } from '../../reducers/modal';
+import { CONFIRM_CANCEL_POST_MODAL_OPEN } from '../../reducers/modal';
 import { LOAD_IMAGE, UPDATE_POST_REQUEST } from '../../reducers/post';
 import UploadImageForm from './NewPostModal/UploadImageForm';
 
@@ -113,14 +113,14 @@ const UpdatePostModal = () => {
 
   useEffect(() => {
     dispatch({ type: LOAD_IMAGE, images: currentPost.Images });
-  }, []);
+  }, [currentPost.Images]);
 
   const onStopEventBubbling = useCallback(e => {
     e.stopPropagation();
   }, []);
 
   const onCancelUpdatePostModal = useCallback(() => {
-    dispatch({ type: CANCEL_POST_MODAL_OPEN });
+    dispatch({ type: CONFIRM_CANCEL_POST_MODAL_OPEN });
   }, []);
 
   const onUpdatePost = useCallback(() => {

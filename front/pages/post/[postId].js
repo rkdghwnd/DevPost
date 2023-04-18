@@ -24,6 +24,8 @@ import wrapper from '../../store/configureStore';
 import { LOAD_MY_INFO_REQUEST } from '../../reducers/user';
 import Custom404 from '../404';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import TopScroll from '../../components/TopScroll';
 
 const PostForm = styled.section`
   padding: 20px;
@@ -81,15 +83,12 @@ const LogInBox = styled.div`
 `;
 
 const post = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { postOptionVisible } = useSelector(state => state.option);
-  const {
-    currentPost,
-    loadPostLoading,
-    updatePostDone,
-    removePostDone,
-    loadPostError,
-  } = useSelector(state => state.post);
+  const { currentPost, loadPostLoading, loadPostError } = useSelector(
+    state => state.post,
+  );
   const { me } = useSelector(state => state.user);
 
   const isMyPost = me?.id === currentPost?.UserId;
@@ -106,11 +105,10 @@ const post = () => {
     onClose: () => {},
   };
 
-  const onClickPostOpition = useCallback(() => {
-    if (isMyPost) {
-      dispatch({ type: POST_OPTION_TOGGLE_REQUEST });
-    }
-  }, [isMyPost]);
+  const onClickPostOption = useCallback(e => {
+    dispatch({ type: POST_OPTION_TOGGLE_REQUEST });
+    e.stopPropagation();
+  }, []);
 
   const onClickLogInBox = useCallback(() => {
     dispatch({ type: LOG_IN_MODAL_OPEN });
@@ -136,28 +134,28 @@ const post = () => {
   }, [me, isAleredayBookmark, currentPost]);
 
   const onClickBack = useCallback(() => {
-    window.history.back();
-  }, []);
+    router.back();
+  }, [router]);
 
   if (loadPostError) {
     return <Custom404 />;
   }
 
-  if (loadPostLoading || updatePostDone || removePostDone || !currentPost) {
+  if (loadPostLoading || !currentPost) {
     return <PostLoading />;
   }
 
   return (
     <>
       <Head>
-        <title>{currentPost.title} - PostMoa</title>
+        <title>{currentPost.title} - DevPost</title>
       </Head>
       <DesktopHeader />
       <PostForm>
         <PostMenu>
           <AiOutlineArrowLeft onClick={onClickBack} />
           <BsBookmark onClick={onClickBookmarkButton} style={bookmarkColor} />
-          {isMyPost ? <BsThreeDots onClick={onClickPostOpition} /> : null}
+          {isMyPost && <BsThreeDots onClick={onClickPostOption} />}
         </PostMenu>
         {postOptionVisible ? <PostOption /> : null}
         <PostMainText />
@@ -178,6 +176,7 @@ const post = () => {
           <LogInBox onClick={onClickLogInBox}>로그인이 필요합니다.</LogInBox>
         )}
       </PostForm>
+      <TopScroll />
     </>
   );
 };

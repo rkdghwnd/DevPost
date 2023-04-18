@@ -74,7 +74,11 @@ import {
   UPLOAD_IMAGES_REQUEST,
   UPLOAD_IMAGES_SUCCESS,
 } from '../reducers/post';
-import { MESSAGE_MODAL_TOGGLE_REQUEST } from '../reducers/modal';
+import {
+  MESSAGE_MODAL_TOGGLE_REQUEST,
+  NEW_POST_MODAL_CLOSE_REQUEST,
+} from '../reducers/modal';
+import { UPDATE_POST_MODAL_CLOSE_REQUEST } from '../reducers/modal';
 
 function addPostAPI(data) {
   return axios.post(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post`, data);
@@ -86,6 +90,9 @@ function* addPost(action) {
     yield put({
       type: ADD_POST_SUCCESS,
       data: result.data,
+    });
+    yield put({
+      type: NEW_POST_MODAL_CLOSE_REQUEST,
     });
   } catch (err) {
     yield put({
@@ -215,6 +222,9 @@ function* updatePost(action) {
     yield put({
       type: UPDATE_POST_SUCCESS,
       data: result.data,
+    });
+    yield put({
+      type: UPDATE_POST_MODAL_CLOSE_REQUEST,
     });
   } catch (err) {
     console.error(err);

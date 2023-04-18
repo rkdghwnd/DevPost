@@ -82,10 +82,10 @@ const InfoModal = () => {
         infoModalSlideUp={infoModalSlideUp}
         close={close}
       >
-        <h4>Copyright 2023 Postmoa.com All Right Reserved.</h4>
+        <h4>Copyright 2023 devpost.site All Right Reserved.</h4>
         <div>
           <a
-            href="https://github.com/rkdghwnd"
+            href="https://github.com/rkdghwnd/DevPost"
             target="_blank"
             rel="noreferrer noopener"
           >

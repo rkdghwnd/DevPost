@@ -5,7 +5,7 @@ import Head from 'next/head';
 export default function Custom500() {
   <>
     <Head>
-      <title>Postmoa - Page Not Found</title>
+      <title>DevPost - Page Not Found</title>
     </Head>
     <Custom404 />;
   </>;

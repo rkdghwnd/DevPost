@@ -15,6 +15,9 @@ const morgan = require("morgan");
 const hpp = require("hpp");
 const helmet = require("helmet");
 
+const swaggerFile = require("./swagger-output.json");
+const swaggerUi = require("swagger-ui-express");
+
 const app = express();
 
 if (process.env.NODE_ENV === "production") {
@@ -50,11 +53,11 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    proxy: process.env.NODE_ENV === "production",
+    // proxy: process.env.NODE_ENV === "production",
     cookie: {
       httpOnly: true,
-      secure: true,
-      domain: process.env.NODE_ENV === "production" && ".postmoa.shop",
+      // secure: true,
+      // domain: process.env.NODE_ENV === "production" && ".devpost.site",
     },
   })
 );
@@ -65,6 +68,19 @@ app.use(passport.session());
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/posts", postsRouter);
+
+//Swagger
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerFile, { explorer: true })
+);
+
+app.use((req, res, next) => {
+  const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
+  error.status = 404;
+  next(error);
+});
 
 app.listen(process.env.PORT || 4010, () => {
   console.log(`${process.env.PORT} 서버 실행 중`);

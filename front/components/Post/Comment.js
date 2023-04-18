@@ -24,7 +24,9 @@ const CommentForm = styled.article`
   }
 `;
 
-const CommentBody = styled.p`
+const CommentBody = styled.div`
+  width: 100%;
+  white-space: pre-wrap;
   margin: 5px 0;
   line-height: 20px;
 `;
