@@ -1,11 +1,14 @@
 const express = require("express");
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
-
 const { User, Comment, Post, Image, Nested_Comment } = require("../models");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const multerS3 = require("multer-s3");
+const AWS = require("aws-sdk");
+const dotenv = require("dotenv");
+dotenv.config();
 
 try {
   fs.accessSync("uploads");
@@ -14,23 +17,22 @@ try {
   fs.mkdirSync("uploads"); // 이미지 저장할 폴더가 만들어져 있지 않은 경우 폴더생성
 }
 
+AWS.config.update({
+  accessKeyId: Process.env.S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  region: "us-east-1",
+});
+
 const upload = multer({
   // storage : 파일을 저장할 장소 설정
-  // diskStorage : 하드 디스크에 저장
-  storage: multer.diskStorage({
-    destination(req, file, done) {
-      done(null, "uploads");
-    },
-    filename(req, file, done) {
-      // 제로초.png
-      const ext = path.extname(file.originalname); // 확장자 추출(.png)
-      const basename = path.basename(file.originalname, ext); // 제로초
-      done(null, basename + "_" + new Date().getTime() + ext); // 제로초125345235.png
-      // getTime은 파일을 덮어씌우는것을 방지하기 위해 설정한 것일 뿐임
+  storage: multerS3({
+    s3: new AWS.S3(), // S3에 접근하는 권한을 허용
+    bucket: "devpost-s3",
+    key(req, file, cb) {
+      cb(null, `original/${Data.now()}_${path.basename(file.originalname)}`); // 저장되는 경로와 이름 설정
     },
   }),
-  // 20MB로 용량 제한(제한 안하면 해커공격에 이용될 수 있음)
-  limits: { fileSize: 20 * 1024 * 1024 },
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB로 용량 제한
 });
 
 // upload.none() -> 이미지가 없고 다른것(텍스트 등)이 있다
@@ -105,8 +107,7 @@ router.post(
   upload.array("image"), // 이미지를 저장소에 업로드한다.
   async (req, res, next) => {
     // POST /post/images
-    // console.log(req.files); // 업로드한 이미지에 대한 정보
-    res.json(req.files.map((y) => y.filename));
+    res.json(req.files.map((y) => y.location)); // 디스크 스토리지는 filename, S3는 location
   }
 );
 
