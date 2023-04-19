@@ -53,11 +53,11 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    // proxy: process.env.NODE_ENV === "production",
+    proxy: process.env.NODE_ENV === "production",
     cookie: {
       httpOnly: true,
-      // secure: true,
-      // domain: process.env.NODE_ENV === "production" && ".devpost.site",
+      secure: true,
+      domain: process.env.NODE_ENV === "production" && ".devpost.site",
     },
   })
 );

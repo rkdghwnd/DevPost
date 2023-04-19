@@ -90,13 +90,6 @@ const signup = () => {
   const submitButton = useRef();
   const router = useRouter();
 
-  // 로그인 된 상태에서는 signup 페이지 접근 x
-  useEffect(() => {
-    if (me && me.id) {
-      Router.replace('/');
-    }
-  }, [me && me.id]);
-
   useEffect(() => {
     if (signUpLoading) {
       submitButton.disabled = true;

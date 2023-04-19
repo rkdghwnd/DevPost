@@ -18,6 +18,7 @@ const SearchInputWrapper = styled.div`
   & > :first-child {
     margin: 0 10px;
     cursor: pointer;
+    z-index: 999;
   }
 
   input {
@@ -31,7 +32,7 @@ const SearchInputWrapper = styled.div`
 const SearchInput = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { keyword, onChangeKeyword } = useInput('');
+  const [keyword, onChangeKeyword] = useInput('');
 
   const onSearch = useCallback(
     e => {
@@ -44,6 +45,7 @@ const SearchInput = () => {
   );
 
   const onClickSearch = useCallback(() => {
+    console.log(keyword);
     if (keyword) {
       dispatch({
         type: SEARCH_POSTS_REQUEST,

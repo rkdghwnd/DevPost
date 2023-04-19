@@ -25,7 +25,6 @@ const ModalBackdrop = styled.div`
 const InfoForm = styled.div`
   width: 400px;
   height: 650px;
-  font-weight: 700;
   text-align: left;
   border-radius: 5px;
   background-color: white;
