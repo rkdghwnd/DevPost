@@ -32,7 +32,7 @@ const news = () => {
               return <NewsCard key={shortId.generate()} post={post} />;
             })
           )}
-          <Paginations total={newsPosts[1]} />
+          <Paginations total={newsPosts[1] || 0} />
         </MainContentsWrapper>
       </AppLayout>
     </>

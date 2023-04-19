@@ -32,7 +32,7 @@ const home = () => {
               return <BlogCard key={shortId.generate()} post={post} />;
             })
           )}
-          <Paginations total={blogPosts[1]} />
+          <Paginations total={blogPosts[1] || 0} />
         </MainContentsWrapper>
       </AppLayout>
     </>

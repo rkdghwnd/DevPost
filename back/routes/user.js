@@ -165,7 +165,7 @@ router.delete("/auth", isLoggedIn, (req, res, next) => {
 });
 
 // 회원가입
-router.post("/info", isNotLoggedIn, async (req, res, next) => {
+router.post("/info", async (req, res, next) => {
   // POST /user/info
   const exUser = await User.findOne({
     where: {
