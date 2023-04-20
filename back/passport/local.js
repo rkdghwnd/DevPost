@@ -12,7 +12,6 @@ module.exports = () => {
         passwordField: "password",
       },
       async (email, password, done) => {
-        // 항상 await을 활용할때는 try catch로 감싸는것이 좋다.
         try {
           // 존재하는 사용자인지 확인
           const user = await User.findOne({
