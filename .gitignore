@@ -103,8 +103,8 @@ dist
 # TernJS port file
 .tern-port
 
-rootkey.csv
 post-moa.pem
 crawler/images
 back/uploads
 /front/build
+rootkey.csv
