@@ -12,25 +12,21 @@ try {
   fs.accessSync("uploads");
 } catch (error) {
   console.log("uploads 폴더가 없으므로 생성합니다.");
-  fs.mkdirSync("uploads"); // 이미지 저장할 폴더가 만들어져 있지 않은 경우 폴더생성
+  fs.mkdirSync("uploads");
 }
 
 const upload = multer({
-  // storage : 파일을 저장할 장소 설정
-  // diskStorage : 하드 디스크에 저장
   storage: multer.diskStorage({
     destination(req, file, done) {
       done(null, "uploads");
     },
     filename(req, file, done) {
-      // 제로초.png
       const ext = path.extname(file.originalname); // 확장자 추출(.png)
-      const basename = path.basename(file.originalname, ext); // 제로초
-      done(null, basename + "_" + new Date().getTime() + ext); // 제로초125345235.png
-      // getTime은 파일을 덮어씌우는것을 방지하기 위해 설정한 것일 뿐임
+      const basename = path.basename(file.originalname, ext);
+      done(null, basename + "_" + new Date().getTime() + ext);
     },
   }),
-  // 20MB로 용량 제한(제한 안하면 해커공격에 이용될 수 있음)
+  // 20MB로 용량 제한
   limits: { fileSize: 20 * 1024 * 1024 },
 });
 
@@ -40,8 +36,8 @@ router.get("/me", async (req, res, next) => {
   try {
     if (req.user) {
       const fullUserWithoutPassword = await User.findOne({
-        where: { id: req.user.id }, // 조건
-        // 가져올 속성
+        where: { id: req.user.id },
+
         attributes: { exclude: ["password", "createdAt", "updatedAt"] }, // password 제외하고 가져오기
         include: [
           { model: Post, as: "Liked", attributes: ["id"] },
@@ -91,8 +87,8 @@ router.post("/local/auth", isNotLoggedIn, (req, res, next) => {
       }
 
       const fullUserWithoutPassword = await User.findOne({
-        where: { id: user.id }, // 조건
-        // 가져올 속성
+        where: { id: user.id },
+
         attributes: { exclude: ["password", "createdAt", "updatedAt"] }, // password 제외하고 가져오기
         include: [
           { model: Post, attributes: ["id"] },
@@ -104,12 +100,7 @@ router.post("/local/auth", isNotLoggedIn, (req, res, next) => {
 
       return res.status(201).json(fullUserWithoutPassword);
     });
-  })(req, res, next); // 미들웨어 확장
-  // passport.authenticate()는 미들웨어를 리턴한다
-  // 내부 콜백함수를 실행하려면 미들웨어를 호출해야하기 때문에
-  // passport.authenticate()() 형태로 호출을 해야하고
-  // req, res, next를 사용하기 위해서 인자로 전달해준다.
-  // -> 미들웨어 안에서 미들웨어를 사용하는 형태로 '미들웨어 확장'이라 부른다.
+  })(req, res, next);
 });
 
 // 카카오 로그인
@@ -335,8 +326,8 @@ router.patch("/me", upload.none(), isLoggedIn, async (req, res, next) => {
       );
 
       const fullUserWithoutPassword = await User.findOne({
-        where: { id: req.user.id }, // 조건
-        // 가져올 속성
+        where: { id: req.user.id },
+
         attributes: { exclude: ["password", "createdAt", "updatedAt"] }, // password 제외하고 가져오기
         include: [
           { model: Post, attributes: ["id"] },
@@ -366,8 +357,8 @@ router.get("/you", async (req, res, next) => {
   // GET /user/you
   try {
     const yourInfo = await User.findOne({
-      where: { id: parseInt(req.query.userId) }, // 조건
-      // 가져올 속성
+      where: { id: parseInt(req.query.userId) },
+
       attributes: { exclude: ["password", "createdAt", "updatedAt"] },
       order: [[Post, "createdAt", "DESC"]],
       include: [
@@ -399,12 +390,12 @@ router.get("/you", async (req, res, next) => {
               ],
             },
             {
-              model: User, // 좋아요 누른 사람
+              model: User,
               as: "Likers",
               attributes: ["id"],
             },
             {
-              model: User, // 북마크
+              model: User,
               as: "Bookmarkers",
               attributes: ["id"],
             },
