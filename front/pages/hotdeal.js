@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
-import NavBar from '../components/NavBar';
-import HotDealCard from '../components/Card/HotDealCard';
-import MainContentsWrapper from '../components/MainContentsWrapper';
-import AppLayout from '../components/AppLayout/AppLayout';
+import NavBar from '../components/Common/NavBar';
+import HotDealCard from '../components/HotDeal/HotDealCard';
+import MainContentsWrapper from '../components/Common/MainContentsWrapper';
+import AppLayout from '../components/Common/AppLayout/AppLayout';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
 import { List } from 'react-virtualized';
@@ -13,11 +13,13 @@ import {
 import styled from 'styled-components';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
-import TopScroll from '../components/TopScroll';
+import TopScroll from '../components/HotDeal/TopScroll';
 import wrapper from '../store/configureStore';
 import axios from 'axios';
 import { END } from 'redux-saga';
 import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
+import shortId from 'shortid';
+
 const Spinner = styled(Spin)`
   text-align: center;
   color: #46a6ff;
@@ -55,7 +57,7 @@ const hotdeal = () => {
   const rowRenderer = useCallback(
     ({ index, key }) => {
       const post = hotDealPosts[index];
-      return <HotDealCard key={key} post={post} />;
+      return <HotDealCard key={shortId.generate()} post={post} />;
     },
     [hotDealPosts],
   );
@@ -80,6 +82,7 @@ const hotdeal = () => {
             <Spinner indicator={<LoadingOutlined spin />}></Spinner>
           )}
         </MainContentsWrapper>
+
         <TopScroll />
       </AppLayout>
     </>

@@ -706,6 +706,7 @@ function* watchLoadMyBookmark() {
 function* watchSearchPosts() {
   yield debounce(500, SEARCH_POSTS_REQUEST, searchPosts);
 }
+
 function* watchYourInfo() {
   yield takeLatest(LOAD_YOUR_INFO_REQUEST, loadYourInfo);
 }

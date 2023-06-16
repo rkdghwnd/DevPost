@@ -97,7 +97,7 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
 router.post(
   "/images",
   isLoggedIn,
-  upload.array("image"), // 이미지를 저장소에 업로드한다.
+  upload.array("image"), // 이미지(여러개)를 저장소에 업로드한다.
   async (req, res, next) => {
     // POST /post/images
     // console.log(req.files); // 업로드한 이미지에 대한 정보

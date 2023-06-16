@@ -18,12 +18,12 @@ try {
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, done) {
-      done(null, "uploads");
+      done(null, "uploads"); // uploads 폴더에 저장하기
     },
     filename(req, file, done) {
       const ext = path.extname(file.originalname); // 확장자 추출(.png)
       const basename = path.basename(file.originalname, ext);
-      done(null, basename + "_" + new Date().getTime() + ext);
+      done(null, basename + "_" + new Date().getTime() + ext); // 파일이름 지정
     },
   }),
   // 20MB로 용량 제한

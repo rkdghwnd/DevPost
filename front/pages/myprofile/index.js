@@ -5,24 +5,24 @@ import { BsFileEarmarkPost } from 'react-icons/bs';
 import { BsBookmark } from 'react-icons/bs';
 import { FaRegCommentDots } from 'react-icons/fa';
 import styled from 'styled-components';
-import MyProfileOption from '../../components/Option/MyProfileOption';
-import AppLayout from '../../components/AppLayout/AppLayout';
+import MyProfileOption from '../../components/MyProfile/MyProfileOption';
 import { useDispatch, useSelector } from 'react-redux';
 import { MY_PROFILE_OPTION_TOGGLE_REQUEST } from '../../reducers/option';
-import PostCard from '../../components/PostCard/PostCard';
+import PostCard from '../../components/Free/PostCard/PostCard';
 import {
   LOAD_MY_BOOKMARK_REQUEST,
   LOAD_MY_COMMENTS_REQUEST,
   LOAD_MY_POSTS_REQUEST,
 } from '../../reducers/post';
-import ShortComment from '../../components/ShortComment';
+import ShortComment from '../../components/Free/UserInfoModal/ShortComment';
 import shortId from 'shortid';
-import MyProfileLoading from '../../components/Loading/MyProfileLoading';
+import MyProfileLoading from '../../components/MyProfile/MyProfileLoading';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import { useRouter } from 'next/router';
 import { LOAD_MY_INFO_REQUEST } from '../../reducers/user';
 import Head from 'next/head';
+import AppLayout from '../../components/Common/AppLayout/AppLayout';
 
 const MyProfileForm = styled.div`
   background-color: white;

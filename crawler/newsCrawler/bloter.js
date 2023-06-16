@@ -18,9 +18,11 @@ const bloter = async () => {
       "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Mobile Safari/537.36"
     );
     await page.goto(
-      "https://www.bloter.net/news/articleList.html?sc_section_code=S1N4&view_type=sm",
-      { timeout: 0 }
+      "https://www.bloter.net/news/articleList.html?sc_section_code=S1N4&view_type=sm"
     );
+    await page.waitForSelector(".list-btn-more");
+    await page.click(".list-btn-more");
+    await page.waitForSelector("ul.type2 > li:nth-child(39)");
     const articles = await page.evaluate(() => {
       const list = document.querySelectorAll("ul.type2 > li");
       const posts = [];
