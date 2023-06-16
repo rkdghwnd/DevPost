@@ -3,17 +3,17 @@ import { AiOutlineArrowLeft, AiOutlineCheck } from 'react-icons/ai';
 import { FcCameraIdentification } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import AppLayout from '../../components/AppLayout/AppLayout';
-import ProfileEditInput from '../../components/ProfileEditInput';
+import ProfileEditInput from '../../components/MyProfile/edit/ProfileEditInput';
 import useInput from '../../hooks/input';
 import { LOAD_PROFILE_IMAGE, UPLOAD_IMAGES_REQUEST } from '../../reducers/post';
 import {
   LOAD_MY_INFO_REQUEST,
   UPDATE_MY_INFO_REQUEST,
 } from '../../reducers/user';
-import MyProfileEditLoading from '../../components/Loading/MyProfileEditLoading';
+import MyProfileEditLoading from '../../components/MyProfile/edit/MyProfileEditLoading';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import AppLayout from '../../components/Common/AppLayout/AppLayout';
 
 const EditForm = styled.section`
   background-color: white;

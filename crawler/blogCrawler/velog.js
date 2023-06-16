@@ -21,7 +21,11 @@ const velog = async () => {
       "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Mobile Safari/537.36"
     );
     await page.goto("https://velog.io/");
-    await page.waitForSelector("main > div > div");
+
+    await page.evaluate(() => {
+      window.scrollBy(0, 12000);
+    });
+    await page.waitForSelector("main > div > div:nth-child(40)");
     const blogPosts = await page.evaluate(() => {
       const list = document.querySelectorAll("main > div > div");
       const posts = [];
@@ -65,6 +69,8 @@ const velog = async () => {
       });
       return posts;
     });
+
+    console.log(blogPosts);
     await page.close();
     await browser.close();
     return blogPosts;

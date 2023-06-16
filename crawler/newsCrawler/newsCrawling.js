@@ -37,7 +37,10 @@ const newsCrawling = async () => {
         },
       });
 
-      if (v.imageSource) {
+      if (
+        v.imageSource &&
+        v.imageSource !== "https://zdnet.co.kr/images/default.png?ver=20220905"
+      ) {
         let imageExtension = "not extension";
         if (v.imageSource.includes(".jpg")) {
           imageExtension = ".jpg";
@@ -58,6 +61,7 @@ const newsCrawling = async () => {
           .join("")
           .split("%")
           .join("");
+
         const image = await axios.get(v.imageSource, {
           responseType: "arraybuffer",
         });

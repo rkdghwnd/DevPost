@@ -63,7 +63,7 @@ app.use(
 );
 
 app.use(passport.initialize()); // passport 초기화
-app.use(passport.session());
+app.use(passport.session()); // 세션등록, deserializeUser() 호출
 
 app.use("/user", userRouter);
 app.use("/post", postRouter);

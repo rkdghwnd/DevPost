@@ -4,9 +4,8 @@ import { END } from 'redux-saga';
 import axios from 'axios';
 import PostMainText from '../../components/Post/PostMainText';
 import PostFooter from '../../components/Post/PostFooter';
-import Comment from '../../components/Post/Comment';
-import DesktopHeader from '../../components/AppLayout/DesktopHeader/DesktopHeader';
-import CommentInputDesktop from '../../components/Post/CommentInputDesktop';
+import Comment from '../../components/Post/Comment/Comment';
+import CommentInputDesktop from '../../components/Post/Comment/CommentInputDesktop';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   ADD_BOOKMARK_REQUEST,
@@ -15,17 +14,18 @@ import {
 } from '../../reducers/post';
 import { BsBookmark, BsThreeDots } from 'react-icons/bs';
 import { POST_OPTION_TOGGLE_REQUEST } from '../../reducers/option';
-import PostOption from '../../components/Option/PostOption';
+import PostOption from '../../components/Post/PostOption';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { LOG_IN_MODAL_OPEN } from '../../reducers/modal';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import PostLoading from '../../components/Loading/PostLoading';
+import PostLoading from '../../components/Post/PostLoading';
 import wrapper from '../../store/configureStore';
 import { LOAD_MY_INFO_REQUEST } from '../../reducers/user';
 import Custom404 from '../404';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import TopScroll from '../../components/TopScroll';
+import TopScroll from '../../components/HotDeal/TopScroll';
+import DesktopHeader from '../../components/Common/AppLayout/DesktopHeader/DesktopHeader';
 
 const PostForm = styled.section`
   padding: 20px;

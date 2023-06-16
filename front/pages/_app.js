@@ -3,30 +3,28 @@ import propTypes from 'prop-types';
 import wrapper from '../store/configureStore';
 import { Normalize } from 'styled-normalize';
 import { useDispatch, useSelector } from 'react-redux';
-import InfoModal from '../components/Modal/InfoModal';
-import LogInModal from '../components/Modal/LogInModal/LogInModal';
-import MessageModal from '../components/Modal/MessageModal';
-import UpdatePostModal from '../components/Modal/UpdatePostModal';
+import LogInModal from '../components/Common/LogInModal/LogInModal';
+import MessageModal from '../components/Common/MessageModal';
+import UpdatePostModal from '../components/Post/PostModal/UpdatePostModal';
 import Script from 'next/script';
 import Head from 'next/head';
-import ShareModal from '../components/Modal/ShareModal';
+import ShareModal from '../components/Post/ShareModal/ShareModal';
 import useScript from '../hooks/useScript';
-import UserInfoModal from '../components/Modal/UserInfoModal';
-import CommentModal from '../components/Modal/CommentModal/CommentModal';
-import NewPostModal from '../components/Modal/NewPostModal/NewPostModal';
+import CommentModal from '../components/Free/CommentModal/CommentModal';
+import NewPostModal from '../components/Post/PostModal/NewPostModal';
 import { createGlobalStyle } from 'styled-components';
-import VerifyPasswordModal from '../components/Modal/VerifyPasswordModal';
-import ConfirmRemoveCommentModal from '../components/Modal/ConfirmRemoveCommentModal';
-import ConfirmRemovePostModal from '../components/Modal/ConfirmRemovePostModal';
-import ConfirmCancelPostModal from '../components/Modal/ConfirmCancelPostModal';
-import ConfirmRemoveAccountModal from '../components/Modal/ConfirmRemoveAccountModal';
+import VerifyPasswordModal from '../components/MyProfile/edit/VerifyPasswordModal';
+import ConfirmRemoveCommentModal from '../components/Post/Comment/ConfirmRemoveCommentModal';
+import ConfirmRemovePostModal from '../components/Post/ConfirmRemovePostModal';
+import ConfirmCancelPostModal from '../components/Post/PostModal/ConfirmCancelPostModal';
+import ConfirmRemoveAccountModal from '../components/MyProfile/edit/ConfirmRemoveAccountModal';
 import {
   HEADER_OPTION_CLOSE_REQUEST,
   MY_PROFILE_OPTION_CLOSE_REQUEST,
-  MY_PROFILE_OPTION_TOGGLE_REQUEST,
   POST_OPTION_CLOSE_REQUEST,
-  POST_OPTION_TOGGLE_REQUEST,
 } from '../reducers/option';
+import InfoModal from '../components/Common/AppLayout/Footer/InfoModal';
+import UserInfoModal from '../components/Free/UserInfoModal/UserInfoModal';
 
 const GlobalStyle = createGlobalStyle`
 * {

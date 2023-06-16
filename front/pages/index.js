@@ -1,38 +1,39 @@
 import React from 'react';
-import NavBar from '../components/NavBar';
-import AppLayout from '../components/AppLayout/AppLayout';
-import MainContentsWrapper from '../components/MainContentsWrapper';
-import Head from 'next/head';
+import MainContentsWrapper from '../components/Common/MainContentsWrapper';
+import NavBar from '../components/Common/NavBar';
+import PostCard from '../components/Free/PostCard/PostCard';
+import AppLayout from '../components/Common/AppLayout/AppLayout';
 import { useSelector } from 'react-redux';
-import BlogCard from '../components/Card/BlogCard';
-import { LOAD_BLOG_POSTS_REQUEST } from '../reducers/posts';
+import { LOAD_FREE_POSTS_REQUEST } from '../reducers/post';
 import shortId from 'shortid';
-import PostsLoading from '../components/Loading/PostsLoading';
-import Paginations from '../components/Paginations';
-import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
-import wrapper from '../store/configureStore';
+import PostsLoading from '../components/Free/Loading/PostsLoading';
+import Paginations from '../components/Common/Paginations';
 import axios from 'axios';
+import Head from 'next/head';
+import wrapper from '../store/configureStore';
 import { END } from 'redux-saga';
+import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 
-const home = () => {
-  const { blogPosts, loadBlogPostsLoading } = useSelector(state => state.posts);
+const free = () => {
+  const { freePosts, loadFreePostsLoading, postTotal, addPostLoading } =
+    useSelector(state => state.post);
 
   return (
     <>
       <Head>
-        <title>DevPost</title>
+        <title>자유 게시판 - DevPost</title>
       </Head>
       <AppLayout>
         <MainContentsWrapper>
           <NavBar />
-          {loadBlogPostsLoading ? (
+          {loadFreePostsLoading || addPostLoading ? (
             <PostsLoading />
           ) : (
-            blogPosts[0]?.map(post => {
-              return <BlogCard key={shortId.generate()} post={post} />;
+            freePosts.map(post => {
+              return <PostCard key={shortId.generate()} post={post} />;
             })
           )}
-          <Paginations total={blogPosts[1] || 0} />
+          <Paginations total={postTotal} />
         </MainContentsWrapper>
       </AppLayout>
     </>
@@ -49,11 +50,11 @@ export const getServerSideProps = wrapper.getServerSideProps(async context => {
     type: LOAD_MY_INFO_REQUEST, // 로그인 유지
   });
   context.store.dispatch({
-    type: LOAD_BLOG_POSTS_REQUEST,
+    type: LOAD_FREE_POSTS_REQUEST,
     page: Number(context.query.page),
   });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
 });
 
-export default home;
+export default free;

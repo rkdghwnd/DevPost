@@ -16,7 +16,7 @@ router.get("/", async (req, res, next) => {
       limit: 10,
     });
 
-    res.status(200).json(posts);
+    res.status(201).json(posts);
   } catch (error) {
     console.error(error);
     next(error);

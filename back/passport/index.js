@@ -14,7 +14,7 @@ module.exports = () => {
 
   passport.deserializeUser(async (id, done) => {
     try {
-      // user.id 값으로 session id 복구 (로그인 후 매 라우터 요청마다 실행)
+      // user.id 값으로 session id 복구 (매 라우터 요청마다 실행)
       const user = await User.findOne({ where: { id } });
       done(null, user); // req.user
     } catch (error) {

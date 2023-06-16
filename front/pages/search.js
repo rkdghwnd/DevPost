@@ -144,16 +144,16 @@ const search = () => {
             <RecommendKeyword keyword={'개발자'} />
           </KeyWordWrapper>
 
-          {searchPosts.length === 0 ? (
-            <>
-              <br />
-              <div>검색결과가 없습니다.</div>
-            </>
-          ) : searchPostsLoading ? (
+          {searchPostsLoading ? (
             <Spinner
               tip="Loading..."
               indicator={<LoadingOutlined spin />}
             ></Spinner>
+          ) : searchPosts.length === 0 ? (
+            <>
+              <br />
+              <div>검색결과가 없습니다.</div>
+            </>
           ) : (
             searchPosts.map(post =>
               post.content ? (
