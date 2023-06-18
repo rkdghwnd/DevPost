@@ -7,8 +7,8 @@ router.get("/", async (req, res, next) => {
   // GET /news?page={page || 1}
   try {
     const posts = await News.findAll({
-      offset: 10 * (parseInt(req.query.page, 10) - 1),
-      limit: 10, // 개수 제한
+      offset: 30 * (parseInt(req.query.page, 10) - 1),
+      limit: 30, // 개수 제한
     });
     const count = await News.count();
 

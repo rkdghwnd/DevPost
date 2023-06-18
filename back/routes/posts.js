@@ -9,8 +9,8 @@ router.get("/free", async (req, res, next) => {
   try {
     const count = await Post.count();
     const posts = await Post.findAll({
-      offset: 10 * (parseInt(req.query.page, 10) - 1),
-      limit: 10, // 개수 제한
+      offset: 30 * (parseInt(req.query.page, 10) - 1),
+      limit: 30, // 개수 제한
       order: [
         ["createdAt", "DESC"],
         [Comment, "createdAt", "ASC"],
