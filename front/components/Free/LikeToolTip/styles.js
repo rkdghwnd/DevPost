@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const Message = styled.div`
+export const Message = styled.div`
   position: absolute;
   top: -30px;
   left: -15px;
@@ -21,7 +20,7 @@ const Message = styled.div`
   }
 `;
 
-const Triangle = styled.div`
+export const Triangle = styled.div`
   width: 0;
   height: 0;
   border-bottom: 7px solid transparent;
@@ -32,14 +31,3 @@ const Triangle = styled.div`
   top: 18px;
   right: 5px;
 `;
-
-const BookmarkToolTip = () => {
-  return (
-    <Message>
-      북마크
-      <Triangle />
-    </Message>
-  );
-};
-
-export default BookmarkToolTip;

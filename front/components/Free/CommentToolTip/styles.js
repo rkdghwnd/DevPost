@@ -1,14 +1,13 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const Message = styled.div`
+export const Message = styled.div`
   position: absolute;
   top: -30px;
-  left: -15px;
+  left: -10px;
   display: none;
   border-radius: 8px;
   background-color: #666;
-  width: 50px;
+  width: 40px;
   height: 20px;
   font-size: 12px;
   text-align: center;
@@ -17,11 +16,10 @@ const Message = styled.div`
   opacity: 0.8;
   @media (min-width: 765px) {
     top: -30px;
-    left: -20px;
   }
 `;
 
-const Triangle = styled.div`
+export const Triangle = styled.div`
   width: 0;
   height: 0;
   border-bottom: 7px solid transparent;
@@ -32,14 +30,3 @@ const Triangle = styled.div`
   top: 18px;
   right: 5px;
 `;
-
-const LikeToolTip = () => {
-  return (
-    <Message>
-      좋아요
-      <Triangle />
-    </Message>
-  );
-};
-
-export default LikeToolTip;

@@ -17,7 +17,7 @@ import HotDealCard from '../../components/HotDeal/HotDealCard/HotDealCard';
 import MainContentsWrapper from '../../components/Common/MainContentsWrapper/MainContentsWrapper';
 import AppLayout from '../../components/Common/AppLayout';
 import TopScroll from '../../components/HotDeal/TopScroll/TopScroll';
-import SideFilter from '../../components/Common/SideFilter';
+import SideFilter from '../../components/Common/SideFilter/SideFilter';
 import { List } from 'react-virtualized';
 
 const hotdeal = () => {

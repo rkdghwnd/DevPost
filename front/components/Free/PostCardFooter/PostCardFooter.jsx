@@ -1,7 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
 import { FaSmile, FaCommentDots } from 'react-icons/fa';
-import { BsFillBookmarkFill } from 'react-icons/bs';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,63 +10,16 @@ import {
   REMOVE_BOOKMARK_REQUEST,
   UNLIKE_POST_REQUEST,
 } from '../../../reducers/post';
-import LikeToolTip from './ToolTip/LikeToolTip';
-import BookmarkToolTip from './ToolTip/BookmarkToolTip';
-import CommentToolTip from './ToolTip/CommentToolTip';
-
-const FooterForm = styled.div`
-  margin: 5px 0;
-
-  & > button {
-    all: unset;
-    border: 1px solid rgb(220, 220, 220);
-    border-radius: 4px;
-    padding: 1px 6px 4px 6px;
-    cursor: pointer;
-    color: rgb(217, 217, 217);
-    margin-right: 10px;
-    position: relative;
-  }
-  & > button:first-child:hover {
-    & > :last-child {
-      display: block;
-    }
-  }
-  & > button:nth-child(2):hover {
-    & > :last-child {
-      display: block;
-    }
-  }
-  & > button:last-child:hover {
-    & > :last-child {
-      display: block;
-    }
-  }
-
-  & > button > :first-child {
-    vertical-align: middle;
-  }
-  & > button:last-child {
-    width: 25px;
-    float: right;
-    text-align: center;
-  }
-  & > button:last-child:after {
-    content: '';
-    clear: both;
-  }
-  span {
-    margin-left: 5px;
-    font-size: 13px;
-  }
-`;
-
-const LikeButton = styled.button``;
-const CommentButton = styled.button``;
-const BookmarkButton = styled.button``;
-const BsFillBookmarkIcon = styled(BsFillBookmarkFill)`
-  vertical-align: middle;
-`;
+import LikeToolTip from '../LikeToolTip/LikeToolTip';
+import BookmarkToolTip from '../BookmarkToolTip/BookmarkToolTip';
+import CommentToolTip from '../CommentToolTip/CommentToolTip';
+import {
+  BookmarkButton,
+  BsFillBookmarkIcon,
+  CommentButton,
+  FooterForm,
+  LikeButton,
+} from './styles';
 
 const PostCardFooter = ({ post }) => {
   const dispatch = useDispatch();

@@ -1,20 +1,8 @@
 import React from 'react';
-import FilterBox from './FilterBox';
+import FilterBox from '../FilterBox/FilterBox';
 import PropTypes from 'prop-types';
 import shortid from 'shortid';
-import styled from 'styled-components';
-
-const FilterContainer = styled.section`
-  @media (min-width: 765px) {
-    position: absolute;
-    top: 150px;
-    left: -140px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  display: none;
-`;
+import { FilterContainer } from './styles';
 
 const SideFilter = ({ tags }) => {
   return (
