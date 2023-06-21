@@ -10,11 +10,14 @@ export const initialState = {
   loadNewsPostsLoading: false,
   loadNewsPostsDone: false,
   loadNewsPostsError: null,
-  hasMoreHotDealPosts: true,
+  hasMoreHotDealPosts: false,
   loadHotDealPostsLoading: false,
   loadHotDealPostsDone: false,
   loadHotDealPostsError: null,
+  filteredList: [],
 };
+
+export const TOGGLE_FILTER_LIST = 'TOGGLE_FILTER_LIST';
 
 export const LOAD_NEWS_POSTS_REQUEST = 'LOAD_NEWS_POSTS_REQUEST';
 export const LOAD_NEWS_POSTS_SUCCESS = 'LOAD_NEWS_POSTS_SUCCESS';
@@ -41,6 +44,14 @@ export const LOAD_MORE_HOTDEAL_POSTS_FAILURE =
 const reducer = (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
+      case TOGGLE_FILTER_LIST:
+        // 이미 존재하는 태그면 삭제, 존재 안하면 추가
+        if (draft.filteredList.includes(action.tag)) {
+          draft.filteredList.splice(draft.filteredList.indexOf(action.tag), 1);
+        } else {
+          draft.filteredList.push(action.tag);
+        }
+        break;
       case LOAD_NEWS_POSTS_REQUEST:
         draft.loadNewsPostsLoading = true;
         draft.loadNewsPostsDone = false;

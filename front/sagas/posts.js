@@ -1,4 +1,4 @@
-import { fork, takeLatest, put, all, call } from 'redux-saga/effects';
+import { fork, takeLatest, put, all, call, throttle } from 'redux-saga/effects';
 import axios from 'axios';
 import {
   LOAD_BLOG_POSTS_FAILURE,
