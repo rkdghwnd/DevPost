@@ -16,7 +16,10 @@ const SearchInput = () => {
       if (e.key === 'Enter') {
         router.push('/search');
       }
-      dispatch({ type: SEARCH_POSTS_REQUEST, keyword: e.currentTarget.value });
+      dispatch({
+        type: SEARCH_POSTS_REQUEST,
+        keyword: e.currentTarget.value,
+      });
     },
     [router],
   );

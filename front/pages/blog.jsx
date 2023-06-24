@@ -12,23 +12,16 @@ import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 import wrapper from '../store/configureStore';
 import axios from 'axios';
 import { END } from 'redux-saga';
-import SideFilter from '../components/Common/SideFilter';
+import { useFilter } from '../hooks/useFilter';
+import SideFilter from '../components/Common/SideFilter/SideFilter';
 
 const blog = () => {
   const { blogPosts, filteredList } = useSelector(state => state.posts);
-  const tags = [
-    ...new Set(
-      blogPosts[0]?.map(post => {
-        return post.blog_name;
-      }),
-    ),
-  ];
-  const visiblePosts =
-    filteredList.length === 0
-      ? blogPosts[0]
-      : blogPosts[0]?.filter(post => {
-          return filteredList.includes(post.blog_name);
-        });
+  const [tags, visiblePosts] = useFilter(
+    blogPosts[0],
+    filteredList,
+    'blog_name',
+  );
 
   return (
     <>
@@ -60,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async context => {
   });
   context.store.dispatch({
     type: LOAD_BLOG_POSTS_REQUEST,
-    page: Number(context.query.page),
+    data: Number(context.query.page),
   });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();

@@ -107,7 +107,7 @@ const NestedComment = ({ nestedComment, commentId, commentInput }) => {
 NestedComment.propTypes = {
   nestedComment: PropTypes.object,
   commentId: PropTypes.number,
-  commentInput: PropTypes.obejct,
+  commentInput: PropTypes.object,
 };
 
 export default NestedComment;

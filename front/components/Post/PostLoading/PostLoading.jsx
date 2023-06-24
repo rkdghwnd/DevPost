@@ -1,6 +1,6 @@
 import React from 'react';
-import CommentSkeleton from './Comment/CommentSkeleton';
-import DesktopHeader from '../Common/AppLayout/DesktopHeader/DesktopHeader';
+import DesktopHeader from '../../Common/DesktopHeader/DesktopHeader';
+import CommentSkeleton from '../../Post/CommentSkeleton/CommentSkeleton';
 import {
   PostForm,
   PostMenu,

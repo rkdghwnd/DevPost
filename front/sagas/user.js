@@ -28,9 +28,10 @@ import {
   LOG_IN_MODAL_CLOSE_REQUEST,
   MESSAGE_MODAL_TOGGLE_REQUEST,
   VERIFY_PASSWORD_MODAL_CLOSE,
+  messageModal,
 } from '../reducers/modal';
 import { HEADER_OPTION_TOGGLE_REQUEST } from '../reducers/option';
-import { LOAD_PROFILE_IMAGE } from '../reducers/post';
+import createRequestSaga from '../hooks/createRequestSaga';
 
 function logInAPI(data) {
   return axios.post(
@@ -39,52 +40,27 @@ function logInAPI(data) {
   );
 }
 
-function* logIn(action) {
-  try {
-    const result = yield call(logInAPI, action.data);
-    yield put({
-      type: LOG_IN_SUCCESS,
-      data: result.data,
-    });
-    yield put({
-      type: LOG_IN_MODAL_CLOSE_REQUEST,
-    });
-  } catch (err) {
-    yield put({
-      type: LOG_IN_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: err.response.data,
-    });
-  }
-}
+const logIn = createRequestSaga(
+  LOG_IN_SUCCESS,
+  LOG_IN_FAILURE,
+  logInAPI,
+  { type: LOG_IN_MODAL_CLOSE_REQUEST },
+  'error_data_response',
+);
 
 function logOutAPI() {
   return axios.delete(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/auth`);
 }
 
-function* logOut() {
-  try {
-    const result = yield call(logOutAPI);
-    yield put({
-      type: LOG_OUT_SUCCESS,
-    });
-    yield put({
-      type: HEADER_OPTION_TOGGLE_REQUEST,
-    });
-  } catch (err) {
-    yield put({
-      type: LOG_OUT_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '로그아웃에 실패했습니다',
-    });
-  }
-}
+const logOut = createRequestSaga(
+  LOG_OUT_SUCCESS,
+  LOG_OUT_FAILURE,
+  logOutAPI,
+  {
+    type: HEADER_OPTION_TOGGLE_REQUEST,
+  },
+  messageModal('로그아웃에 실패했습니다.'),
+);
 
 function signUpAPI(data) {
   return axios.post(
@@ -93,50 +69,25 @@ function signUpAPI(data) {
   );
 }
 
-function* signUp(action) {
-  try {
-    const result = yield call(signUpAPI, action.data);
-    yield put({
-      type: SIGN_UP_SUCCESS,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '회원가입에 성공하였습니다.',
-    });
-  } catch (err) {
-    yield put({
-      type: SIGN_UP_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '회원가입에 실패하였습니다',
-    });
-  }
-}
+const signUp = createRequestSaga(
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE,
+  signUpAPI,
+  messageModal('회원가입에 성공하였습니다.'),
+  messageModal('회원가입에 실패하였습니다.'),
+);
 
 function loadMyInfoAPI() {
   return axios.get(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/me`);
 }
 
-function* loadMyInfo() {
-  try {
-    const result = yield call(loadMyInfoAPI);
-    yield put({
-      type: LOAD_MY_INFO_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    yield put({
-      type: LOAD_MY_INFO_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '내 정보를 불러오지 못했습니다.',
-    });
-  }
-}
+const loadMyInfo = createRequestSaga(
+  LOAD_MY_INFO_SUCCESS,
+  LOAD_MY_INFO_FAILURE,
+  loadMyInfoAPI,
+  undefined,
+  messageModal('내 정보를 불러오지 못했습니다.'),
+);
 
 function updateMyInfoAPI(data) {
   return axios.patch(
@@ -145,28 +96,13 @@ function updateMyInfoAPI(data) {
   );
 }
 
-function* updateMyInfo(action) {
-  try {
-    const result = yield call(updateMyInfoAPI, action.data);
-    yield put({
-      type: UPDATE_MY_INFO_SUCCESS,
-      data: result.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '회원정보 수정이 완료되었습니다.',
-    });
-  } catch (err) {
-    yield put({
-      type: UPDATE_MY_INFO_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '내 정보 수정 실패',
-    });
-  }
-}
+const updateMyInfo = createRequestSaga(
+  UPDATE_MY_INFO_SUCCESS,
+  UPDATE_MY_INFO_FAILURE,
+  updateMyInfoAPI,
+  messageModal('회원정보 수정이 완료되었습니다.'),
+  messageModal('내 정보 수정 실패'),
+);
 
 function verifyPasswordAPI(data) {
   return axios.post(
@@ -207,24 +143,13 @@ function removeAccountAPI(data) {
   );
 }
 
-function* removeAccount(action) {
-  try {
-    const result = yield call(removeAccountAPI, action.data);
-    yield put({
-      type: REMOVE_ACCOUNT_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    yield put({
-      type: REMOVE_ACCOUNT_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '회원탈퇴에 실패하였습니다',
-    });
-  }
-}
+const removeAccount = createRequestSaga(
+  REMOVE_ACCOUNT_SUCCESS,
+  REMOVE_ACCOUNT_FAILURE,
+  removeAccountAPI,
+  undefined,
+  messageModal('회원탈퇴에 실패하였습니다.'),
+);
 
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);

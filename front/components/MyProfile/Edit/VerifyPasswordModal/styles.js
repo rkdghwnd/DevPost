@@ -24,6 +24,7 @@ export const InfoForm = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  position: relative;
   & > input {
     all: unset;
     border-radius: 5px;

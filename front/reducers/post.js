@@ -707,10 +707,10 @@ const reducer = (state = initialState, action) => {
         draft.loadFreePostsError = null;
         break;
       case LOAD_FREE_POSTS_SUCCESS:
-        draft.freePosts = action.data;
+        draft.freePosts = action.data[0];
         draft.loadFreePostsLoading = false;
         draft.loadFreePostsDone = true;
-        draft.postTotal = action.page;
+        draft.postTotal = action.data[1];
         break;
       case LOAD_FREE_POSTS_FAILURE:
         draft.loadFreePostsLoading = false;
@@ -743,7 +743,7 @@ const reducer = (state = initialState, action) => {
         );
         draft.removePostLoading = false;
         draft.removePostDone = true;
-        window.location.href = `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/free`;
+        window.location.href = `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/`;
         break;
       case REMOVE_POST_FAILURE:
         draft.removePostLoading = false;

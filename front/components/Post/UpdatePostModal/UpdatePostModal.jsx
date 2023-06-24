@@ -38,7 +38,7 @@ const UpdatePostModal = () => {
 
   const onUpdatePost = useCallback(() => {
     if (!title || !title.trim()) {
-      alert('제목을 입력하세요');
+      return alert('제목을 입력하세요');
     }
     if (!mainText || !mainText.trim()) {
       return alert('게시글을 작성하세요.');

@@ -12,23 +12,16 @@ import NavBar from '../../components/Common/NavBar/NavBar';
 import MainContentsWrapper from '../../components/Common/MainContentsWrapper/MainContentsWrapper';
 import AppLayout from '../../components/Common/AppLayout';
 import Paginations from '../../components/Common/Paginations/Paginations';
-import SideFilter from '../../components/Common/SideFilter';
+import { useFilter } from '../../hooks/useFilter';
+import SideFilter from '../../components/Common/SideFilter/SideFilter';
 
 const news = () => {
   const { newsPosts, filteredList } = useSelector(state => state.posts);
-  const tags = [
-    ...new Set(
-      newsPosts[0]?.map(post => {
-        return post.news_name;
-      }),
-    ),
-  ];
-  const visiblePosts =
-    filteredList.length === 0
-      ? newsPosts[0]
-      : newsPosts[0]?.filter(post => {
-          return filteredList.includes(post.news_name);
-        });
+  const [tags, visiblePosts] = useFilter(
+    newsPosts[0],
+    filteredList,
+    'news_name',
+  );
 
   return (
     <>
@@ -60,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async context => {
   });
   context.store.dispatch({
     type: LOAD_NEWS_POSTS_REQUEST,
-    page: Number(context.query.page),
+    data: Number(context.query.page),
   });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();

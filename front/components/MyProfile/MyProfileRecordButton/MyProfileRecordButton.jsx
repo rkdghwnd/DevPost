@@ -45,6 +45,7 @@ const MyProfileRecordButton = ({
     setCommentsVisible(false);
     setBookmarkVisible(state => !state);
   }, []);
+
   return (
     <MyProfileRecordForm>
       <MyPostsButton onClick={onClickPosts} postsVisible={postsVisible}>

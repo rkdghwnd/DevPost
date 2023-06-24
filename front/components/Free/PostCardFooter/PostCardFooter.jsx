@@ -59,13 +59,13 @@ const PostCardFooter = ({ post }) => {
       if (isAlreadyLike) {
         dispatch({
           type: UNLIKE_POST_REQUEST,
-          postId: post.id,
+          data: post.id,
           mode: 'post_card',
         });
       } else {
         dispatch({
           type: LIKE_POST_REQUEST,
-          postId: post.id,
+          data: post.id,
           mode: 'post_card',
         });
       }
@@ -87,13 +87,13 @@ const PostCardFooter = ({ post }) => {
       if (isAlreadyBookmark) {
         dispatch({
           type: REMOVE_BOOKMARK_REQUEST,
-          postId: post?.id,
+          data: post?.id,
           mode: 'post_card',
         });
       } else {
         dispatch({
           type: ADD_BOOKMARK_REQUEST,
-          postId: post?.id,
+          data: post?.id,
           mode: 'post_card',
         });
       }

@@ -77,34 +77,22 @@ import {
 import {
   MESSAGE_MODAL_TOGGLE_REQUEST,
   NEW_POST_MODAL_CLOSE_REQUEST,
+  messageModal,
 } from '../reducers/modal';
 import { UPDATE_POST_MODAL_CLOSE_REQUEST } from '../reducers/modal';
+import createRequestSaga from '../hooks/createRequestSaga';
 
 function addPostAPI(data) {
   return axios.post(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post`, data);
 }
 
-function* addPost(action) {
-  try {
-    const result = yield call(addPostAPI, action.data);
-    yield put({
-      type: ADD_POST_SUCCESS,
-      data: result.data,
-    });
-    yield put({
-      type: NEW_POST_MODAL_CLOSE_REQUEST,
-    });
-  } catch (err) {
-    yield put({
-      type: ADD_POST_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '글 작성에 실패했습니다',
-    });
-  }
-}
+const addPost = createRequestSaga(
+  ADD_POST_SUCCESS,
+  ADD_POST_FAILURE,
+  addPostAPI,
+  { type: NEW_POST_MODAL_CLOSE_REQUEST },
+  messageModal('글 작성에 실패했습니다.'),
+);
 
 function removePostAPI(data) {
   return axios.delete(
@@ -112,77 +100,41 @@ function removePostAPI(data) {
   );
 }
 
-function* removePost(action) {
-  try {
-    const result = yield call(removePostAPI, action.data);
-    yield put({
-      type: REMOVE_POST_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    yield put({
-      type: REMOVE_POST_FAILURE,
-      data: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '글 삭제에 실패했습니다',
-    });
-  }
-}
+const removePost = createRequestSaga(
+  REMOVE_POST_SUCCESS,
+  REMOVE_POST_FAILURE,
+  removePostAPI,
+  undefined,
+  messageModal('글 삭제에 실패했습니다.'),
+);
 
-function loadFreePostsAPI(page) {
+function loadFreePostsAPI(data) {
   return axios.get(
-    `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/posts/free?page=${page || 1}`,
+    `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/posts/free?page=${data || 1}`,
   );
 }
 
-function* loadFreePosts(action) {
-  try {
-    const result = yield call(loadFreePostsAPI, action.page);
-    yield put({
-      type: LOAD_FREE_POSTS_SUCCESS,
-      data: result.data[0],
-      page: result.data[1],
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: LOAD_FREE_POSTS_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '자유게시판 불러오기 실패',
-    });
-  }
-}
+const loadFreePosts = createRequestSaga(
+  LOAD_FREE_POSTS_SUCCESS,
+  LOAD_FREE_POSTS_FAILURE,
+  loadFreePostsAPI,
+  undefined,
+  messageModal('자유게시판 불러오기 실패'),
+);
 
-function loadPostAPI(postId) {
+function loadPostAPI(data) {
   return axios.get(
-    `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/free?postId=${postId}`,
+    `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/free?postId=${data}`,
   );
 }
 
-function* loadPost(action) {
-  try {
-    const result = yield call(loadPostAPI, action.postId);
-    yield put({
-      type: LOAD_POST_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: LOAD_POST_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '게시글 불러오기 실패',
-    });
-  }
-}
+const loadPost = createRequestSaga(
+  LOAD_POST_SUCCESS,
+  LOAD_POST_FAILURE,
+  loadPostAPI,
+  undefined,
+  messageModal('게시글 불러오기 실패'),
+);
 
 function uploadImagesAPI(data) {
   return axios.post(
@@ -191,53 +143,25 @@ function uploadImagesAPI(data) {
   );
 }
 
-function* uploadImages(action) {
-  try {
-    const result = yield call(uploadImagesAPI, action.data);
-    yield put({
-      type: UPLOAD_IMAGES_SUCCESS,
-      data: result.data,
-      mode: action.mode,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: UPLOAD_IMAGES_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '이미지 업로드 실패',
-    });
-  }
-}
+const uploadImages = createRequestSaga(
+  UPLOAD_IMAGES_SUCCESS,
+  UPLOAD_IMAGES_FAILURE,
+  uploadImagesAPI,
+  undefined,
+  messageModal('이미지 업로드 실패'),
+);
 
 function updatePostAPI(data) {
   return axios.patch(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post`, data);
 }
 
-function* updatePost(action) {
-  try {
-    const result = yield call(updatePostAPI, action.data);
-    yield put({
-      type: UPDATE_POST_SUCCESS,
-      data: result.data,
-    });
-    yield put({
-      type: UPDATE_POST_MODAL_CLOSE_REQUEST,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: UPDATE_POST_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '글 수정에 실패하였습니다',
-    });
-  }
-}
+const updatePost = createRequestSaga(
+  UPDATE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
+  updatePostAPI,
+  { type: UPDATE_POST_MODAL_CLOSE_REQUEST },
+  messageModal('글 수정에 실패하였습니다'),
+);
 
 function addCommentAPI(data) {
   return axios.post(
@@ -246,26 +170,13 @@ function addCommentAPI(data) {
   ); // POST /post/:postId/comment
 }
 
-function* addComment(action) {
-  try {
-    const result = yield call(addCommentAPI, action.data);
-    yield put({
-      type: ADD_COMMENT_SUCCESS,
-      data: result.data,
-      postId: action.data.postId,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: ADD_COMMENT_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '댓글 추가에 실패하였습니다',
-    });
-  }
-}
+const addComment = createRequestSaga(
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_FAILURE,
+  addCommentAPI,
+  undefined,
+  messageModal('댓글 추가에 실패하였습니다'),
+);
 
 function removeCommentAPI(data) {
   return axios.delete(
@@ -273,26 +184,13 @@ function removeCommentAPI(data) {
   ); // DELETE /post/:postId/comment
 }
 
-function* removeComment(action) {
-  try {
-    const result = yield call(removeCommentAPI, action.data);
-    yield put({
-      type: REMOVE_COMMENT_SUCCESS,
-      data: result.data,
-      postId: action.data.postId,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: REMOVE_COMMENT_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '댓글 삭제에 실패하였습니다',
-    });
-  }
-}
+const removeComment = createRequestSaga(
+  REMOVE_COMMENT_SUCCESS,
+  REMOVE_COMMENT_FAILURE,
+  removeCommentAPI,
+  undefined,
+  messageModal('댓글 삭제에 실패하였습니다.'),
+);
 
 function updateCommentAPI(data) {
   return axios.patch(
@@ -301,26 +199,13 @@ function updateCommentAPI(data) {
   ); // DELETE /post/:postId/comment
 }
 
-function* updateComment(action) {
-  try {
-    const result = yield call(updateCommentAPI, action.data);
-    yield put({
-      type: UPDATE_COMMENT_SUCCESS,
-      data: result.data,
-      postId: action.data.postId,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: UPDATE_COMMENT_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '댓글 수정에 실패하였습니다',
-    });
-  }
-}
+const updateComment = createRequestSaga(
+  UPDATE_COMMENT_SUCCESS,
+  UPDATE_COMMENT_FAILURE,
+  updateCommentAPI,
+  undefined,
+  messageModal('댓글 수정에 실패하였습니다.'),
+);
 
 function addNestedCommentAPI(data) {
   return axios.post(
@@ -329,26 +214,13 @@ function addNestedCommentAPI(data) {
   ); // POST /post/:postId/comment
 }
 
-function* addNestedComment(action) {
-  try {
-    const result = yield call(addNestedCommentAPI, action.data);
-    yield put({
-      type: ADD_NESTED_COMMENT_SUCCESS,
-      data: result.data,
-      postId: action.data.postId,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: ADD_NESTED_COMMENT_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '대댓글 추가에 실패하였습니다',
-    });
-  }
-}
+const addNestedComment = createRequestSaga(
+  ADD_NESTED_COMMENT_SUCCESS,
+  ADD_NESTED_COMMENT_FAILURE,
+  addNestedCommentAPI,
+  undefined,
+  messageModal('대댓글 추가에 실패하였습니다'),
+);
 
 function removeNestedCommentAPI(data) {
   return axios.delete(
@@ -356,26 +228,13 @@ function removeNestedCommentAPI(data) {
   ); // DELETE /post/:postId/comment/:commentId/nested_comment/:nestedCommentId
 }
 
-function* removeNestedComment(action) {
-  try {
-    const result = yield call(removeNestedCommentAPI, action.data);
-    yield put({
-      type: REMOVE_NESTED_COMMENT_SUCCESS,
-      data: result.data,
-      postId: action.data.postId,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: REMOVE_NESTED_COMMENT_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '대댓글 삭제에 실패하였습니다',
-    });
-  }
-}
+const removeNestedComment = createRequestSaga(
+  REMOVE_NESTED_COMMENT_SUCCESS,
+  REMOVE_NESTED_COMMENT_FAILURE,
+  removeNestedCommentAPI,
+  undefined,
+  messageModal('대댓글 삭제에 실패하였습니다.'),
+);
 
 function updateNestedCommentAPI(data) {
   return axios.patch(
@@ -384,26 +243,13 @@ function updateNestedCommentAPI(data) {
   ); // DELETE /post/:postId/comment/:commentId/nested_comment/:nestedCommentId
 }
 
-function* updateNestedComment(action) {
-  try {
-    const result = yield call(updateNestedCommentAPI, action.data);
-    yield put({
-      type: UPDATE_NESTED_COMMENT_SUCCESS,
-      data: result.data,
-      postId: action.data.postId,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: UPDATE_NESTED_COMMENT_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '대댓글 수정에 실패하였습니다',
-    });
-  }
-}
+const updateNestedComment = createRequestSaga(
+  UPDATE_NESTED_COMMENT_SUCCESS,
+  UPDATE_NESTED_COMMENT_FAILURE,
+  updateNestedCommentAPI,
+  undefined,
+  messageModal('대댓글 수정에 실패하였습니다.'),
+);
 
 function likePostAPI(postId) {
   return axios.patch(
@@ -411,26 +257,13 @@ function likePostAPI(postId) {
   );
 }
 
-function* likePost(action) {
-  try {
-    const result = yield call(likePostAPI, action.postId);
-    yield put({
-      type: LIKE_POST_SUCCESS,
-      data: result.data,
-      mode: action.mode,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: LIKE_POST_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '좋아요 추가에 실패하였습니다',
-    });
-  }
-}
+const likePost = createRequestSaga(
+  LIKE_POST_SUCCESS,
+  LIKE_POST_FAILURE,
+  likePostAPI,
+  undefined,
+  messageModal('좋아요 추가에 실패하였습니다.'),
+);
 
 function unlikePostAPI(postId) {
   return axios.delete(
@@ -438,26 +271,13 @@ function unlikePostAPI(postId) {
   );
 }
 
-function* unlikePost(action) {
-  try {
-    const result = yield call(unlikePostAPI, action.postId);
-    yield put({
-      type: UNLIKE_POST_SUCCESS,
-      data: result.data,
-      mode: action.mode,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: UNLIKE_POST_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '좋아요 취소에 실패하였습니다',
-    });
-  }
-}
+const unlikePost = createRequestSaga(
+  UNLIKE_POST_SUCCESS,
+  UNLIKE_POST_FAILURE,
+  unlikePostAPI,
+  undefined,
+  messageModal('좋아요 취소에 실패하였습니다.'),
+);
 
 function addBookmarkAPI(postId) {
   return axios.patch(
@@ -465,26 +285,13 @@ function addBookmarkAPI(postId) {
   );
 }
 
-function* addBookmark(action) {
-  try {
-    const result = yield call(addBookmarkAPI, action.postId);
-    yield put({
-      type: ADD_BOOKMARK_SUCCESS,
-      data: result.data,
-      mode: action.mode,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: ADD_BOOKMARK_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '북마크 추가에 실패하였습니다',
-    });
-  }
-}
+const addBookmark = createRequestSaga(
+  ADD_BOOKMARK_SUCCESS,
+  ADD_BOOKMARK_FAILURE,
+  addBookmarkAPI,
+  undefined,
+  messageModal('북마크 추가에 실패하였습니다.'),
+);
 
 function removeBookmarkAPI(postId) {
   return axios.delete(
@@ -492,95 +299,49 @@ function removeBookmarkAPI(postId) {
   );
 }
 
-function* removeBookmark(action) {
-  try {
-    const result = yield call(removeBookmarkAPI, action.postId);
-    yield put({
-      type: REMOVE_BOOKMARK_SUCCESS,
-      data: result.data,
-      mode: action.mode,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: REMOVE_BOOKMARK_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '북마크 취소에 실패하였습니다',
-    });
-  }
-}
+const removeBookmark = createRequestSaga(
+  REMOVE_BOOKMARK_SUCCESS,
+  REMOVE_BOOKMARK_FAILURE,
+  removeBookmarkAPI,
+  undefined,
+  messageModal('북마크 취소에 실패하였습니다.'),
+);
 
 function loadMyPostsAPI() {
   return axios.get(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/posts`);
 }
 
-function* loadMyPosts() {
-  try {
-    const result = yield call(loadMyPostsAPI);
-    yield put({
-      type: LOAD_MY_POSTS_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    yield put({
-      type: LOAD_MY_POSTS_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '내 게시글 목록 로드 실패',
-    });
-  }
-}
+const loadMyPosts = createRequestSaga(
+  LOAD_MY_POSTS_SUCCESS,
+  LOAD_MY_POSTS_FAILURE,
+  loadMyPostsAPI,
+  undefined,
+  messageModal('내 게시글 목록 로드 실패'),
+);
 
 function loadMyCommentsAPI() {
   return axios.get(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/comments`);
 }
 
-function* loadMyComments() {
-  try {
-    const result = yield call(loadMyCommentsAPI);
-    yield put({
-      type: LOAD_MY_COMMENTS_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    yield put({
-      type: LOAD_MY_COMMENTS_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '내 댓글 목록 로드 실패',
-    });
-  }
-}
+const loadMyComments = createRequestSaga(
+  LOAD_MY_COMMENTS_SUCCESS,
+  LOAD_MY_COMMENTS_FAILURE,
+  loadMyCommentsAPI,
+  undefined,
+  messageModal('내 댓글 목록 로드 실패'),
+);
 
 function loadMyBookmarkAPI() {
   return axios.get(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/bookmark`);
 }
 
-function* loadMyBookmark() {
-  try {
-    const result = yield call(loadMyBookmarkAPI);
-    yield put({
-      type: LOAD_MY_BOOKMARK_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    yield put({
-      type: LOAD_MY_BOOKMARK_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '내 북마크 목록 로드 실패',
-    });
-  }
-}
+const loadMyBookmark = createRequestSaga(
+  LOAD_MY_BOOKMARK_SUCCESS,
+  LOAD_MY_BOOKMARK_FAILURE,
+  loadMyBookmarkAPI,
+  undefined,
+  messageModal('내 북마크 목록 로드 실패'),
+);
 
 function searchPostsAPI(keyword) {
   return axios.get(
@@ -628,24 +389,13 @@ function loadYourInfoAPI(userId) {
   );
 }
 
-function* loadYourInfo(action) {
-  try {
-    const result = yield call(loadYourInfoAPI, action.userId);
-    yield put({
-      type: LOAD_YOUR_INFO_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    yield put({
-      type: LOAD_YOUR_INFO_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '유저정보를 불러오지 못했습니다',
-    });
-  }
-}
+const loadYourInfo = createRequestSaga(
+  LOAD_YOUR_INFO_SUCCESS,
+  LOAD_YOUR_INFO_FAILURE,
+  loadYourInfoAPI,
+  undefined,
+  messageModal('유저정보를 불러오지 못했습니다.'),
+);
 
 function* watchAddPost() {
   yield takeLatest(ADD_POST_REQUEST, addPost);
