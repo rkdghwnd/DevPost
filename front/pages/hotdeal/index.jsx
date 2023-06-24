@@ -1,10 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  LOAD_EARLY_HOTDEAL_POSTS_REQUEST,
-  LOAD_MORE_HOTDEAL_POSTS_REQUEST,
-} from '../../reducers/posts';
+import { LOAD_EARLY_HOTDEAL_POSTS_REQUEST } from '../../reducers/posts';
 import { LoadingOutlined } from '@ant-design/icons';
 import wrapper from '../../store/configureStore';
 import axios from 'axios';
@@ -19,6 +16,8 @@ import AppLayout from '../../components/Common/AppLayout';
 import TopScroll from '../../components/HotDeal/TopScroll/TopScroll';
 import SideFilter from '../../components/Common/SideFilter/SideFilter';
 import { List } from 'react-virtualized';
+import { useFilter } from '../../hooks/useFilter';
+import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 
 const hotdeal = () => {
   const dispatch = useDispatch();
@@ -29,52 +28,24 @@ const hotdeal = () => {
     filteredList,
   } = useSelector(state => state.posts);
 
-  const tags = [
-    ...new Set(
-      hotDealPosts?.map(post => {
-        return post.site_name;
-      }),
-    ),
-  ];
-
-  const visiblePosts =
-    filteredList.length === 0
-      ? hotDealPosts
-      : hotDealPosts?.filter(post => {
-          return filteredList.includes(post.site_name);
-        });
+  const [tags, visiblePosts] = useFilter(
+    hotDealPosts,
+    filteredList,
+    'site_name',
+  );
 
   const viewport = useRef(null);
   const scrollTarget = useRef(null);
 
   useEffect(() => {
-    const options = {
-      root: viewport.current,
-      threshold: 0,
-    };
-
-    const handleIntersection = entries => {
-      entries.forEach(entry => {
-        if (
-          entry.isIntersecting &&
-          hasMoreHotDealPosts &&
-          !loadHotDealPostsLoading
-        ) {
-          console.log('인피니트 스크롤링 !');
-          const lastId = hotDealPosts[hotDealPosts.length - 1]?.id;
-          dispatch({
-            type: LOAD_MORE_HOTDEAL_POSTS_REQUEST,
-            lastId,
-          });
-        }
-      });
-    };
-
-    const io = new IntersectionObserver(handleIntersection, options);
-
-    if (scrollTarget.current) {
-      io.observe(scrollTarget.current); // 관찰 지정
-    }
+    const io = useInfiniteScroll(
+      viewport,
+      hasMoreHotDealPosts,
+      loadHotDealPostsLoading,
+      hotDealPosts,
+      scrollTarget,
+      dispatch,
+    );
 
     return () => io && io.disconnect(); // 모든 요소의 관찰을 중지
   }, [
@@ -109,7 +80,6 @@ const hotdeal = () => {
             rowRenderer={rowRenderer}
             list={visiblePosts}
           />
-
           {loadHotDealPostsLoading && (
             <Spinner indicator={<LoadingOutlined spin />}></Spinner>
           )}
@@ -140,7 +110,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async context => {
   });
   context.store.dispatch({
     type: LOAD_EARLY_HOTDEAL_POSTS_REQUEST,
-    lastId: null,
+    data: null,
   });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();

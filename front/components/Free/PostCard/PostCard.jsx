@@ -12,7 +12,7 @@ const PostCard = ({ post }) => {
   const createdAt = post.createdAt.slice(0, 10).split('-');
   const onClickUser = useCallback(() => {
     dispatch({ type: USER_INFO_MODAL_OPEN });
-    dispatch({ type: LOAD_YOUR_INFO_REQUEST, userId: post.User.id });
+    dispatch({ type: LOAD_YOUR_INFO_REQUEST, data: post.User.id });
   }, []);
 
   return (

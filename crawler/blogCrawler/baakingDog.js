@@ -5,13 +5,13 @@ dotenv.config();
 const baakingDog = async () => {
   try {
     const browser = await puppeteer.launch({
-      // headless: process.env.STATUS === "production",
-      // args: [
-      //   "--disable-gpu",
-      //   "--disable-setuid-sandbox",
-      //   "--no-sandbox",
-      //   "--no-zygote",
-      // ],
+      headless: process.env.STATUS === "production",
+      args: [
+        "--disable-gpu",
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--no-zygote",
+      ],
     });
     const page = await browser.newPage();
     await page.setUserAgent(

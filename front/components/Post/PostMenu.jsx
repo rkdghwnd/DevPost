@@ -55,13 +55,13 @@ const PostMenu = () => {
       if (isAlreadyBookmark) {
         dispatch({
           type: REMOVE_BOOKMARK_REQUEST,
-          postId: currentPost.id,
+          data: currentPost.id,
           mode: 'post',
         });
       } else {
         dispatch({
           type: ADD_BOOKMARK_REQUEST,
-          postId: currentPost.id,
+          data: currentPost.id,
           mode: 'post',
         });
       }

@@ -28,6 +28,11 @@ export const initialState = {
   confirmRemoveAccountModalVisual: false,
 };
 
+export const messageModal = message => ({
+  type: MESSAGE_MODAL_TOGGLE_REQUEST,
+  message,
+});
+
 export const CONFIRM_REMOVE_ACCOUNT_MODAL_OPEN =
   'CONFIRM_REMOVE_ACCOUNT_MODAL_OPEN';
 export const CONFIRM_REMOVE_ACCOUNT_MODAL_CLOSE =

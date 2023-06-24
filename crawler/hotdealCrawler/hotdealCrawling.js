@@ -15,7 +15,7 @@ const hotdealCrawling = async () => {
     await HotDeal.destroy({ truncate: true });
 
     for (let i = 0; i < allPosts.length; i++) {
-      const newsPost = await HotDeal.create({
+      const hotDealPost = await HotDeal.create({
         site_name: allPosts[i].site_name,
         title: allPosts[i].title,
         time: allPosts[i].time,

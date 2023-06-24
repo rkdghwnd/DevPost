@@ -14,7 +14,8 @@ import {
   LOAD_NEWS_POSTS_REQUEST,
   LOAD_NEWS_POSTS_SUCCESS,
 } from '../reducers/posts';
-import { MESSAGE_MODAL_TOGGLE_REQUEST } from '../reducers/modal';
+import { messageModal } from '../reducers/modal';
+import createRequestSaga from '../hooks/createRequestSaga';
 
 function loadMoreHotDealPostsAPI(lastId) {
   return axios.get(
@@ -22,25 +23,13 @@ function loadMoreHotDealPostsAPI(lastId) {
   );
 }
 
-function* loadMoreHotDealPosts(action) {
-  try {
-    const result = yield call(loadMoreHotDealPostsAPI, action.lastId);
-    yield put({
-      type: LOAD_MORE_HOTDEAL_POSTS_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: LOAD_MORE_HOTDEAL_POSTS_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '핫딜 게시판 추가로드 실패',
-    });
-  }
-}
+const loadMoreHotDealPosts = createRequestSaga(
+  LOAD_MORE_HOTDEAL_POSTS_SUCCESS,
+  LOAD_MORE_HOTDEAL_POSTS_FAILURE,
+  loadMoreHotDealPostsAPI,
+  undefined,
+  messageModal('핫딜 게시판 추가로드 실패'),
+);
 
 function loadEarlyHotDealPostsAPI(lastId) {
   return axios.get(
@@ -48,50 +37,27 @@ function loadEarlyHotDealPostsAPI(lastId) {
   );
 }
 
-function* loadEarlyHotDealPosts(action) {
-  try {
-    const result = yield call(loadEarlyHotDealPostsAPI, action.lastId);
-    yield put({
-      type: LOAD_EARLY_HOTDEAL_POSTS_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: LOAD_EARLY_HOTDEAL_POSTS_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '핫딜 게시판 초기로드 실패',
-    });
-  }
-}
+const loadEarlyHotDealPosts = createRequestSaga(
+  LOAD_EARLY_HOTDEAL_POSTS_SUCCESS,
+  LOAD_EARLY_HOTDEAL_POSTS_FAILURE,
+  loadEarlyHotDealPostsAPI,
+  undefined,
+  messageModal('핫딜 게시판 초기로드 실패'),
+);
+
 function loadBlogPostsAPI(page) {
   return axios.get(
     `${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/blog?page=${page || 1}`,
   );
 }
 
-function* loadBlogPosts(action) {
-  try {
-    const result = yield call(loadBlogPostsAPI, action.page);
-    yield put({
-      type: LOAD_BLOG_POSTS_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: LOAD_BLOG_POSTS_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '블로그 게시판 로드 실패',
-    });
-  }
-}
+const loadBlogPosts = createRequestSaga(
+  LOAD_BLOG_POSTS_SUCCESS,
+  LOAD_BLOG_POSTS_FAILURE,
+  loadBlogPostsAPI,
+  undefined,
+  messageModal('블로그 게시판 로드 실패'),
+);
 
 function loadNewsPostsAPI(page) {
   return axios.get(
@@ -99,26 +65,13 @@ function loadNewsPostsAPI(page) {
   );
 }
 
-function* loadNewsPosts(action) {
-  try {
-    const result = yield call(loadNewsPostsAPI, action.page);
-
-    yield put({
-      type: LOAD_NEWS_POSTS_SUCCESS,
-      data: result.data,
-    });
-  } catch (err) {
-    console.error(err);
-    yield put({
-      type: LOAD_NEWS_POSTS_FAILURE,
-      error: err.response.data,
-    });
-    yield put({
-      type: MESSAGE_MODAL_TOGGLE_REQUEST,
-      message: '뉴스 게시판 로드 실패',
-    });
-  }
-}
+const loadNewsPosts = createRequestSaga(
+  LOAD_NEWS_POSTS_SUCCESS,
+  LOAD_NEWS_POSTS_FAILURE,
+  loadNewsPostsAPI,
+  undefined,
+  messageModal('뉴스 게시판 로드 실패'),
+);
 
 function* watchLoadMoreHotDealPosts() {
   yield takeLatest(LOAD_MORE_HOTDEAL_POSTS_REQUEST, loadMoreHotDealPosts);

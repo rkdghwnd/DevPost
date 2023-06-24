@@ -51,7 +51,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async context => {
   });
   context.store.dispatch({
     type: LOAD_FREE_POSTS_REQUEST,
-    page: Number(context.query.page),
+    data: Number(context.query.page),
   });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();

@@ -1,24 +1,24 @@
 import React, { useCallback } from 'react';
 import { END } from 'redux-saga';
 import axios from 'axios';
-import PostMainText from '../../components/Post/PostMainText';
-import PostFooter from '../../components/Post/PostFooter';
 import Comment from '../../components/Post/Comment/Comment';
-import CommentInputDesktop from '../../components/Post/Comment/CommentInputDesktop';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_POST_REQUEST } from '../../reducers/post';
-import PostOption from '../../components/Post/PostOption';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { LOG_IN_MODAL_OPEN } from '../../reducers/modal';
-import PostLoading from '../../components/Post/PostLoading';
 import wrapper from '../../store/configureStore';
 import { LOAD_MY_INFO_REQUEST } from '../../reducers/user';
 import Custom404 from '../404';
 import Head from 'next/head';
-import TopScroll from '../../components/HotDeal/TopScroll';
-import DesktopHeader from '../../components/Common/AppLayout/DesktopHeader/DesktopHeader';
 import { EmptyCommentForm, LogInBox, PostForm } from './styles';
 import PostMenu from '../../components/Post/PostMenu';
+import PostMainText from '../../components/Post/PostMainText/PostMainText';
+import PostFooter from '../../components/Post/PostFooter/PostFooter';
+import CommentInputDesktop from '../../components/Post/CommentInputDesktop/CommentInputDesktop';
+import PostOption from '../../components/Post/PostOption/PostOption';
+import PostLoading from '../../components/Post/PostLoading/PostLoading';
+import TopScroll from '../../components/HotDeal/TopScroll/TopScroll';
+import DesktopHeader from '../../components/Common/DesktopHeader/DesktopHeader';
 
 const post = () => {
   const dispatch = useDispatch();
@@ -87,7 +87,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async context => {
   }
   context.store.dispatch({
     type: LOAD_POST_REQUEST,
-    postId: context.params.postId,
+    data: context.params.postId,
   });
   context.store.dispatch({
     type: LOAD_MY_INFO_REQUEST, // 로그인 유지

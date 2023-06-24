@@ -2,7 +2,6 @@ const express = require("express");
 const { Post, User, Image, Comment, Nested_Comment } = require("../models");
 const { Op } = require("sequelize");
 const router = express.Router();
-// npm i morgan
 
 router.get("/free", async (req, res, next) => {
   // GET /free?page={page || 1}

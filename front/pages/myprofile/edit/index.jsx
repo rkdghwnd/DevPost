@@ -29,10 +29,7 @@ const edit = () => {
   const Router = useRouter();
   const { me, loadMyInfoLoading } = useSelector(state => state.user);
   const { profileImage } = useSelector(state => state.post);
-  // const [nickname, setNickname] = useState(me?.nickname);
   const [introduce, onChangeIntroduce] = useInput(me?.introduce);
-  // const [password, setPassword] = useState('');
-  // const [passwordCheck, setPasswordCheck] = useState('');
   const [nicknameValidateError, isNicknameValidate] =
     useNicknameValidate(false);
   const [passwordValidateError, isPasswordValidate] =
@@ -57,24 +54,6 @@ const edit = () => {
   useEffect(() => {
     dispatch({ type: LOAD_PROFILE_IMAGE, image: me?.profile_img });
   }, [me]);
-
-  // const onChangeNickname = useCallback(e => {
-  //   setNickname(e.currentTarget.value);
-  //   isNicknameValidate(e.currentTarget.value);
-  // }, []);
-
-  // const onChangePassword = useCallback(e => {
-  //   setPassword(e.currentTarget.value);
-  //   isPasswordValidate(e.currentTarget.value);
-  // }, []);
-
-  // const onChangePasswordCheck = useCallback(
-  //   e => {
-  //     setPasswordCheck(e.currentTarget.value);
-  //     setPasswordMatchError(e.currentTarget.value !== password);
-  //   },
-  //   [password],
-  // );
 
   const onClickBack = useCallback(() => {
     window.history.back();

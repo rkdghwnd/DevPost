@@ -20,13 +20,13 @@ const PostFooter = () => {
       if (isAlreadyLike) {
         dispatch({
           type: UNLIKE_POST_REQUEST,
-          postId: currentPost.id,
+          data: currentPost.id,
           mode: 'post',
         });
       } else {
         dispatch({
           type: LIKE_POST_REQUEST,
-          postId: currentPost.id,
+          data: currentPost.id,
           mode: 'post',
         });
       }
