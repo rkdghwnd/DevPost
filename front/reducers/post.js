@@ -251,7 +251,6 @@ const reducer = (state = initialState, action) => {
         draft.loadMyBookmarkLoading = false;
         draft.loadMyBookmarkError = action.error;
         break;
-
       case REMOVE_BOOKMARK_REQUEST:
         draft.removeBookmarkLoading = true;
         draft.removeBookmarkDone = false;
@@ -421,6 +420,10 @@ const reducer = (state = initialState, action) => {
         );
         if (myBookmark) {
           myBookmark.Likers.push({ id: action.data.UserId });
+        }
+        const search = draft.searchPosts.find(v => v.id === action.data.PostId);
+        if (search) {
+          search.Likers.push({ id: action.data.UserId });
         }
         const yourPost = draft.you?.Posts.find(
           v => v.id === action.data.PostId,
@@ -655,9 +658,6 @@ const reducer = (state = initialState, action) => {
         break;
       case UPDATE_POST_SUCCESS:
         draft.imagePaths = []; // 게시글 올린뒤 이미지업로드 부분 초기화
-        // draft.freePosts = draft.freePosts.map(post =>
-        //   post.id === action.data.id ? action.data : post,
-        // );
         draft.currentPost = action.data;
         draft.updatePostLoading = false;
         draft.updatePostDone = true;

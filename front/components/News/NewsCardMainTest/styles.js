@@ -23,6 +23,8 @@ export const MainTextForm = styled.li`
     font-size: 13px;
     color: rgb(153, 153, 153);
     margin-right: 10px;
+    line-height: 17px;
+    margin-top: 5px;
   }
   img {
     width: 80px;
