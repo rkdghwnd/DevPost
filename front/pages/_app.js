@@ -37,6 +37,7 @@ const GlobalStyle = createGlobalStyle`
 body {
   background-color: rgb(245,245,245);
   width: 100%;
+  
 }
 
 @keyframes pulse {

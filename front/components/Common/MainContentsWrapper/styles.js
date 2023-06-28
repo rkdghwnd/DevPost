@@ -6,7 +6,7 @@ export const ContentsWrapper = styled.div`
     max-width: 800px;
     margin: 0 auto;
     background-color: white;
-    padding: 0 10px 25px 10px;
+    padding: 0 10px;
     position: relative;
   }
   border-radius: 5px;
