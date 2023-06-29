@@ -13,9 +13,10 @@ import NavBar from '../components/Common/NavBar/NavBar';
 import AppLayout from '../components/Common/AppLayout';
 import PostsLoading from '../components/Free/PostsLoading/PostsLoading';
 import Paginations from '../components/Common/Paginations/Paginations';
+import { LOADING } from '../reducers';
 
 const free = () => {
-  const { freePosts, loadFreePostsLoading, postTotal, addPostLoading } =
+  const { freePosts, loadFreePostsStatus, postTotal, addPostStatus } =
     useSelector(state => state.post);
 
   return (
@@ -26,7 +27,7 @@ const free = () => {
       <AppLayout>
         <MainContentsWrapper>
           <NavBar />
-          {loadFreePostsLoading || addPostLoading ? (
+          {loadFreePostsStatus === LOADING || addPostStatus === LOADING ? (
             <PostsLoading />
           ) : (
             freePosts.map(post => {

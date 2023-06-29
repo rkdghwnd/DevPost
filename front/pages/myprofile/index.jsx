@@ -15,6 +15,7 @@ import ShortComment from '../../components/Free/ShortComment/ShortComment';
 import MyProfileLoading from '../../components/MyProfile/MyProfileLoading/MyProfileLoading';
 import MyProfileOption from '../../components/MyProfile/MyProfileOption/MyProfileOption';
 import AppLayout from '../../components/Common/AppLayout';
+import { LOADING } from '../../reducers';
 
 const myprofile = () => {
   const dispatch = useDispatch();
@@ -24,11 +25,11 @@ const myprofile = () => {
     myPosts,
     myComments,
     myBookmark,
-    loadMyPostsLoading,
-    loadMyCommentsLoading,
-    loadMyBookmarkLoading,
+    loadMyPostsStatus,
+    loadMyCommentsStatus,
+    loadMyBookmarkStatus,
   } = useSelector(state => state.post);
-  const { me, loadMyInfoLoading } = useSelector(state => state.user);
+  const { me, loadMyInfoStatus } = useSelector(state => state.user);
   const [postsVisible, setPostsVisible] = useState(false);
   const [commentsVisible, setCommentsVisible] = useState(false);
   const [bookmarkVisible, setBookmarkVisible] = useState(false);
@@ -39,7 +40,7 @@ const myprofile = () => {
 
   useEffect(() => {
     me?.id ? '' : Router.replace('/');
-  }, [me && me.id]);
+  }, [me?.id]);
 
   const onClickOption = useCallback(e => {
     dispatch({ type: MY_PROFILE_OPTION_TOGGLE_REQUEST });
@@ -49,7 +50,7 @@ const myprofile = () => {
   if (!me) {
     return;
   }
-  if (loadMyInfoLoading) {
+  if (loadMyInfoStatus === LOADING) {
     return <MyProfileLoading />;
   }
 
@@ -74,9 +75,9 @@ const myprofile = () => {
             commentsVisible={commentsVisible}
             bookmarkVisible={bookmarkVisible}
           />
-          {(loadMyPostsLoading ||
-            loadMyCommentsLoading ||
-            loadMyBookmarkLoading) && (
+          {(loadMyPostsStatus === LOADING ||
+            loadMyCommentsStatus === LOADING ||
+            loadMyBookmarkStatus === LOADING) && (
             <Spinner
               tip="Loading..."
               indicator={<LoadingOutlined spin />}

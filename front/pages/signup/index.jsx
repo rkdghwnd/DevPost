@@ -19,20 +19,21 @@ import {
   useOnChange,
   usePasswordValidate,
 } from '../../hooks/validate';
+import { LOADING } from '../../reducers';
 
 const signup = () => {
   const dispatch = useDispatch();
-  const { signUpLoading, signUpError } = useSelector(state => state.user);
+  const { signUpStatus } = useSelector(state => state.user);
   const submitButton = useRef();
   const router = useRouter();
 
   useEffect(() => {
-    if (signUpLoading) {
+    if (signUpStatus === LOADING) {
       submitButton.disabled = true;
     } else {
       submitButton.disabled = false;
     }
-  }, [signUpLoading]);
+  }, [signUpStatus]);
 
   const [email, setEmail] = useState('');
   const [nicknameValidateError, isNicknameValidate] =
@@ -66,33 +67,29 @@ const signup = () => {
     isEmailValidate(e.currentTarget.value);
   }, []);
 
-  const onSubmit = useCallback(
-    e => {
-      e.preventDefault();
-      // 이메일 형식을 만족하고 있는지
-      const verify1 = isEmailValidate(email);
-      // 패스워드가 영어 + 숫자 + 특수문자 갖춰져 있는지
-      const verify2 = isPasswordValidate(password);
-      // 패스워드가 일치하는지 setPasswordMatchError
-      setPasswordMatchError(passwordCheck !== password);
-      // 닉네임이 2글자 이상인지
-      const verify3 = isNicknameValidate(nickname);
-      // +
-      // 중복된 이메일인지 -> 요청시 backend 에서 검증
+  const onClickSignUp = useCallback(() => {
+    // 이메일 형식을 만족하고 있는지
+    const verify1 = isEmailValidate(email);
+    // 패스워드가 영어 + 숫자 + 특수문자 갖춰져 있는지
+    const verify2 = isPasswordValidate(password);
+    // 패스워드가 일치하는지 setPasswordMatchError
+    setPasswordMatchError(passwordCheck !== password);
+    // 닉네임이 2글자 이상인지
+    const verify3 = isNicknameValidate(nickname);
+    // +
+    // 중복된 이메일인지 -> 요청시 backend 에서 검증
 
-      if (verify1 && verify2 && verify3 && !passwordMatchError) {
-        dispatch({
-          type: SIGN_UP_REQUEST,
-          data: {
-            email,
-            nickname,
-            password,
-          },
-        });
-      }
-    },
-    [email, password, nickname, passwordCheck],
-  );
+    if (verify1 && verify2 && verify3 && !passwordMatchError) {
+      dispatch({
+        type: SIGN_UP_REQUEST,
+        data: {
+          email,
+          nickname,
+          password,
+        },
+      });
+    }
+  }, [email, password, nickname, passwordCheck]);
 
   const onClickBack = useCallback(() => {
     router.back();
@@ -105,7 +102,7 @@ const signup = () => {
       </Head>
       <AppLayout>
         <SignupWrapper>
-          <SignUpForm onSubmit={onSubmit}>
+          <SignUpForm>
             <h2>Sign up</h2>
             <BackButton onClick={onClickBack} />
             <Input
@@ -118,8 +115,8 @@ const signup = () => {
             {emailValidateError ? (
               <div>이메일 형식을 만족하지 않습니다.</div>
             ) : null}
-            {signUpError === '이미 사용중인 아이디입니다.' ? (
-              <div>{signUpError}</div>
+            {signUpStatus === '이미 사용중인 아이디입니다.' ? (
+              <div>{signUpStatus}</div>
             ) : null}
             <Input
               type="text"
@@ -155,9 +152,9 @@ const signup = () => {
               <div>비밀번호가 일치하지 않습니다.</div>
             ) : null}
             <SignUpButton
-              type="submit"
               ref={submitButton}
-              signUpLoading={signUpLoading}
+              signUpStatus={signUpStatus}
+              onClick={onClickSignUp}
             >
               회원가입
             </SignUpButton>

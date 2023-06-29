@@ -13,11 +13,12 @@ import {
   WritePostBody,
 } from './styles';
 import UploadImageForm from '../UploadImageForm/UploadImageForm';
+import { LOADING } from '../../../reducers';
 
 const UpdatePostModal = () => {
   const dispatch = useDispatch();
 
-  const { updatePostLoading, currentPost, imagePaths } = useSelector(
+  const { updatePostStatus, currentPost, imagePaths } = useSelector(
     state => state.post,
   );
   const { updatePostModalSlideUp } = useSelector(state => state.modal);
@@ -65,7 +66,7 @@ const UpdatePostModal = () => {
         <WritePostHeader>
           <AiOutlineClose onClick={onCancelUpdatePostModal} />
           <span>글 수정</span>
-          {updatePostLoading ? (
+          {updatePostStatus === LOADING ? (
             <Spin />
           ) : (
             <AiOutlineCheck onClick={onUpdatePost} />

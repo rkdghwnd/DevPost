@@ -1,5 +1,6 @@
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import styled from 'styled-components';
+import { LOADING } from '../../reducers';
 
 export const SignupWrapper = styled.section`
   min-height: 500px;
@@ -15,7 +16,7 @@ export const SignupWrapper = styled.section`
   }
 `;
 
-export const SignUpForm = styled.form`
+export const SignUpForm = styled.section`
   max-width: 765px;
   padding: 20px;
   display: flex;
@@ -72,5 +73,5 @@ export const SignUpButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   border: none;
-  opacity: ${props => (props.signUpLoading ? '0.5' : '1')};
+  opacity: ${props => (props.signUpStatus === LOADING ? '0.5' : '1')};
 `;

@@ -13,10 +13,11 @@ import {
   InfoForm,
   Spinner,
 } from './styles';
+import { LOADING } from '../../../reducers';
 
 const UserInfoModal = () => {
   const dispatch = useDispatch();
-  const { you, loadYourInfoLoading } = useSelector(state => state.post);
+  const { you, loadYourInfoStatus } = useSelector(state => state.post);
   const { userInfoModalSlideUp } = useSelector(state => state.modal);
   const [postsVisible, setPostsVisible] = useState(false);
   const [commentsVisible, setCommentsVisible] = useState(false);
@@ -68,7 +69,7 @@ const UserInfoModal = () => {
           you?.Comments.map(comment => (
             <ShortComment key={shortId.generate()} comment={comment} />
           ))}
-        {loadYourInfoLoading && (
+        {loadYourInfoStatus === LOADING && (
           <Spinner indicator={<LoadingOutlined spin />}></Spinner>
         )}
       </InfoForm>

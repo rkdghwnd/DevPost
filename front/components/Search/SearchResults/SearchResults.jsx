@@ -8,13 +8,14 @@ import { useSelector } from 'react-redux';
 import shortId from 'shortid';
 import { Spin } from 'antd';
 import { SpinnerContainer } from './styles';
+import { LOADING } from '../../../reducers';
 
 const SearchResults = () => {
-  const { searchPosts, searchPostsLoading } = useSelector(state => state.post);
+  const { searchPosts, searchPostsStatus } = useSelector(state => state.post);
 
   return (
     <>
-      {searchPostsLoading ? (
+      {searchPostsStatus === LOADING ? (
         <SpinnerContainer>
           <Spin indicator={<LoadingOutlined spin />}></Spin>
         </SpinnerContainer>

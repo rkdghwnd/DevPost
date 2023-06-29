@@ -1,28 +1,22 @@
 import produce from 'immer';
+import { LOADING, REJECTED, SUCCEEDED } from '.';
 
 export const initialState = {
   me: null,
-  loadMyInfoLoading: false, // 내 정보 가져오는 중
-  loadMyInfoError: null,
-  loadMyInfoDone: false,
-  logInLoading: false, // 로그인 시도중
-  logInDone: false,
-  logInError: null,
-  logOutLoading: false, // 로그아웃 시도중
-  logOutDone: true,
-  logOutError: null,
-  signUpLoading: false, // 회원가입 시도중
-  SignUpDone: false,
-  signUpError: null,
-  updateMyInfoLoading: false,
-  updateMyInfoError: null,
-  updateMyInfoDone: false,
-  verifyPasswordLoading: false,
-  verifyPasswordError: null,
-  verifyPasswordDone: false,
-  removeAccountLoading: false,
-  removeAccountError: null,
-  removeAccountDone: false,
+
+  loadMyInfoStatus: 'idle',
+
+  logInStatus: 'idle',
+
+  logOutStatus: 'idle',
+
+  signUpStatus: 'idle',
+
+  updateMyInfoStatus: 'idle',
+
+  verifyPasswordStatus: 'idle',
+
+  removeAccountStatus: 'idle',
 };
 
 export const REMOVE_ACCOUNT_REQUEST = 'REMOVE_ACCOUNT_REQUEST';
@@ -56,10 +50,6 @@ export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
-export const CHANGE_NICKNAME_REQUEST = 'CHANGE_NICKNAME_REQUEST';
-export const CHANGE_NICKNAME_SUCCESS = 'CHANGE_NICKNAME_SUCCESS';
-export const CHANGE_NICKNAME_FAILURE = 'CHANGE_NICKNAME_FAILURE';
-
 export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
 export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
 export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
@@ -68,31 +58,22 @@ const reducer = (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
       case REMOVE_ACCOUNT_REQUEST:
-        draft.removeAccountLoading = true;
-        draft.removeAccountError = null;
-        draft.removeAccountDone = false;
+        draft.removeAccountStatus = LOADING;
         break;
       case REMOVE_ACCOUNT_SUCCESS:
-        draft.removeAccountLoading = false;
-        draft.removeAccountDone = true;
-        window.location.href = process.env.NEXT_PUBLIC_FRONT_END_DOMAIN;
+        draft.removeAccountStatus = SUCCEEDED;
         break;
       case REMOVE_ACCOUNT_FAILURE:
-        draft.removeAccountLoading = false;
-        draft.removeAccountError = action.error;
+        draft.removeAccountStatus = REJECTED;
         break;
       case VERIFY_PASSWORD_REQUEST:
-        draft.verifyPasswordLoading = true;
-        draft.verifyPasswordError = null;
-        draft.verifyPasswordDone = false;
+        draft.verifyPasswordStatus = LOADING;
         break;
       case VERIFY_PASSWORD_SUCCESS:
-        draft.verifyPasswordLoading = false;
-        draft.verifyPasswordDone = true;
+        draft.verifyPasswordStatus = SUCCEEDED;
         break;
       case VERIFY_PASSWORD_FAILURE:
-        draft.verifyPasswordLoading = false;
-        draft.verifyPasswordError = action.error;
+        draft.verifyPasswordStatus = REJECTED;
         break;
       case RESET_UPDATE_MY_INFO_DONE:
         draft.updateMyInfoDone = false;
@@ -101,27 +82,20 @@ const reducer = (state = initialState, action) => {
         draft.updateMyInfoError = null;
         break;
       case UPDATE_MY_INFO_REQUEST:
-        draft.updateMyInfoLoading = true;
-        draft.updateMyInfoError = null;
-        draft.updateMyInfoDone = false;
+        draft.updateMyInfoStatus = LOADING;
         break;
       case UPDATE_MY_INFO_SUCCESS:
-        draft.updateMyInfoLoading = false;
-        draft.updateMyInfoDone = true;
+        draft.updateMyInfoStatus = SUCCEEDED;
         draft.me = action.data;
         break;
       case UPDATE_MY_INFO_FAILURE:
-        draft.updateMyInfoLoading = false;
-        draft.updateMyInfoError = action.error;
+        draft.updateMyInfoStatus = REJECTED;
         break;
       case LOAD_MY_INFO_REQUEST:
-        draft.loadMyInfoLoading = true;
-        draft.loadMyInfoError = null;
-        draft.loadMyInfoDone = false;
+        draft.loadMyInfoStatus = LOADING;
         break;
       case LOAD_MY_INFO_SUCCESS:
-        draft.loadMyInfoLoading = false;
-        draft.loadMyInfoDone = true;
+        draft.loadMyInfoStatus = SUCCEEDED;
         if (action.data) {
           draft.logInDone = true;
           draft.logOutDone = false;
@@ -132,74 +106,46 @@ const reducer = (state = initialState, action) => {
         draft.me = action.data;
         break;
       case LOAD_MY_INFO_FAILURE:
-        draft.loadMyInfoLoading = false;
-        draft.loadMyInfoError = action.error;
+        draft.loadMyInfoStatus = REJECTED;
         break;
       case RESET_LOG_IN_ERROR:
-        draft.logInError = false;
+        draft.logInStatus = 'idle';
         break;
       case RESET_SIGN_UP_ERROR:
-        draft.signUpError = false;
-        break;
-      case RESET_SIGN_UP_DONE:
-        draft.signUpDone = false;
+        draft.signUpStatus = 'idle';
         break;
       case LOG_IN_REQUEST:
-        draft.loginLoading = true;
-        draft.logInError = null;
-        draft.logInDone = false;
+        draft.logInStatus = LOADING;
         break;
       case LOG_IN_SUCCESS:
-        draft.logInLoading = false;
-        draft.logInDone = true;
-        draft.logOutDone = false;
+        draft.logInStatus = SUCCEEDED;
+
+        draft.logOutStatus = 'idle';
         draft.me = action.data;
         break;
       case LOG_IN_FAILURE:
-        draft.logInLoading = false;
-        draft.logInError = action.error;
+        draft.logInStatus = REJECTED;
         break;
       case LOG_OUT_REQUEST:
-        draft.logOutLoading = true;
-        draft.logOutDone = false;
-        draft.logInDone = true;
-        draft.logOutError = null;
+        draft.logOutStatus = LOADING;
+
         break;
       case LOG_OUT_SUCCESS:
-        draft.logOutLoading = false;
-        draft.logInDone = false;
-        draft.logOutDone = true;
+        draft.logOutStatus = SUCCEEDED;
+        draft.logInStatus = 'idle';
         draft.me = null;
         break;
       case LOG_OUT_FAILURE:
-        draft.logOutLoading = false;
-        draft.logOutError = action.error;
+        draft.logOutStatus = REJECTED;
         break;
       case SIGN_UP_REQUEST:
-        draft.signUpLoading = true;
-        draft.signUpDone = false;
-        draft.signUpError = null;
+        draft.signUpStatus = LOADING;
         break;
       case SIGN_UP_SUCCESS:
-        draft.signUpLoading = false;
-        draft.signUpDone = true;
+        draft.signUpStatus = SUCCEEDED;
         break;
       case SIGN_UP_FAILURE:
-        draft.signUpLoading = false;
-        draft.signUpError = action.error;
-        break;
-      case CHANGE_NICKNAME_REQUEST:
-        draft.changeNicknameLoading = true;
-        draft.changeNicknameDone = false;
-        draft.changeNicknameError = null;
-        break;
-      case CHANGE_NICKNAME_SUCCESS:
-        draft.changeNicknameLoading = false;
-        draft.changeNicknameDone = true;
-        break;
-      case CHANGE_NICKNAME_FAILURE:
-        draft.changeNicknameLoading = false;
-        draft.changeNicknameError = action.error;
+        draft.signUpStatus = action.error;
         break;
       default:
         break;

@@ -18,13 +18,14 @@ import SideFilter from '../../components/Common/SideFilter/SideFilter';
 import { List } from 'react-virtualized';
 import { useFilter } from '../../hooks/useFilter';
 import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
+import { LOADING } from '../../reducers';
 
 const hotdeal = () => {
   const dispatch = useDispatch();
   const {
     hotDealPosts,
     hasMoreHotDealPosts,
-    loadHotDealPostsLoading,
+    loadHotDealPostsStatus,
     filteredList,
   } = useSelector(state => state.posts);
 
@@ -41,7 +42,7 @@ const hotdeal = () => {
     const io = useInfiniteScroll(
       viewport,
       hasMoreHotDealPosts,
-      loadHotDealPostsLoading,
+      loadHotDealPostsStatus,
       hotDealPosts,
       scrollTarget,
       dispatch,
@@ -51,7 +52,7 @@ const hotdeal = () => {
   }, [
     viewport,
     scrollTarget,
-    loadHotDealPostsLoading,
+    loadHotDealPostsStatus,
     hasMoreHotDealPosts,
     hotDealPosts,
   ]);
@@ -80,12 +81,12 @@ const hotdeal = () => {
             rowRenderer={rowRenderer}
             list={visiblePosts}
           />
-          {loadHotDealPostsLoading && (
+          {loadHotDealPostsStatus === LOADING && (
             <Spinner indicator={<LoadingOutlined spin />}></Spinner>
           )}
           <div
             ref={
-              hasMoreHotDealPosts && !loadHotDealPostsLoading
+              hasMoreHotDealPosts && !(loadHotDealPostsStatus === LOADING)
                 ? scrollTarget
                 : undefined
             }

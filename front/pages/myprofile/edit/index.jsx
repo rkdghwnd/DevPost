@@ -22,12 +22,13 @@ import {
   useOnChange,
   usePasswordValidate,
 } from '../../../hooks/validate';
+import { LOADING } from '../../../reducers';
 
 const edit = () => {
   const dispatch = useDispatch();
   const imageInput = useRef();
   const Router = useRouter();
-  const { me, loadMyInfoLoading } = useSelector(state => state.user);
+  const { me, loadMyInfoStatus } = useSelector(state => state.user);
   const { profileImage } = useSelector(state => state.post);
   const [introduce, onChangeIntroduce] = useInput(me?.introduce);
   const [nicknameValidateError, isNicknameValidate] =
@@ -48,16 +49,18 @@ const edit = () => {
   }, []);
 
   useEffect(() => {
-    me?.id ? '' : Router.replace('/');
-  }, [me && me.id]);
+    if (!me?.id) {
+      Router.replace('/');
+    }
+  }, [me?.id, Router]);
 
   useEffect(() => {
     dispatch({ type: LOAD_PROFILE_IMAGE, image: me?.profile_img });
   }, [me]);
 
   const onClickBack = useCallback(() => {
-    window.history.back();
-  }, []);
+    Router.back();
+  }, [Router]);
 
   const onChangeUploadImage = useCallback(e => {
     const imageFormData = new FormData(); // FormData 형식 객체 생성
@@ -100,7 +103,7 @@ const edit = () => {
   if (!me) {
     return;
   }
-  if (loadMyInfoLoading) {
+  if (loadMyInfoStatus === LOADING) {
     return <MyProfileEditLoading />;
   }
 

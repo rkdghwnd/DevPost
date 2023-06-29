@@ -1,9 +1,10 @@
+import { LOADING } from '../reducers';
 import { LOAD_MORE_HOTDEAL_POSTS_REQUEST } from '../reducers/posts';
 
 export function useInfiniteScroll(
   viewport,
   hasMoreHotDealPosts,
-  loadHotDealPostsLoading,
+  loadHotDealPostsStatus,
   hotDealPosts,
   scrollTarget,
   dispatch,
@@ -18,7 +19,7 @@ export function useInfiniteScroll(
       if (
         entry.isIntersecting &&
         hasMoreHotDealPosts &&
-        !loadHotDealPostsLoading
+        !(loadHotDealPostsStatus === LOADING)
       ) {
         console.log('인피니트 스크롤링 !');
         const lastId = hotDealPosts[hotDealPosts.length - 1]?.id;

@@ -56,7 +56,7 @@ export default function createRequestSaga(
         yield put(successAdditionalAction);
       }
     } catch (error) {
-      yield put({ type: failureType, data: error.response.data });
+      yield put({ type: failureType, error: error.response.data });
       if (failureAdditionalAction === 'error_data_response') {
         yield put(messageModal(error.response.data));
       } else if (failureAdditionalAction) {
