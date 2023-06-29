@@ -5,6 +5,8 @@ export const BlogCardForm = styled.article`
   padding: 10px;
   background-color: white;
   border-bottom: 1px solid rgb(240, 240, 240);
+  border-radius: 5px;
+
   &:hover {
     background-color: rgb(250, 250, 250);
   }

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { END } from 'redux-saga';
 import axios from 'axios';
 import Comment from '../../components/Post/Comment/Comment';
@@ -19,11 +19,14 @@ import PostOption from '../../components/Post/PostOption/PostOption';
 import PostLoading from '../../components/Post/PostLoading/PostLoading';
 import TopScroll from '../../components/HotDeal/TopScroll/TopScroll';
 import DesktopHeader from '../../components/Common/DesktopHeader/DesktopHeader';
+import { LOADING, REJECTED, SUCCEEDED } from '../../reducers';
+import { useRouter } from 'next/router';
 
 const post = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { postOptionVisible } = useSelector(state => state.option);
-  const { currentPost, loadPostLoading, loadPostError } = useSelector(
+  const { currentPost, loadPostStatus, removePostStatus } = useSelector(
     state => state.post,
   );
   const { me } = useSelector(state => state.user);
@@ -39,11 +42,17 @@ const post = () => {
     dispatch({ type: LOG_IN_MODAL_OPEN });
   }, []);
 
-  if (loadPostError) {
+  useEffect(() => {
+    if (removePostStatus === SUCCEEDED) {
+      router.push(`${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}`);
+    }
+  }, [removePostStatus, router]);
+
+  if (loadPostStatus === REJECTED) {
     return <Custom404 />;
   }
 
-  if (loadPostLoading || !currentPost) {
+  if (loadPostStatus === LOADING || !currentPost) {
     return <PostLoading />;
   }
 

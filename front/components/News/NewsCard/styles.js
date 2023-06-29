@@ -4,11 +4,13 @@ export const NewsCardForm = styled.article`
   background-color: white;
   padding: 10px 20px;
   border-bottom: 1px solid rgb(240, 240, 240);
+  border-radius: 5px;
   ul {
     list-style-type: none;
     padding-left: 0;
     margin: 0;
   }
+
   &:hover {
     background-color: rgb(250, 250, 250);
   }

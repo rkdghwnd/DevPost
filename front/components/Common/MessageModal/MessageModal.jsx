@@ -10,16 +10,21 @@ import {
   RESET_UPDATE_MY_INFO_ERROR,
 } from '../../../reducers/user';
 import { ModalBackdrop, MessageForm } from './styles';
+import { REJECTED, SUCCEEDED } from '../../../reducers';
 
 const MessageModal = () => {
   const dispatch = useDispatch();
   const { message } = useSelector(state => state.modal);
   const {
-    signUpDone,
-    signUpError,
-    logInError,
-    updateMyInfoError,
-    updateMyInfoDone,
+    // signUpDone,
+    // signUpError,
+    signUpStatus,
+    // logInError,
+    logInStatus,
+    // updateMyInfoError,
+    // updateMyInfoDone,
+    updateMyInfoStatus,
+    removeAccountStatus,
   } = useSelector(state => state.user);
 
   // 확인 눌렀을때 닫히도록
@@ -28,33 +33,31 @@ const MessageModal = () => {
     dispatch({ type: MESSAGE_MODAL_TOGGLE_REQUEST, message: '' });
 
     // 로그인 에러, 회원가입, 프로필 수정 에러 상태 초기화
-    if (logInError) {
+    if (logInStatus === REJECTED) {
       dispatch({ type: RESET_LOG_IN_ERROR });
     }
-    if (signUpError) {
+    if (signUpStatus === REJECTED) {
       dispatch({ type: RESET_SIGN_UP_ERROR });
     }
-    if (updateMyInfoError) {
+    if (updateMyInfoStatus === REJECTED) {
       dispatch({ type: RESET_UPDATE_MY_INFO_ERROR });
     }
     // 회원가입 성공시 상태 초기화
-    if (signUpDone) {
+    if (signUpStatus === SUCCEEDED) {
       dispatch({ type: RESET_SIGN_UP_DONE });
       Router.replace('/');
     }
 
     // 프로필 수정 성공시 상태 초기화
-    if (updateMyInfoDone) {
+    if (updateMyInfoStatus === SUCCEEDED) {
       dispatch({ type: RESET_UPDATE_MY_INFO_DONE });
       Router.replace('/myprofile');
     }
-  }, [
-    signUpDone,
-    logInError,
-    signUpError,
-    updateMyInfoError,
-    updateMyInfoDone,
-  ]);
+
+    if (removeAccountStatus === SUCCEEDED) {
+      Router.replace('/');
+    }
+  }, [logInStatus, signUpStatus, updateMyInfoStatus]);
 
   return (
     <ModalBackdrop>

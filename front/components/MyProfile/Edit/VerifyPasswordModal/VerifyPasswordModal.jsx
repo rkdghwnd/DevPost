@@ -1,11 +1,13 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import useInput from '../../../../hooks/input';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { VERIFY_PASSWORD_REQUEST } from '../../../../reducers/user';
 import { ModalBackdrop, InfoForm } from './styles';
 import styled from 'styled-components';
 import { AiOutlineClose } from 'react-icons/ai';
 import { VERIFY_PASSWORD_MODAL_CLOSE } from '../../../../reducers/modal';
+import { useRouter } from 'next/router';
+import { SUCCEEDED } from '../../../../reducers';
 
 const CloseButton = styled(AiOutlineClose)`
   cursor: pointer;
@@ -17,8 +19,9 @@ const CloseButton = styled(AiOutlineClose)`
 
 const VerifyPasswordModal = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [password, onChangePassword] = useInput('');
-
+  const { removeAccountStatus } = useSelector(state => state.user);
   const onVerifyPassword = useCallback(() => {
     dispatch({ type: VERIFY_PASSWORD_REQUEST, data: { password } });
   }, [password]);
@@ -26,6 +29,12 @@ const VerifyPasswordModal = () => {
   const onCloseVerifyModal = useCallback(() => {
     dispatch({ type: VERIFY_PASSWORD_MODAL_CLOSE });
   }, []);
+
+  useEffect(() => {
+    if (removeAccountStatus === SUCCEEDED) {
+      router.replace(process.env.NEXT_PUBLIC_FRONT_END_DOMAIN);
+    }
+  }, [removeAccountStatus, router]);
 
   return (
     <ModalBackdrop>

@@ -1,19 +1,14 @@
 import produce from 'immer';
+import { LOADING, REJECTED, SUCCEEDED } from '.';
 
 export const initialState = {
   blogPosts: [],
   newsPosts: [],
   hotDealPosts: [],
-  loadBlogPostsLoading: false,
-  loadBlogPostsDone: false,
-  loadBlogPostsError: null,
-  loadNewsPostsLoading: false,
-  loadNewsPostsDone: false,
-  loadNewsPostsError: null,
+  loadBlogPostsStatus: 'idle',
+  loadNewsPostsStatus: 'idle',
   hasMoreHotDealPosts: false,
-  loadHotDealPostsLoading: false,
-  loadHotDealPostsDone: false,
-  loadHotDealPostsError: null,
+  loadHotDealPostsStatus: 'idle',
   filteredList: [],
 };
 
@@ -53,62 +48,50 @@ const reducer = (state = initialState, action) => {
         }
         break;
       case LOAD_NEWS_POSTS_REQUEST:
-        draft.loadNewsPostsLoading = true;
-        draft.loadNewsPostsDone = false;
-        draft.loadNewsPostsError = null;
+        draft.loadNewsPostsStatus = LOADING;
         break;
       case LOAD_NEWS_POSTS_SUCCESS:
         draft.newsPosts = action.data;
-        draft.loadNewsPostsLoading = false;
-        draft.loadNewsPostsDone = true;
+
+        draft.loadNewsPostsStatus = SUCCEEDED;
         break;
       case LOAD_NEWS_POSTS_FAILURE:
-        draft.loadNewsPostsLoading = false;
-        draft.loadNewsPostsError = action.error;
+        draft.loadNewsPostsStatus = REJECTED;
         break;
       case LOAD_BLOG_POSTS_REQUEST:
-        draft.loadBlogPostsLoading = true;
-        draft.loadBlogPostsDone = false;
-        draft.loadBlogPostsError = null;
+        draft.loadBlogPostsStatus = LOADING;
         break;
       case LOAD_BLOG_POSTS_SUCCESS:
         draft.blogPosts = action.data;
-        draft.loadBlogPostsLoading = false;
-        draft.loadBlogPostsDone = true;
+
+        draft.loadBlogPostsStatus = SUCCEEDED;
         break;
       case LOAD_BLOG_POSTS_FAILURE:
-        draft.loadBlogPostsLoading = false;
-        draft.loadBlogPostsError = action.error;
+        draft.loadBlogPostsStatus = REJECTED;
         break;
       case LOAD_EARLY_HOTDEAL_POSTS_REQUEST:
-        draft.loadHotDealPostsLoading = true;
-        draft.loadHotDealPostsDone = false;
-        draft.loadHotDealPostsError = null;
+        draft.loadHotDealPostsStatus = LOADING;
         break;
       case LOAD_EARLY_HOTDEAL_POSTS_SUCCESS:
         draft.hotDealPosts = action.data;
-        draft.loadHotDealPostsLoading = false;
-        draft.loadHotDealPostsDone = true;
+
+        draft.loadHotDealPostsStatus = SUCCEEDED;
         draft.hasMoreHotDealPosts = action.data.length === 10;
         break;
       case LOAD_EARLY_HOTDEAL_POSTS_FAILURE:
-        draft.loadHotDealPostsLoading = false;
-        draft.loadHotDealPostsError = action.error;
+        draft.loadHotDealPostsStatus = REJECTED;
         break;
       case LOAD_MORE_HOTDEAL_POSTS_REQUEST:
-        draft.loadHotDealPostsLoading = true;
-        draft.loadHotDealPostsDone = false;
-        draft.loadHotDealPostsError = null;
+        draft.loadHotDealPostsStatus = LOADING;
         break;
       case LOAD_MORE_HOTDEAL_POSTS_SUCCESS:
         draft.hotDealPosts = draft.hotDealPosts.concat(action.data);
-        draft.loadHotDealPostsLoading = false;
-        draft.loadHotDealPostsDone = true;
+
+        draft.loadHotDealPostsStatus = SUCCEEDED;
         draft.hasMoreHotDealPosts = action.data.length === 10;
         break;
       case LOAD_MORE_HOTDEAL_POSTS_FAILURE:
-        draft.loadHotDealPostsLoading = false;
-        draft.loadHotDealPostsError = action.error;
+        draft.loadHotDealPostsStatus = REJECTED;
         break;
       default:
         break;

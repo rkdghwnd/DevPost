@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const CommentInputWrapper = styled.section`
   padding: 15px;
+  border-bottom: 1px solid #f5f6f7;
 `;
 
 export const CommentInput = styled.div`

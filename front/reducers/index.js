@@ -6,6 +6,10 @@ import modal from './modal';
 import option from './option';
 import posts from './posts';
 
+export const LOADING = 'loading';
+export const SUCCEEDED = 'succeeded';
+export const REJECTED = 'rejected';
+
 const rootReducer = (state, action) => {
   switch (action.type) {
     case HYDRATE:

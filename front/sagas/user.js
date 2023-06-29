@@ -147,7 +147,7 @@ const removeAccount = createRequestSaga(
   REMOVE_ACCOUNT_SUCCESS,
   REMOVE_ACCOUNT_FAILURE,
   removeAccountAPI,
-  undefined,
+  messageModal('회원탈퇴에 성공하였습니다.'),
   messageModal('회원탈퇴에 실패하였습니다.'),
 );
 

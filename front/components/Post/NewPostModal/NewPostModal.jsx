@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import useInput from '../../../hooks/input';
 import { AiOutlineClose, AiOutlineCheck } from 'react-icons/ai';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -14,17 +14,20 @@ import {
   Spinner,
 } from './styles';
 import UploadImageForm from '../UploadImageForm/UploadImageForm';
+import { LOADING, SUCCEEDED } from '../../../reducers';
+import { useRouter } from 'next/router';
 
 const PostModal = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const [title, onChangeTitle] = useInput('');
   const [mainText, onChangeMainText] = useInput('');
 
-  const { newPostModalSlideUp, addPostLoading } = useSelector(
+  const { newPostModalSlideUp, addPostStatus } = useSelector(
     state => state.modal,
   );
-  const { imagePaths } = useSelector(state => state.post);
+  const { currentPost, imagePaths } = useSelector(state => state.post);
 
   const onStopEventBubbling = useCallback(e => {
     e.stopPropagation();
@@ -54,6 +57,14 @@ const PostModal = () => {
     });
   }, [title, mainText, imagePaths]);
 
+  useEffect(() => {
+    if (addPostStatus === SUCCEEDED) {
+      router.push(
+        `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/post/${currentPost?.id}`,
+      );
+    }
+  }, [router, currentPost?.id, addPostStatus]);
+
   return (
     <ModalBackdrop>
       <WritePostForm
@@ -63,7 +74,7 @@ const PostModal = () => {
         <WritePostHeader>
           <AiOutlineClose onClick={onCancelNewPost} />
           <span>글 작성</span>
-          {addPostLoading ? (
+          {addPostStatus === LOADING ? (
             <Spinner indicator={<LoadingOutlined />} />
           ) : (
             <AiOutlineCheck onClick={onNewPost} />

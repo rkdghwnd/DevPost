@@ -7,11 +7,15 @@ import { RecommendedKeyWordForm } from './styles';
 
 const RecommendKeyword = ({ keyword }) => {
   const dispatch = useDispatch();
-  const recommendSearch = useCallback(() => {
-    dispatch({ type: SEARCH_POSTS_REQUEST, keyword });
-  }, []);
+  const recommendSearch = useCallback(
+    keyword => () => {
+      dispatch({ type: SEARCH_POSTS_REQUEST, keyword });
+    },
+    [],
+  );
+
   return (
-    <RecommendedKeyWordForm onClick={recommendSearch}>
+    <RecommendedKeyWordForm onClick={recommendSearch(keyword)}>
       <button>
         <BsFillArrowUpRightCircleFill />
         <span>{keyword}</span>

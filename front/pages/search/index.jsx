@@ -35,12 +35,6 @@ const search = () => {
     [keyword],
   );
 
-  const onClickSearch = useCallback(() => {
-    if (keyword) {
-      dispatch({ type: SEARCH_POSTS_REQUEST, keyword });
-    }
-  }, [keyword]);
-
   return (
     <>
       <Head>
@@ -50,7 +44,7 @@ const search = () => {
         <SearchWrapper>
           <SearchInputForm onSubmit={onSubmitSearch}>
             <div>
-              <BsSearch onClick={onClickSearch} />
+              <BsSearch />
               <input
                 type="text"
                 placeholder="검색어를 입력하세요"
