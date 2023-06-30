@@ -5,8 +5,10 @@ export const PostCardForm = styled.article`
   padding: 10px 20px;
   border-bottom: 1px solid rgb(240, 240, 240);
   border-radius: 5px;
+  margin-bottom: 6px;
   &:hover {
-    background-color: rgb(250, 250, 250);
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.22);
+    transition: box-shadow 0.15s ease-out;
   }
 `;
 

@@ -35,6 +35,8 @@ export const initialState = {
   updatePostStatus: 'idle',
 };
 
+export const CHANGE_COMMENTS = 'CHANGE_COMMENTS';
+
 export const LOAD_FREE_POSTS_REQUEST = 'LOAD_FREE_POSTS_REQUEST';
 export const LOAD_FREE_POSTS_SUCCESS = 'LOAD_FREE_POSTS_SUCCESS';
 export const LOAD_FREE_POSTS_FAILURE = 'LOAD_FREE_POSTS_FAILURE';
@@ -132,6 +134,15 @@ export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
 const reducer = (state = initialState, action) => {
   return produce(state, draft => {
+    function findElement(elements) {
+      return elements?.find(v => v.id === action.data.PostId);
+    }
+    function filterElement(elements) {
+      return elements.filter(v => v.id !== action.data.UserId);
+    }
+    function pushElement(elements) {
+      return elements?.push({ id: action.data.UserId });
+    }
     switch (action.type) {
       case LOAD_YOUR_INFO_REQUEST:
         draft.loadYourInfoStatus = LOADING;
@@ -198,43 +209,30 @@ const reducer = (state = initialState, action) => {
         break;
       case REMOVE_BOOKMARK_SUCCESS: {
         if (draft.currentPost) {
-          draft.currentPost.Bookmarkers = draft.currentPost.Bookmarkers.filter(
-            v => v.id !== action.data.UserId,
+          draft.currentPost.Bookmarkers = filterElement(
+            draft.currentPost.Bookmarkers,
           );
         }
-        const freePost = draft.freePosts.find(v => v.id === action.data.PostId);
+
+        const freePost = findElement(draft.freePosts);
         if (freePost) {
-          freePost.Bookmarkers = freePost.Bookmarkers.filter(
-            v => v.id !== action.data.UserId,
-          );
+          freePost.Bookmarkers = filterElement(freePost.Bookmarkers);
         }
-        const myPost = draft.myPosts.find(v => v.id === action.data.PostId);
+        const myPost = findElement(draft.myPosts);
         if (myPost) {
-          myPost.Bookmarkers = myPost.Bookmarkers.filter(
-            v => v.id !== action.data.UserId,
-          );
+          myPost.Bookmarkers = filterElement(myPost.Bookmarkers);
         }
-        const myBookmark = draft.myBookmark.find(
-          v => v.id === action.data.PostId,
-        );
+        const myBookmark = findElement(draft.myBookmark);
         if (myBookmark) {
-          myBookmark.Bookmarkers = myBookmark.Bookmarkers.filter(
-            v => v.id !== action.data.UserId,
-          );
+          myBookmark.Bookmarkers = filterElement(myBookmark.Bookmarkers);
         }
-        const search = draft.searchPosts.find(v => v.id === action.data.PostId);
+        const search = findElement(draft.searchPosts);
         if (search) {
-          search.Bookmarkers = search.Bookmarkers.filter(
-            v => v.id !== action.data.UserId,
-          );
+          search.Bookmarkers = filterElement(search.Bookmarkers);
         }
-        const yourPost = draft.you?.Posts.find(
-          v => v.id === action.data.PostId,
-        );
+        const yourPost = findElement(draft.you?.Posts);
         if (yourPost) {
-          yourPost.Bookmarkers = yourPost.Bookmarkers.filter(
-            v => v.id !== action.data.UserId,
-          );
+          yourPost.Bookmarkers = filterElement(yourPost.Bookmarkers);
         }
 
         draft.removeBookmarkStatus = SUCCEEDED;
@@ -250,29 +248,26 @@ const reducer = (state = initialState, action) => {
         if (draft.currentPost) {
           draft.currentPost.Bookmarkers.push({ id: action.data.UserId });
         }
-        const freePost = draft.freePosts.find(v => v.id === action.data.PostId);
+        const freePost = findElement(draft.freePosts);
         if (freePost) {
-          freePost.Bookmarkers.push({ id: action.data.UserId });
+          pushElement(freePost.Bookmarkers);
         }
-        const myPost = draft.myPosts.find(v => v.id === action.data.PostId);
+        const myPost = findElement(draft.myPosts);
         if (myPost) {
-          myPost.Bookmarkers.push({ id: action.data.UserId });
+          pushElement(myPost.Bookmarkers);
         }
-        const myBookmark = draft.myBookmark.find(
-          v => v.id === action.data.PostId,
-        );
+        const myBookmark = findElement(draft.myBookmark);
         if (myBookmark) {
-          myBookmark.Bookmarkers.push({ id: action.data.UserId });
+          pushElement(myBookmark.Bookmarkers);
         }
-        const search = draft.searchPosts.find(v => v.id === action.data.PostId);
+        const search = findElement(draft.searchPosts);
         if (search) {
-          search.Bookmarkers.push({ id: action.data.UserId });
+          pushElement(search.Bookmarkers);
         }
-        const yourPost = draft.you?.Posts.find(
-          v => v.id === action.data.PostId,
-        );
+
+        const yourPost = findElement(draft.you?.Posts);
         if (yourPost) {
-          yourPost.Bookmarkers.push({ id: action.data.UserId });
+          pushElement(yourPost.Bookmarkers);
         }
 
         draft.addBookmarkStatus = SUCCEEDED;
@@ -286,43 +281,27 @@ const reducer = (state = initialState, action) => {
         break;
       case UNLIKE_POST_SUCCESS: {
         if (draft.currentPost) {
-          draft.currentPost.Likers = draft.currentPost.Likers.filter(
-            v => v.id !== action.data.UserId,
-          );
+          draft.currentPost.Likers = filterElement(draft.currentPost.Likers);
         }
-        const freePost = draft.freePosts.find(v => v.id === action.data.PostId);
+        const freePost = findElement(draft.freePosts);
         if (freePost) {
-          freePost.Likers = freePost.Likers.filter(
-            v => v.id !== action.data.UserId,
-          );
+          freePost.Likers = filterElement(freePost.Likers);
         }
-        const myPost = draft.myPosts.find(v => v.id === action.data.PostId);
+        const myPost = findElement(draft.myPosts);
         if (myPost) {
-          myPost.Likers = myPost.Likers.filter(
-            v => v.id !== action.data.UserId,
-          );
+          myPost.Likers = filterElement(myPost.Likers);
         }
-        const myBookmark = draft.myBookmark.find(
-          v => v.id === action.data.PostId,
-        );
+        const myBookmark = findElement(draft.myBookmark);
         if (myBookmark) {
-          myBookmark.Likers = myBookmark.Likers.filter(
-            v => v.id !== action.data.UserId,
-          );
+          myBookmark.Likers = filterElement(myBookmark.Likers);
         }
-        const search = draft.searchPosts.find(v => v.id === action.data.PostId);
+        const search = findElement(draft.searchPosts);
         if (search) {
-          search.Likers = search.Likers.filter(
-            v => v.id !== action.data.UserId,
-          );
+          search.Likers = filterElement(search.Likers);
         }
-        const yourPost = draft.you?.Posts.find(
-          v => v.id === action.data.PostId,
-        );
+        const yourPost = findElement(draft.you?.Posts);
         if (yourPost) {
-          yourPost.Likers = yourPost.Likers.filter(
-            v => v.id !== action.data.UserId,
-          );
+          yourPost.Likers = filterElement(yourPost.Likers);
         }
 
         draft.unlikePostStatus = SUCCEEDED;
@@ -336,33 +315,28 @@ const reducer = (state = initialState, action) => {
         break;
       case LIKE_POST_SUCCESS: {
         if (draft.currentPost) {
-          draft.currentPost.Likers.push({ id: action.data.UserId });
+          pushElement(draft.currentPost.Likers);
         }
-        const freePost = draft.freePosts.find(v => v.id === action.data.PostId);
+        const freePost = findElement(draft.freePosts);
         if (freePost) {
-          freePost.Likers.push({ id: action.data.UserId });
+          pushElement(freePost.Likers);
         }
-        const myPost = draft.myPosts.find(v => v.id === action.data.PostId);
+        const myPost = findElement(draft.myPosts);
         if (myPost) {
-          myPost.Likers.push({ id: action.data.UserId });
+          pushElement(myPost.Likers);
         }
-        const myBookmark = draft.myBookmark.find(
-          v => v.id === action.data.PostId,
-        );
+        const myBookmark = findElement(draft.myBookmark);
         if (myBookmark) {
-          myBookmark.Likers.push({ id: action.data.UserId });
+          pushElement(myBookmark.Likers);
         }
-        const search = draft.searchPosts.find(v => v.id === action.data.PostId);
+        const search = findElement(draft.searchPosts);
         if (search) {
-          search.Likers.push({ id: action.data.UserId });
+          pushElement(search.Likers);
         }
-        const yourPost = draft.you?.Posts.find(
-          v => v.id === action.data.PostId,
-        );
+        const yourPost = findElement(draft.you?.Posts);
         if (yourPost) {
-          yourPost.Likers.push({ id: action.data.UserId });
+          pushElement(yourPost.Likers);
         }
-
         draft.likePostStatus = SUCCEEDED;
         break;
       }
@@ -373,28 +347,6 @@ const reducer = (state = initialState, action) => {
         draft.updateNestedCommentStatus = LOADING;
         break;
       case UPDATE_NESTED_COMMENT_SUCCESS: {
-        draft.currentPost.Comments = action.data;
-        const freePost = draft.freePosts.find(v => v.id === action.postId);
-        if (freePost) {
-          freePost.Comments = action.data;
-        }
-        const myPost = draft.myPosts.find(v => v.id === action.postId);
-        if (myPost) {
-          myPost.Comments = action.data;
-        }
-        const myBookmark = draft.myBookmark.find(v => v.id === action.postId);
-        if (myBookmark) {
-          myBookmark.Comments = action.data;
-        }
-        const search = draft.searchPosts.find(v => v.id === action.postId);
-        if (search) {
-          search.Comments = action.data;
-        }
-        const yourPost = draft.you?.Posts.find(v => v.id === action.postId);
-        if (yourPost) {
-          yourPost.Comments = action.data;
-        }
-
         draft.updateNestedCommentStatus = SUCCEEDED;
         break;
       }
@@ -405,28 +357,6 @@ const reducer = (state = initialState, action) => {
         draft.removeNestedCommentStatus = LOADING;
         break;
       case REMOVE_NESTED_COMMENT_SUCCESS: {
-        draft.currentPost.Comments = action.data;
-        const freePost = draft.freePosts.find(v => v.id === action.postId);
-        if (freePost) {
-          freePost.Comments = action.data;
-        }
-        const myPost = draft.myPosts.find(v => v.id === action.postId);
-        if (myPost) {
-          myPost.Comments = action.data;
-        }
-        const myBookmark = draft.myBookmark.find(v => v.id === action.postId);
-        if (myBookmark) {
-          myBookmark.Comments = action.data;
-        }
-        const search = draft.searchPosts.find(v => v.id === action.postId);
-        if (search) {
-          search.Comments = action.data;
-        }
-        const yourPost = draft.you?.Posts.find(v => v.id === action.postId);
-        if (yourPost) {
-          yourPost.Comments = action.data;
-        }
-
         draft.removeNestedCommentStatus = SUCCEEDED;
         break;
       }
@@ -437,28 +367,6 @@ const reducer = (state = initialState, action) => {
         draft.addNestedCommentStatus = LOADING;
         break;
       case ADD_NESTED_COMMENT_SUCCESS: {
-        draft.currentPost.Comments = action.data;
-        const freePost = draft.freePosts.find(v => v.id === action.postId);
-        if (freePost) {
-          freePost.Comments = action.data;
-        }
-        const myPost = draft.myPosts.find(v => v.id === action.postId);
-        if (myPost) {
-          myPost.Comments = action.data;
-        }
-        const myBookmark = draft.myBookmark.find(v => v.id === action.postId);
-        if (myBookmark) {
-          myBookmark.Comments = action.data;
-        }
-        const search = draft.searchPosts.find(v => v.id === action.postId);
-        if (search) {
-          search.Comments = action.data;
-        }
-        const yourPost = draft.you?.Posts.find(v => v.id === action.postId);
-        if (yourPost) {
-          yourPost.Comments = action.data;
-        }
-
         draft.addNestedCommentStatus = SUCCEEDED;
         break;
       }
@@ -469,28 +377,6 @@ const reducer = (state = initialState, action) => {
         draft.updateCommentStatus = LOADING;
         break;
       case UPDATE_COMMENT_SUCCESS: {
-        draft.currentPost.Comments = action.data;
-        const freePost = draft.freePosts.find(v => v.id === action.postId);
-        if (freePost) {
-          freePost.Comments = action.data;
-        }
-        const myPost = draft.myPosts.find(v => v.id === action.postId);
-        if (myPost) {
-          myPost.Comments = action.data;
-        }
-        const myBookmark = draft.myBookmark.find(v => v.id === action.postId);
-        if (myBookmark) {
-          myBookmark.Comments = action.data;
-        }
-        const search = draft.searchPosts.find(v => v.id === action.postId);
-        if (search) {
-          search.Comments = action.data;
-        }
-        const yourPost = draft.you?.Posts.find(v => v.id === action.postId);
-        if (yourPost) {
-          yourPost.Comments = action.data;
-        }
-
         draft.updateCommentStatus = SUCCEEDED;
         break;
       }
@@ -501,28 +387,6 @@ const reducer = (state = initialState, action) => {
         draft.removeCommentStatus = LOADING;
         break;
       case REMOVE_COMMENT_SUCCESS: {
-        draft.currentPost.Comments = action.data;
-        const freePost = draft.freePosts.find(v => v.id === action.postId);
-        if (freePost) {
-          freePost.Comments = action.data;
-        }
-        const myPost = draft.myPosts.find(v => v.id === action.postId);
-        if (myPost) {
-          myPost.Comments = action.data;
-        }
-        const myBookmark = draft.myBookmark.find(v => v.id === action.postId);
-        if (myBookmark) {
-          myBookmark.Comments = action.data;
-        }
-        const search = draft.searchPosts.find(v => v.id === action.postId);
-        if (search) {
-          search.Comments = action.data;
-        }
-        const yourPost = draft.you?.Posts.find(v => v.id === action.postId);
-        if (yourPost) {
-          yourPost.Comments = action.data;
-        }
-
         draft.removeCommentStatus = SUCCEEDED;
         break;
       }
@@ -536,6 +400,9 @@ const reducer = (state = initialState, action) => {
         draft.addCommentStatus = LOADING;
         break;
       case ADD_COMMENT_SUCCESS:
+        draft.addCommentStatus = SUCCEEDED;
+        break;
+      case CHANGE_COMMENTS: {
         draft.currentPost.Comments = action.data;
         const freePost = draft.freePosts.find(v => v.id === action.postId);
         if (freePost) {
@@ -557,9 +424,8 @@ const reducer = (state = initialState, action) => {
         if (yourPost) {
           yourPost.Comments = action.data;
         }
-
-        draft.addCommentStatus = SUCCEEDED;
         break;
+      }
       case ADD_COMMENT_FAILURE:
         draft.addCommentStatus = REJECTED;
         break;
@@ -636,7 +502,6 @@ const reducer = (state = initialState, action) => {
         draft.freePosts = draft.freePosts.filter(
           v => v.id !== action.data.PostId,
         );
-
         draft.removePostStatus = SUCCEEDED;
         break;
       case REMOVE_POST_FAILURE:

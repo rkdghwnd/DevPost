@@ -74,7 +74,7 @@ const hotdeal = () => {
         <MainContentsWrapper>
           <NavBar />
           <List
-            width={780}
+            width={800}
             height={100 * visiblePosts.length}
             rowCount={visiblePosts.length}
             rowHeight={100}
