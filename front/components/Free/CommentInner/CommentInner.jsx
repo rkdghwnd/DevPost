@@ -3,6 +3,7 @@ import Comment from '../../Post/Comment/Comment';
 import { FaRegCommentDots } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { CommentWrapper, EmptyCommentForm } from './styles';
+import NestedComment from '../../Post/NestedComment/NestedComment';
 
 const CommentInner = () => {
   const { currentPost } = useSelector(state => state.post);
@@ -16,7 +17,11 @@ const CommentInner = () => {
         </EmptyCommentForm>
       ) : (
         currentPost?.Comments.map(comment => {
-          return <Comment key={comment.id} comment={comment} />;
+          if (comment.CommentId) {
+            return <NestedComment key={comment.id} nestedComment={comment} />;
+          } else {
+            return <Comment key={comment.id} comment={comment} />;
+          }
         })
       )}
     </CommentWrapper>

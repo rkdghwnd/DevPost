@@ -23,7 +23,7 @@ import { LOAD_POST_REQUEST } from '../reducers/post';
 function* commentModalOpen(action) {
   yield put({
     type: LOAD_POST_REQUEST,
-    postId: action.postId,
+    data: action.postId,
   });
 }
 

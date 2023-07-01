@@ -1,15 +1,19 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+// import {
+//   CONFIRM_REMOVE_COMMENT_MODAL_OPEN,
+//   LOG_IN_MODAL_OPEN,
+// } from '../../../reducers/modal';
+import { NESTED_COMMENT_INPUT_VISIBLE } from '../../../reducers/option';
+import { CommentForm, ReplyIcon, CommentBody, CommentSubMenu } from './styles';
+import CommentInputDesktop from '../CommentInputDesktop/CommentInputDesktop';
 import {
   CONFIRM_REMOVE_COMMENT_MODAL_OPEN,
   LOG_IN_MODAL_OPEN,
 } from '../../../reducers/modal';
-import { NESTED_COMMENT_INPUT_VISIBLE } from '../../../reducers/option';
-import { CommentForm, ReplyIcon, CommentBody, CommentSubMenu } from './styles';
-import CommentInputDesktop from '../CommentInputDesktop/CommentInputDesktop';
 
-const NestedComment = ({ nestedComment, commentId, commentInput }) => {
+const NestedComment = ({ nestedComment }) => {
   const dispatch = useDispatch();
   const { me } = useSelector(state => state.user);
   const { currentPost } = useSelector(state => state.post);
@@ -19,6 +23,7 @@ const NestedComment = ({ nestedComment, commentId, commentInput }) => {
     0,
     10,
   )} ${nestedComment.createdAt.slice(11, 19)}`;
+
   const updateInfo = {
     user: me,
     content: nestedComment.content,
@@ -28,7 +33,6 @@ const NestedComment = ({ nestedComment, commentId, commentInput }) => {
     onClose: () => {
       setUpdateVisible(false);
     },
-    commentInput,
   };
   const replyInfo = {
     user: me,
@@ -39,12 +43,11 @@ const NestedComment = ({ nestedComment, commentId, commentInput }) => {
       setReplyVisible(false);
     },
     target: nestedComment.User.nickname,
-    commentInput,
   };
   const removeComment = useCallback(() => {
     dispatch({
       type: CONFIRM_REMOVE_COMMENT_MODAL_OPEN,
-      commentId: commentId,
+      commentId: nestedComment.CommentId,
       nestedCommentId: nestedComment.id,
     });
   }, [currentPost]);
@@ -90,24 +93,14 @@ const NestedComment = ({ nestedComment, commentId, commentInput }) => {
           </CommentSubMenu>
         </div>
       </CommentForm>
-      {updateVisible ? (
-        <>
-          <CommentInputDesktop info={updateInfo} />
-        </>
-      ) : null}
-      {replyVisible ? (
-        <>
-          <CommentInputDesktop info={replyInfo} />
-        </>
-      ) : null}
+      {updateVisible ? <>{<CommentInputDesktop info={updateInfo} />}</> : null}
+      {replyVisible ? <>{<CommentInputDesktop info={replyInfo} />}</> : null}
     </>
   );
 };
 
 NestedComment.propTypes = {
   nestedComment: PropTypes.object,
-  commentId: PropTypes.number,
-  commentInput: PropTypes.object,
 };
 
 export default NestedComment;

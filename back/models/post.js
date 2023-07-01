@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     db.Post.belongsTo(db.User); // post.addUser, post.getUser, post.setUser
     // db.Post.belongsToMany(db.Hashtag, { through: "Posthashtag" }); // post.addHashtags
     db.Post.hasMany(db.Comment); // post.addComments, post.getComments
-    db.Post.hasMany(db.Nested_Comment);
+    // db.Post.hasMany(db.Nested_Comment);
     db.Post.hasMany(db.Image); // post.addImages, post.getImages
     db.Post.belongsToMany(db.User, { through: "Like", as: "Likers" }); // post.addLikers, post.removeLikers
     // // 좋아요 기능, through : N : M 관계테이블 이름 설정, as : 관계에 대한 별칭(상대에 대한)

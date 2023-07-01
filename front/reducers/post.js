@@ -151,7 +151,7 @@ const reducer = (state = initialState, action) => {
         draft.loadYourInfoStatus = SUCCEEDED;
         draft.you = {
           ...action.data.yourInfo,
-          Comments: action.data.fullComments,
+          Comments: action.data.comments,
         };
         break;
       case LOAD_YOUR_INFO_FAILURE:

@@ -1,7 +1,7 @@
 const express = require("express");
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
-const { User, Comment, Post, Image, Nested_Comment } = require("../models");
+const { User, Comment, Post, Image } = require("../models");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
@@ -55,10 +55,7 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
 
     const newPost = await Post.findOne({
       where: { id: post.id },
-      order: [
-        [{ model: Comment }, "createdAt", "ASC"],
-        [{ model: Comment }, { model: Nested_Comment }, "createdAt", "ASC"],
-      ],
+      order: [[{ model: Comment }, "createdAt", "ASC"]],
       include: [
         {
           model: User, // 게시글 작성자
@@ -71,10 +68,6 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
           include: [
             {
               model: User,
-            },
-            {
-              model: Nested_Comment,
-              include: [{ model: User }],
             },
           ],
         },
@@ -123,10 +116,7 @@ router.get("/free", async (req, res, next) => {
 
     const post = await Post.findOne({
       where: { id: parseInt(req.query.postId) },
-      order: [
-        [{ model: Comment }, "createdAt", "ASC"],
-        [{ model: Comment }, { model: Nested_Comment }, "createdAt", "ASC"],
-      ],
+      order: [[{ model: Comment }, "createdAt", "ASC"]],
       include: [
         { model: Image, attributes: ["id", "src"] },
         {
@@ -135,20 +125,10 @@ router.get("/free", async (req, res, next) => {
         },
         {
           model: Comment,
-          order: [[{ model: Nested_Comment }, "id", "ASC"]],
           include: [
             {
               model: User,
               attributes: ["id", "nickname", "profile_img"],
-            },
-            {
-              model: Nested_Comment,
-              include: [
-                {
-                  model: User,
-                  attributes: ["id", "nickname", "profile_img"],
-                },
-              ],
             },
           ],
         },
@@ -163,7 +143,40 @@ router.get("/free", async (req, res, next) => {
     if (!post) {
       res.status(404).send("게시글이 존재하지 않습니다.");
     }
-    res.status(200).json(post);
+    const comments = [];
+    const nested_comments = [];
+    post.toJSON().Comments.forEach((comment) => {
+      if (comment.CommentId) {
+        nested_comments.push(comment);
+      } else {
+        comments.push(comment);
+      }
+    });
+
+    comments.sort(
+      (a, b) =>
+        new Date(String(a.createdAt)).getTime() -
+        new Date(String(b.createdAt)).getTime()
+    );
+    nested_comments.sort(
+      (a, b) =>
+        new Date(String(b.createdAt)).getTime() -
+        new Date(String(a.createdAt)).getTime()
+    );
+
+    comments.slice().forEach((comment, i) => {
+      nested_comments.forEach((nestedComment, j) => {
+        if (comment.id === nestedComment.CommentId) {
+          comments.splice(comments.indexOf(comment) + 1, 0, nestedComment);
+        }
+      });
+    });
+
+    const result = post.toJSON();
+    result.Comments = comments;
+
+    console.log(result);
+    res.status(200).json(result);
   } catch (error) {
     console.error(error);
     next(error);
@@ -177,9 +190,7 @@ router.delete("/:postId", isLoggedIn, async (req, res) => {
     await Comment.destroy({
       where: { PostId: parseInt(req.params.postId) },
     });
-    await Nested_Comment.destroy({
-      where: { PostId: parseInt(req.params.postId) },
-    });
+
     await Post.destroy({
       // UserId를 추가한 이유는 보안(다른사람이 삭제하지 못하게 하기 위해)
       where: { id: parseInt(req.params.postId), UserId: req.user.id },
@@ -229,10 +240,7 @@ router.patch("/", isLoggedIn, upload.none(), async (req, res, next) => {
 
     const currentPost = await Post.findOne({
       where: { id: post.id },
-      order: [
-        [{ model: Comment }, "createdAt", "ASC"],
-        [{ model: Comment }, { model: Nested_Comment }, "createdAt", "ASC"],
-      ],
+      order: [[{ model: Comment }, "createdAt", "ASC"]],
       include: [
         {
           model: User, // 게시글 작성자
@@ -245,10 +253,6 @@ router.patch("/", isLoggedIn, upload.none(), async (req, res, next) => {
           include: [
             {
               model: User, // 댓글 작성자
-            },
-            {
-              model: Nested_Comment,
-              include: [{ model: User }],
             },
           ],
         },
@@ -288,31 +292,54 @@ router.post("/:postId/comment", isLoggedIn, async (req, res, next) => {
 
     const fullComments = await Comment.findAll({
       where: { PostId: parseInt(req.params.postId) },
-      order: [
-        ["createdAt", "ASC"],
-        [{ model: Nested_Comment }, "createdAt", "ASC"],
-      ],
+      order: [["createdAt", "DESC"]],
       include: [
         {
           model: User,
           attributes: ["id", "nickname", "profile_img"],
         },
-        {
-          model: Nested_Comment,
-          include: [
-            { model: User, attributes: ["id", "nickname", "profile_img"] },
-          ],
-        },
       ],
     });
 
-    res.status(201).json(fullComments);
+    const comments = [];
+    const nested_comments = [];
+
+    const jsonComments = fullComments.map((comment) => comment.toJSON());
+    jsonComments.forEach((comment) => {
+      if (comment.CommentId) {
+        nested_comments.push(comment);
+      } else {
+        comments.push(comment);
+      }
+    });
+
+    comments.sort(
+      (a, b) =>
+        new Date(String(a.createdAt)).getTime() -
+        new Date(String(b.createdAt)).getTime()
+    );
+    nested_comments.sort(
+      (a, b) =>
+        new Date(String(b.createdAt)).getTime() -
+        new Date(String(a.createdAt)).getTime()
+    );
+
+    comments.slice().forEach((comment, i) => {
+      nested_comments.forEach((nestedComment, j) => {
+        if (comment.id === nestedComment.CommentId) {
+          comments.splice(comments.indexOf(comment) + 1, 0, nestedComment);
+        }
+      });
+    });
+
+    res.status(201).json(comments);
   } catch (error) {
     console.log(error);
     next(error);
   }
 });
 
+// 댓글 삭제
 router.delete("/:postId/comment/:commentId", isLoggedIn, async (req, res) => {
   //DELETE /post/:postId/comment/:commentId
   try {
@@ -324,30 +351,58 @@ router.delete("/:postId/comment/:commentId", isLoggedIn, async (req, res) => {
       },
     });
 
-    const fullComments = await Comment.findAll({
-      where: { PostId: parseInt(req.params.postId) },
-      order: [
-        ["createdAt", "ASC"],
-        [{ model: Nested_Comment }, "createdAt", "ASC"],
-      ],
-      include: [
-        { model: User, attributes: ["id", "nickname", "profile_img"] },
-        {
-          model: Nested_Comment,
-          include: [
-            { model: User, attributes: ["id", "nickname", "profile_img"] },
-          ],
-        },
-      ],
+    await Comment.destroy({
+      where: {
+        PostId: parseInt(req.params.postId),
+        CommentId: parseInt(req.params.commentId),
+      },
     });
 
-    res.status(200).json(fullComments);
+    const fullComments = await Comment.findAll({
+      where: { PostId: parseInt(req.params.postId) },
+      order: [["createdAt", "ASC"]],
+      include: [{ model: User, attributes: ["id", "nickname", "profile_img"] }],
+    });
+
+    const comments = [];
+    const nested_comments = [];
+
+    const jsonComments = fullComments.map((comment) => comment.toJSON());
+    jsonComments.forEach((comment) => {
+      if (comment.CommentId) {
+        nested_comments.push(comment);
+      } else {
+        comments.push(comment);
+      }
+    });
+
+    comments.sort(
+      (a, b) =>
+        new Date(String(a.createdAt)).getTime() -
+        new Date(String(b.createdAt)).getTime()
+    );
+    nested_comments.sort(
+      (a, b) =>
+        new Date(String(b.createdAt)).getTime() -
+        new Date(String(a.createdAt)).getTime()
+    );
+
+    comments.slice().forEach((comment, i) => {
+      nested_comments.forEach((nestedComment, j) => {
+        if (comment.id === nestedComment.CommentId) {
+          comments.splice(comments.indexOf(comment) + 1, 0, nestedComment);
+        }
+      });
+    });
+
+    res.status(200).json(comments);
   } catch (error) {
     console.error(error);
     next(error);
   }
 });
 
+// 댓글 수정
 router.patch("/:postId/comment/:commentId", isLoggedIn, async (req, res) => {
   //DELETE /post/:postId/comment
   try {
@@ -365,28 +420,47 @@ router.patch("/:postId/comment/:commentId", isLoggedIn, async (req, res) => {
     );
     const fullComments = await Comment.findAll({
       where: { PostId: parseInt(req.params.postId) },
-      order: [
-        ["createdAt", "ASC"],
-        [{ model: Nested_Comment }, "createdAt", "ASC"],
-      ],
+      order: [["createdAt", "ASC"]],
       include: [
         {
           model: User,
           attributes: ["id", "nickname", "profile_img"],
         },
-        {
-          model: Nested_Comment,
-          include: [
-            {
-              model: User,
-              attributes: ["id", "nickname", "profile_img"],
-            },
-          ],
-        },
       ],
     });
 
-    res.status(201).json(fullComments);
+    const comments = [];
+    const nested_comments = [];
+
+    const jsonComments = fullComments.map((comment) => comment.toJSON());
+    jsonComments.forEach((comment) => {
+      if (comment.CommentId) {
+        nested_comments.push(comment);
+      } else {
+        comments.push(comment);
+      }
+    });
+
+    comments.sort(
+      (a, b) =>
+        new Date(String(a.createdAt)).getTime() -
+        new Date(String(b.createdAt)).getTime()
+    );
+    nested_comments.sort(
+      (a, b) =>
+        new Date(String(b.createdAt)).getTime() -
+        new Date(String(a.createdAt)).getTime()
+    );
+
+    comments.slice().forEach((comment, i) => {
+      nested_comments.forEach((nestedComment, j) => {
+        if (comment.id === nestedComment.CommentId) {
+          comments.splice(comments.indexOf(comment) + 1, 0, nestedComment);
+        }
+      });
+    });
+
+    res.status(200).json(comments);
   } catch (error) {
     console.error(error);
     next(error);
@@ -416,33 +490,57 @@ router.post(
         return res.status(403).send("존재하지 않는 댓글입니다.");
       }
 
-      const nestedComment = await Nested_Comment.create({
+      const nestedComment = await Comment.create({
         content: req.body.content,
         target: req.body.target,
         PostId: parseInt(req.params.postId),
         UserId: req.user.id,
+        CommentId: parseInt(req.params.commentId),
       });
-
-      await comment.addNested_Comments(nestedComment.id);
 
       const fullComments = await Comment.findAll({
         where: { PostId: parseInt(req.params.postId) },
         order: [
           ["createdAt", "ASC"],
-          [{ model: Nested_Comment }, "createdAt", "ASC"],
+          // [{ model: Nested_Comment }, "createdAt", "ASC"],
         ],
         include: [
           { model: User, attributes: ["id", "nickname", "profile_img"] },
-          {
-            model: Nested_Comment,
-            include: [
-              { model: User, attributes: ["id", "nickname", "profile_img"] },
-            ],
-          },
         ],
       });
 
-      res.status(201).json(fullComments);
+      const comments = [];
+      const nested_comments = [];
+
+      const jsonComments = fullComments.map((comment) => comment.toJSON());
+      jsonComments.forEach((comment) => {
+        if (comment.CommentId) {
+          nested_comments.push(comment);
+        } else {
+          comments.push(comment);
+        }
+      });
+
+      comments.sort(
+        (a, b) =>
+          new Date(String(a.createdAt)).getTime() -
+          new Date(String(b.createdAt)).getTime()
+      );
+      nested_comments.sort(
+        (a, b) =>
+          new Date(String(b.createdAt)).getTime() -
+          new Date(String(a.createdAt)).getTime()
+      );
+
+      comments.slice().forEach((comment, i) => {
+        nested_comments.forEach((nestedComment, j) => {
+          if (comment.id === nestedComment.CommentId) {
+            comments.splice(comments.indexOf(comment) + 1, 0, nestedComment);
+          }
+        });
+      });
+
+      res.status(200).json(comments);
     } catch (error) {
       console.log(error);
       next(error);
@@ -457,7 +555,7 @@ router.delete(
   async (req, res) => {
     //DELETE /post/:postId/comment/:commentId/nested_comment/:nestedCommentId
     try {
-      await Nested_Comment.destroy({
+      await Comment.destroy({
         where: {
           id: parseInt(req.params.nestedCommentId),
           CommentId: parseInt(req.params.commentId),
@@ -468,22 +566,44 @@ router.delete(
 
       const fullComments = await Comment.findAll({
         where: { PostId: parseInt(req.params.postId) },
-        order: [
-          ["createdAt", "ASC"],
-          [{ model: Nested_Comment }, "createdAt", "ASC"],
-        ],
+        order: [["createdAt", "ASC"]],
         include: [
           { model: User, attributes: ["id", "nickname", "profile_img"] },
-          {
-            model: Nested_Comment,
-            include: [
-              { model: User, attributes: ["id", "nickname", "profile_img"] },
-            ],
-          },
         ],
       });
 
-      res.status(201).json(fullComments);
+      const comments = [];
+      const nested_comments = [];
+
+      const jsonComments = fullComments.map((comment) => comment.toJSON());
+      jsonComments.forEach((comment) => {
+        if (comment.CommentId) {
+          nested_comments.push(comment);
+        } else {
+          comments.push(comment);
+        }
+      });
+
+      comments.sort(
+        (a, b) =>
+          new Date(String(a.createdAt)).getTime() -
+          new Date(String(b.createdAt)).getTime()
+      );
+      nested_comments.sort(
+        (a, b) =>
+          new Date(String(b.createdAt)).getTime() -
+          new Date(String(a.createdAt)).getTime()
+      );
+
+      comments.slice().forEach((comment, i) => {
+        nested_comments.forEach((nestedComment, j) => {
+          if (comment.id === nestedComment.CommentId) {
+            comments.splice(comments.indexOf(comment) + 1, 0, nestedComment);
+          }
+        });
+      });
+
+      res.status(200).json(comments);
     } catch (error) {
       console.error(error);
       next(error);
@@ -496,9 +616,9 @@ router.patch(
   "/:postId/comment/:commentId/nested_comment/:nestedCommentId",
   isLoggedIn,
   async (req, res) => {
-    //DELETE /post/:postId/comment
+    //DELETE /post/:postId/comment/:commentId/nested_comment/:nestedCommentId
     try {
-      await Nested_Comment.update(
+      await Comment.update(
         {
           content: req.body.content,
         },
@@ -514,28 +634,47 @@ router.patch(
 
       const fullComments = await Comment.findAll({
         where: { PostId: parseInt(req.params.postId) },
-        order: [
-          ["createdAt", "ASC"],
-          [{ model: Nested_Comment }, "createdAt", "ASC"],
-        ],
+        order: [["createdAt", "ASC"]],
         include: [
           {
             model: User,
             attributes: ["id", "nickname", "profile_img"],
           },
-          {
-            model: Nested_Comment,
-            include: [
-              {
-                model: User,
-                attributes: ["id", "nickname", "profile_img"],
-              },
-            ],
-          },
         ],
       });
 
-      res.status(201).json(fullComments);
+      const comments = [];
+      const nested_comments = [];
+
+      const jsonComments = fullComments.map((comment) => comment.toJSON());
+      jsonComments.forEach((comment) => {
+        if (comment.CommentId) {
+          nested_comments.push(comment);
+        } else {
+          comments.push(comment);
+        }
+      });
+
+      comments.sort(
+        (a, b) =>
+          new Date(String(a.createdAt)).getTime() -
+          new Date(String(b.createdAt)).getTime()
+      );
+      nested_comments.sort(
+        (a, b) =>
+          new Date(String(b.createdAt)).getTime() -
+          new Date(String(a.createdAt)).getTime()
+      );
+
+      comments.slice().forEach((comment, i) => {
+        nested_comments.forEach((nestedComment, j) => {
+          if (comment.id === nestedComment.CommentId) {
+            comments.splice(comments.indexOf(comment) + 1, 0, nestedComment);
+          }
+        });
+      });
+
+      res.status(200).json(comments);
     } catch (error) {
       console.error(error);
       next(error);

@@ -1,6 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
-const { User, Post, Comment, Nested_Comment, Image } = require("../models");
+const { User, Post, Comment, Image } = require("../models");
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 const router = express.Router(); // express 라우터 기능 가져오기
 const passport = require("passport");
@@ -46,10 +46,7 @@ router.get("/me", async (req, res, next) => {
             model: Comment,
             attributes: ["id"],
           },
-          {
-            model: Nested_Comment,
-            attributes: ["id"],
-          },
+
           { model: Post, as: "Bookmarked", attributes: ["id"] },
         ],
       });
@@ -202,19 +199,7 @@ router.get("/posts", isLoggedIn, async (req, res, next) => {
           {
             model: Comment,
             attributes: ["id"],
-            include: [
-              { model: User, attributes: ["id"] },
-              {
-                model: Nested_Comment,
-                attributes: ["id"],
-                include: [
-                  {
-                    model: User,
-                    attributes: ["id"],
-                  },
-                ],
-              },
-            ],
+            include: [{ model: User, attributes: ["id"] }],
             attributes: ["id"],
           },
           {
@@ -248,15 +233,10 @@ router.get("/comments", isLoggedIn, async (req, res, next) => {
         where: { UserId: req.user.id },
         include: [{ model: Post, attributes: ["id", "title"] }],
       });
-      const nestedComments = await Nested_Comment.findAll({
-        where: { UserId: req.user.id },
-        include: [{ model: Post, attributes: ["id", "title"] }],
-      });
 
-      const result = [...comments, ...nestedComments];
-      result.sort((a, b) => b.createdAt - a.createdAt);
+      comments.sort((a, b) => b.createdAt - a.createdAt);
 
-      return res.status(201).json(result);
+      return res.status(201).json(comments);
     } else {
       res.status(200).json(null);
     }
@@ -282,14 +262,7 @@ router.get("/bookmark", isLoggedIn, async (req, res, next) => {
           { model: User, attributes: ["id", "nickname", "profile_img"] },
           {
             model: Comment,
-            include: [
-              { model: User, attributes: ["id"] },
-              {
-                model: Nested_Comment,
-                attributes: ["id"],
-                include: [{ model: User, attributes: ["id"] }],
-              },
-            ],
+            include: [{ model: User, attributes: ["id"] }],
             attributes: ["id"],
           },
           { model: User, as: "Likers", attributes: ["id"] },
@@ -335,10 +308,7 @@ router.patch("/me", upload.none(), isLoggedIn, async (req, res, next) => {
             model: Comment,
             attributes: ["id"],
           },
-          {
-            model: Nested_Comment,
-            attributes: ["id"],
-          },
+
           { model: Post, as: "Bookmarked", attributes: ["id"] },
         ],
       });
@@ -375,19 +345,7 @@ router.get("/you", async (req, res, next) => {
             {
               model: Comment,
               attributes: ["id"],
-              include: [
-                { model: User, attributes: ["id"] },
-                {
-                  model: Nested_Comment,
-                  attributes: ["id"],
-                  include: [
-                    {
-                      model: User,
-                      attributes: ["id"],
-                    },
-                  ],
-                },
-              ],
+              include: [{ model: User, attributes: ["id"] }],
             },
             {
               model: User,
@@ -410,16 +368,9 @@ router.get("/you", async (req, res, next) => {
       include: [{ model: Post, attributes: ["id", "title"] }],
     });
 
-    const nestedComments = await Nested_Comment.findAll({
-      limit: 10,
-      where: { UserId: parseInt(req.query.userId) },
-      include: [{ model: Post, attributes: ["id", "title"] }],
-    });
+    comments.sort((a, b) => b.createdAt - a.createdAt);
 
-    const fullComments = [...comments, ...nestedComments];
-    fullComments.sort((a, b) => b.createdAt - a.createdAt);
-
-    return res.status(201).json({ yourInfo, fullComments });
+    return res.status(201).json({ yourInfo, comments });
   } catch (error) {
     console.error(error);
     next(error);

@@ -13,12 +13,7 @@ const CommentModal = () => {
   const { commentModalSlideUp } = useSelector(state => state.modal);
   const { currentPost } = useSelector(state => state.post);
   const { me } = useSelector(state => state.user);
-  const commentCount =
-    currentPost?.Comments.length +
-    currentPost?.Comments.reduce(
-      (acc, cur) => acc + cur?.Nested_Comments.length,
-      0,
-    );
+  const commentCount = currentPost?.Comments.length;
   const addInfo = {
     user: me,
     content: '',
