@@ -25,9 +25,7 @@ const PostCardFooter = ({ post }) => {
   const dispatch = useDispatch();
   const { me } = useSelector(state => state.user);
 
-  const commentCount =
-    post?.Comments.length +
-    post?.Comments.reduce((acc, cur) => acc + cur.Nested_Comments.length, 0);
+  const commentCount = post?.Comments.length;
 
   const isAlreadyLike = post?.Likers.some(v => v.id === me?.id);
   const isAlreadyBookmark = post?.Bookmarkers.some(v => v.id === me?.id);
@@ -41,9 +39,6 @@ const PostCardFooter = ({ post }) => {
   const likeColor = isAlreadyLike ? clikedStyle : {};
   const isExistComment = post?.Comments.some(v => {
     if (v.User.id === me?.id) {
-      return true;
-    }
-    if (v.Nested_Comments.some(vv => vv.User.id === me?.id)) {
       return true;
     }
     return false;

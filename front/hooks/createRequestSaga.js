@@ -3,6 +3,7 @@ import {
   ADD_BOOKMARK_SUCCESS,
   ADD_COMMENT_SUCCESS,
   ADD_NESTED_COMMENT_SUCCESS,
+  CHANGE_COMMENTS,
   LIKE_POST_SUCCESS,
   REMOVE_BOOKMARK_SUCCESS,
   REMOVE_COMMENT_SUCCESS,
@@ -42,7 +43,12 @@ export default function createRequestSaga(
         successType === REMOVE_NESTED_COMMENT_SUCCESS ||
         successType === UPDATE_NESTED_COMMENT_SUCCESS
       ) {
-        successAction = { ...successAction, postId: action.data.postId };
+        delete successAction.data;
+        yield put({
+          type: CHANGE_COMMENTS,
+          data: result.data,
+          postId: action.data.postId,
+        });
       } else if (
         successType === LOG_OUT_SUCCESS ||
         successType === SIGN_UP_SUCCESS

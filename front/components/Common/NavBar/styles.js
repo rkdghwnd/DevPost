@@ -5,6 +5,7 @@ export const Nav = styled.nav`
   top: 0;
   background-color: white;
   border-bottom: 1px solid rgb(240, 240, 240);
+  /* margin-bottom: 6px; */
   ul {
     display: flex;
     padding: 0;

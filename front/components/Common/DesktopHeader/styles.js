@@ -37,7 +37,14 @@ export const HeaderInner = styled.div`
     font-weight: 700;
     text-decoration: none;
     color: #48b4e0;
+    padding: 10px;
+    border-radius: 10px;
     margin-left: 15px;
+    :hover {
+      background-color: rgb(250, 250, 250);
+      color: #1890ff;
+      transition: all 0.2s ease-out;
+    }
   }
 `;
 

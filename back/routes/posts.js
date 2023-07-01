@@ -1,5 +1,5 @@
 const express = require("express");
-const { Post, User, Image, Comment, Nested_Comment } = require("../models");
+const { Post, User, Image, Comment } = require("../models");
 const { Op } = require("sequelize");
 const router = express.Router();
 
@@ -25,19 +25,7 @@ router.get("/free", async (req, res, next) => {
         {
           model: Comment,
           attributes: ["id"],
-          include: [
-            { model: User, attributes: ["id"] },
-            {
-              model: Nested_Comment,
-              attributes: ["id"],
-              include: [
-                {
-                  model: User,
-                  attributes: ["id"],
-                },
-              ],
-            },
-          ],
+          include: [{ model: User, attributes: ["id"] }],
         },
         {
           model: User,
@@ -85,19 +73,7 @@ router.get("/search", async (req, res, next) => {
         {
           model: Comment,
           attributes: ["id"],
-          include: [
-            { model: User, attributes: ["id"] },
-            {
-              model: Nested_Comment,
-              attributes: ["id"],
-              include: [
-                {
-                  model: User,
-                  attributes: ["id"],
-                },
-              ],
-            },
-          ],
+          include: [{ model: User, attributes: ["id"] }],
         },
         {
           model: User,
@@ -128,19 +104,7 @@ router.get("/search", async (req, res, next) => {
             {
               model: Comment,
               attributes: ["id"],
-              include: [
-                { model: User, attributes: ["id"] },
-                {
-                  model: Nested_Comment,
-                  attributes: ["id"],
-                  include: [
-                    {
-                      model: User,
-                      attributes: ["id"],
-                    },
-                  ],
-                },
-              ],
+              include: [{ model: User, attributes: ["id"] }],
             },
             {
               model: User,

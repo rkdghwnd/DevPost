@@ -2,11 +2,13 @@ import styled from 'styled-components';
 
 export const HotDealCardForm = styled.article`
   display: flex;
-  padding: 10px 20px;
+  padding: 10px;
   background-color: white;
   border-bottom: 1px solid rgb(240, 240, 240);
+  margin: 6px 3px;
   &:hover {
-    background-color: rgb(250, 250, 250);
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.22);
+    transition: box-shadow 0.15s ease-out;
   }
   img {
     width: 80px;

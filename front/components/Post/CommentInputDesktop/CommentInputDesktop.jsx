@@ -21,6 +21,7 @@ const CommentInputDesktop = ({ info }) => {
   const [commentText, setCommentText] = useState(info.content);
   const { currentPost } = useSelector(state => state.post);
   const textarea = useRef();
+
   const onChangeTextarea = useCallback(
     e => {
       setCommentText(e.currentTarget.value);
@@ -90,7 +91,7 @@ const CommentInputDesktop = ({ info }) => {
   }, []);
 
   return (
-    <CommentInputWrapper>
+    <CommentInputWrapper purpose={info.purpose}>
       <CommentInput>
         <img
           src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${info.user.profile_img}`}
@@ -101,6 +102,7 @@ const CommentInputDesktop = ({ info }) => {
           rows={2}
           value={commentText}
           onChange={onChangeTextarea}
+          autoFocus
         ></textarea>
       </CommentInput>
       <ButtonWrapper>

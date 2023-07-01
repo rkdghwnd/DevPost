@@ -14,7 +14,11 @@ const Comment = ({ comment }) => {
   const { me } = useSelector(state => state.user);
   const [updateVisible, setUpdateVisible] = useState(false);
   const [replyVisible, setReplyVisible] = useState(false);
-  const dayTime = `${comment.createdAt.slice(0, 10)} ${comment.createdAt.slice(
+  const offset = 1000 * 60 * 60 * 9;
+  const CommentTime = new Date(
+    new Date(comment.createdAt).getTime() + offset,
+  ).toISOString();
+  const writtenTime = `${CommentTime.slice(0, 10)} ${CommentTime.slice(
     11,
     19,
   )}`;
@@ -77,7 +81,7 @@ const Comment = ({ comment }) => {
           <h4>{comment.User.nickname}</h4>
           <CommentBody>{comment.content}</CommentBody>
           <CommentSubMenu>
-            <span>{dayTime}</span>
+            <span>{writtenTime}</span>
             <span onClick={onToggleReply}>답글 달기</span>
             {comment.User.id === me?.id ? (
               <>
@@ -88,21 +92,13 @@ const Comment = ({ comment }) => {
           </CommentSubMenu>
         </div>
       </CommentForm>
-      {replyVisible ? (
-        <>
-          <CommentInputDesktop info={replyInfo} />
-        </>
-      ) : null}
-      {updateVisible ? (
-        <>
-          <CommentInputDesktop info={updateInfo} />
-        </>
-      ) : null}
-      {comment.Nested_Comments.map(v => {
+      {replyVisible ? <>{<CommentInputDesktop info={replyInfo} />}</> : null}
+      {updateVisible ? <>{<CommentInputDesktop info={updateInfo} />}</> : null}
+      {/* {comment.Nested_Comments.map(v => {
         return (
           <NestedComment key={v.id} nestedComment={v} commentId={comment.id} />
         );
-      })}
+      })} */}
     </>
   );
 };

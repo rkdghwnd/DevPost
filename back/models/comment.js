@@ -6,6 +6,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false, // 필수
       },
+      target: {
+        type: DataTypes.STRING(100),
+      },
+      CommentId: {
+        type: DataTypes.INTEGER,
+      },
     },
     {
       chaset: "utf8mb4", // 유니코드 설정, 설정해야 한글 사용가능, mb4 : 이모티콘 사용 가능
@@ -15,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   Comment.associate = (db) => {
     db.Comment.belongsTo(db.User);
     db.Comment.belongsTo(db.Post);
-    db.Comment.hasMany(db.Nested_Comment);
+    // db.Comment.hasMany(db.Nested_Comment);
   };
 
   return Comment;

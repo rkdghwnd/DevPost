@@ -53,12 +53,12 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    proxy: process.env.NODE_ENV === "production",
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      domain: process.env.NODE_ENV === "production" && ".devpost.site",
-    },
+    // proxy: process.env.NODE_ENV === "production", // The "X-Forwarded-Proto" header will be used.
+    // cookie: {
+    //   httpOnly: true,
+    //   secure: true,
+    //   domain: process.env.NODE_ENV === "production" && ".devpost.site",
+    // },
   })
 );
 
