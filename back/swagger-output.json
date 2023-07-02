@@ -86,7 +86,6 @@
                     "id": 2
                   }
                 ],
-                "Nested_Comments": [],
                 "Bookmarked": [
                   {
                     "id": 3,
@@ -793,8 +792,7 @@
                     "id": 1,
                     "nickname": "강호중",
                     "profile_img": "basic-profile-image.png"
-                  },
-                  "Nested_Comments": []
+                  }
                 },
                 {
                   "id": 3,
@@ -807,8 +805,7 @@
                     "id": 1,
                     "nickname": "강호중",
                     "profile_img": "basic-profile-image.png"
-                  },
-                  "Nested_Comments": []
+                  }
                 },
                 {
                   "id": 5,
@@ -821,8 +818,7 @@
                     "id": 4,
                     "nickname": "지메일",
                     "profile_img": "basic-profile-image.png"
-                  },
-                  "Nested_Comments": []
+                  }
                 }
               ]
             }
@@ -872,8 +868,7 @@
                     "id": 1,
                     "nickname": "강호중",
                     "profile_img": "basic-profile-image.png"
-                  },
-                  "Nested_Comments": []
+                  }
                 },
                 {
                   "id": 2,
@@ -886,8 +881,7 @@
                     "id": 2,
                     "nickname": "강호중",
                     "profile_img": ""
-                  },
-                  "Nested_Comments": []
+                  }
                 },
                 {
                   "id": 3,
@@ -900,8 +894,7 @@
                     "id": 1,
                     "nickname": "강호중",
                     "profile_img": "basic-profile-image.png"
-                  },
-                  "Nested_Comments": []
+                  }
                 }
               ]
             }
@@ -956,8 +949,7 @@
                     "id": 1,
                     "nickname": "강호중",
                     "profile_img": "basic-profile-image.png"
-                  },
-                  "Nested_Comments": []
+                  }
                 },
                 {
                   "id": 2,
@@ -970,8 +962,7 @@
                     "id": 2,
                     "nickname": "강호중",
                     "profile_img": ""
-                  },
-                  "Nested_Comments": []
+                  }
                 },
                 {
                   "id": 3,
@@ -984,8 +975,7 @@
                     "id": 1,
                     "nickname": "강호중",
                     "profile_img": "basic-profile-image.png"
-                  },
-                  "Nested_Comments": []
+                  }
                 }
               ]
             }
@@ -1045,39 +1035,7 @@
                     "id": 1,
                     "nickname": "강호중",
                     "profile_img": "basic-profile-image.png"
-                  },
-                  "Nested_Comments": [
-                    {
-                      "id": 1,
-                      "content": "대댓글1",
-                      "target": "강호중",
-                      "createdAt": "2023-04-15T10:39:22.000Z",
-                      "updatedAt": "2023-04-15T10:39:22.000Z",
-                      "CommentId": 6,
-                      "PostId": 6,
-                      "UserId": 1,
-                      "User": {
-                        "id": 1,
-                        "nickname": "강호중",
-                        "profile_img": "basic-profile-image.png"
-                      }
-                    },
-                    {
-                      "id": 2,
-                      "content": "대댓글2",
-                      "target": "6",
-                      "createdAt": "2023-04-15T10:41:51.000Z",
-                      "updatedAt": "2023-04-15T10:41:51.000Z",
-                      "CommentId": 6,
-                      "PostId": 6,
-                      "UserId": 4,
-                      "User": {
-                        "id": 4,
-                        "nickname": "지메일",
-                        "profile_img": "basic-profile-image.png"
-                      }
-                    }
-                  ]
+                  }
                 }
               ]
             }
@@ -1134,39 +1092,7 @@
                     "id": 1,
                     "nickname": "강호중",
                     "profile_img": "basic-profile-image.png"
-                  },
-                  "Nested_Comments": [
-                    {
-                      "id": 1,
-                      "content": "대댓글1",
-                      "target": "강호중",
-                      "createdAt": "2023-04-15T10:39:22.000Z",
-                      "updatedAt": "2023-04-15T10:39:22.000Z",
-                      "CommentId": 6,
-                      "PostId": 6,
-                      "UserId": 1,
-                      "User": {
-                        "id": 1,
-                        "nickname": "강호중",
-                        "profile_img": "basic-profile-image.png"
-                      }
-                    },
-                    {
-                      "id": 2,
-                      "content": "대댓글2",
-                      "target": "6",
-                      "createdAt": "2023-04-15T10:41:51.000Z",
-                      "updatedAt": "2023-04-15T10:41:51.000Z",
-                      "CommentId": 6,
-                      "PostId": 6,
-                      "UserId": 4,
-                      "User": {
-                        "id": 4,
-                        "nickname": "지메일",
-                        "profile_img": "basic-profile-image.png"
-                      }
-                    }
-                  ]
+                  }
                 }
               ]
             }
@@ -1227,39 +1153,7 @@
                     "id": 1,
                     "nickname": "강호중",
                     "profile_img": "basic-profile-image.png"
-                  },
-                  "Nested_Comments": [
-                    {
-                      "id": 1,
-                      "content": "수정된 대댓글 내용",
-                      "target": "강호중",
-                      "createdAt": "2023-04-15T10:39:22.000Z",
-                      "updatedAt": "2023-04-15T10:39:22.000Z",
-                      "CommentId": 6,
-                      "PostId": 6,
-                      "UserId": 1,
-                      "User": {
-                        "id": 1,
-                        "nickname": "강호중",
-                        "profile_img": "basic-profile-image.png"
-                      }
-                    },
-                    {
-                      "id": 2,
-                      "content": "대댓글2",
-                      "target": "6",
-                      "createdAt": "2023-04-15T10:41:51.000Z",
-                      "updatedAt": "2023-04-15T10:41:51.000Z",
-                      "CommentId": 6,
-                      "PostId": 6,
-                      "UserId": 4,
-                      "User": {
-                        "id": 4,
-                        "nickname": "지메일",
-                        "profile_img": "basic-profile-image.png"
-                      }
-                    }
-                  ]
+                  }
                 }
               ]
             }
@@ -1440,21 +1334,7 @@
                         "id": 6,
                         "User": {
                           "id": 1
-                        },
-                        "Nested_Comments": [
-                          {
-                            "id": 2,
-                            "User": {
-                              "id": 4
-                            }
-                          },
-                          {
-                            "id": 1,
-                            "User": {
-                              "id": 1
-                            }
-                          }
-                        ]
+                        }
                       }
                     ],
                     "Likers": [],
@@ -1487,8 +1367,7 @@
                         "id": 4,
                         "User": {
                           "id": 1
-                        },
-                        "Nested_Comments": []
+                        }
                       }
                     ],
                     "Likers": [
@@ -1661,22 +1540,19 @@
                         "id": 1,
                         "User": {
                           "id": 1
-                        },
-                        "Nested_Comments": []
+                        }
                       },
                       {
                         "id": 2,
                         "User": {
                           "id": 2
-                        },
-                        "Nested_Comments": []
+                        }
                       },
                       {
                         "id": 3,
                         "User": {
                           "id": 1
-                        },
-                        "Nested_Comments": []
+                        }
                       }
                     ],
                     "Likers": [],
