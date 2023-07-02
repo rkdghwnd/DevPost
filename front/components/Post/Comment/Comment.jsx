@@ -7,7 +7,6 @@ import {
   LOG_IN_MODAL_OPEN,
 } from '../../../reducers/modal';
 import { CommentForm, CommentBody, CommentSubMenu } from './styles';
-import NestedComment from '../NestedComment/NestedComment';
 
 const Comment = ({ comment }) => {
   const dispatch = useDispatch();

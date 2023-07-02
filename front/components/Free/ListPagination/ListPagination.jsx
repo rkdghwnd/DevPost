@@ -3,7 +3,7 @@ import shortid from 'shortid';
 import PropTypes from 'prop-types';
 import { PageButton, PaginationContainer } from './style';
 
-const CommentPagination = ({ currentPage, setCurrentPage, totalPageCount }) => {
+const ListPagination = ({ currentPage, setCurrentPage, totalPageCount }) => {
   const prevButton = useRef();
   const lastButton = useRef();
 
@@ -63,10 +63,10 @@ const CommentPagination = ({ currentPage, setCurrentPage, totalPageCount }) => {
   );
 };
 
-CommentPagination.propTypes = {
+ListPagination.propTypes = {
   currentPage: PropTypes.number,
   setCurrentPage: PropTypes.func,
   totalPageCount: PropTypes.number,
 };
 
-export default CommentPagination;
+export default ListPagination;

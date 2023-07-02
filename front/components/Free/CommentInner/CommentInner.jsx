@@ -4,7 +4,7 @@ import { FaRegCommentDots } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { CommentWrapper, EmptyCommentForm } from './styles';
 import NestedComment from '../../Post/NestedComment/NestedComment';
-import CommentPagination from '../ComentPagination/CommentPagination';
+import ListPagination from '../ListPagination/ListPagination';
 
 const CommentInner = () => {
   const { currentPost } = useSelector(state => state.post);
@@ -31,7 +31,7 @@ const CommentInner = () => {
           }
         }).slice((currentPage - 1) * 20, (currentPage - 1) * 20 + 20)
       )}
-      <CommentPagination
+      <ListPagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalPageCount={totalPageCount}

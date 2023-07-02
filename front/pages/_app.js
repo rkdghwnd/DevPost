@@ -26,8 +26,8 @@ import ConfirmCancelPostModal from '../components/Post/ConfirmCancelPostModal/Co
 import ConfirmRemoveAccountModal from '../components/MyProfile/Edit/ConfirmRemoveAccountModal/ConfirmRemoveAccountModal';
 import InfoModal from '../components/Common/InfoModal/InfoModal';
 import '../cssVariable.scss';
-import LikeMessage from '../components/Common/LikeMessage';
-import BookmarkMessage from '../components/Common/BookmarkMessage';
+import LikeMessage from '../components/Common/LikeMessage/LikeMessage';
+import BookmarkMessage from '../components/Common/BookmarkMessage/BookmarkMessage';
 
 const GlobalStyle = createGlobalStyle`
 

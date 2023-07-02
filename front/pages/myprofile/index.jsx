@@ -20,6 +20,7 @@ import wrapper from '../../store/configureStore';
 import axios from 'axios';
 import { END } from 'redux-saga';
 import { LOAD_MY_BOOKMARK_REQUEST } from '../../reducers/post';
+import ListPagination from '../../components/Free/ListPagination/ListPagination';
 
 const myprofile = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,12 @@ const myprofile = () => {
   const [postsVisible, setPostsVisible] = useState(false);
   const [commentsVisible, setCommentsVisible] = useState(false);
   const [bookmarkVisible, setBookmarkVisible] = useState(false);
+
+  // currentPage, setCurrentPage, totalPageCount
+  const [totalPageCount, setTotalPageCount] = useState(
+    (parseInt(myBookmark.length / 20) || 0) + 1,
+  );
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     me?.id ? '' : Router.replace('/');
@@ -58,6 +65,26 @@ const myprofile = () => {
     setBookmarkVisible(true);
     dispatch({ type: LOAD_MY_BOOKMARK_REQUEST });
   }, []);
+
+  useEffect(() => {
+    let pageTarget = 1;
+    if (postsVisible) {
+      pageTarget = myBookmark;
+    } else if (commentsVisible) {
+      pageTarget = myComments;
+    } else if (bookmarkVisible) {
+      pageTarget = myBookmark;
+    }
+    setTotalPageCount((parseInt(pageTarget.length / 20) || 0) + 1);
+    setCurrentPage(1);
+  }, [
+    bookmarkVisible,
+    postsVisible,
+    commentsVisible,
+    myBookmark,
+    myPosts,
+    myComments,
+  ]);
 
   return (
     <>
@@ -89,20 +116,27 @@ const myprofile = () => {
             ></Spinner>
           )}
           {postsVisible
-            ? myPosts?.map(post => (
-                <PostCard key={shortId.generate()} post={post} />
-              ))
+            ? myPosts
+                ?.map(post => <PostCard key={shortId.generate()} post={post} />)
+                .slice((currentPage - 1) * 20, (currentPage - 1) * 20 + 20)
             : null}
           {commentsVisible
-            ? myComments.map(comment => (
-                <ShortComment key={shortId.generate()} comment={comment} />
-              ))
+            ? myComments
+                .map(comment => (
+                  <ShortComment key={shortId.generate()} comment={comment} />
+                ))
+                .slice((currentPage - 1) * 20, (currentPage - 1) * 20 + 20)
             : null}
           {bookmarkVisible
-            ? myBookmark?.map(post => (
-                <PostCard key={shortId.generate()} post={post} />
-              ))
+            ? myBookmark
+                ?.map(post => <PostCard key={shortId.generate()} post={post} />)
+                .slice((currentPage - 1) * 20, (currentPage - 1) * 20 + 20)
             : null}
+          <ListPagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPageCount={totalPageCount}
+          />
         </MyProfileForm>
       </AppLayout>
     </>
