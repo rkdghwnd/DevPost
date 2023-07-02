@@ -89,9 +89,9 @@ const hotdeal = () => {
           <NavBar />
           <List
             width={800}
-            height={100 * visiblePosts.length}
+            height={110 * visiblePosts.length}
             rowCount={visiblePosts.length}
-            rowHeight={100}
+            rowHeight={110}
             rowRenderer={rowRenderer}
             list={visiblePosts}
           />
@@ -105,7 +105,6 @@ const hotdeal = () => {
                 : undefined
             }
           />
-          <WhiteSpace />
           <SideFilter tags={tags} />
         </MainContentsWrapper>
         <TopScroll />

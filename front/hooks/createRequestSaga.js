@@ -25,6 +25,7 @@ import {
   UNLIKE_MESSAGE_CLOSE,
   UNLIKE_MESSAGE_OPEN,
 } from '../reducers/message';
+import { LOAD_MORE_HOTDEAL_POSTS_SUCCESS } from '../reducers/posts';
 
 export default function createRequestSaga(
   successType,
