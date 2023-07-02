@@ -8,7 +8,6 @@ import axios from 'axios';
 import { END } from 'redux-saga';
 import { LOAD_MY_INFO_REQUEST } from '../../reducers/user';
 import shortId from 'shortid';
-import { Spinner, WhiteSpace } from './styles';
 import NavBar from '../../components/Common/NavBar/NavBar';
 import HotDealCard from '../../components/HotDeal/HotDealCard/HotDealCard';
 import MainContentsWrapper from '../../components/Common/MainContentsWrapper/MainContentsWrapper';
@@ -19,6 +18,21 @@ import { List } from 'react-virtualized';
 import { useFilter } from '../../hooks/useFilter';
 import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 import { LOADING } from '../../reducers';
+import styled from 'styled-components';
+import { Spin } from 'antd';
+
+const Spinner = styled(Spin)`
+  text-align: center;
+  color: #46a6ff;
+  width: 100%;
+  margin: 20px auto 0 auto;
+`;
+
+const WhiteSpace = styled.div`
+  @media (max-width: 765px) {
+    height: 60px;
+  }
+`;
 
 const hotdeal = () => {
   const dispatch = useDispatch();
