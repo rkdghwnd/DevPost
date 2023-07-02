@@ -84,6 +84,7 @@ import createRequestSaga from '../hooks/createRequestSaga';
 import {
   BOOKMARK_MESSAGE_OPEN,
   LIKE_MESSAGE_OPEN,
+  UNBOOKMARK_MESSAGE_OPEN,
   UNLIKE_MESSAGE_OPEN,
 } from '../reducers/message';
 
@@ -308,7 +309,7 @@ const removeBookmark = createRequestSaga(
   REMOVE_BOOKMARK_SUCCESS,
   REMOVE_BOOKMARK_FAILURE,
   removeBookmarkAPI,
-  { type: UNLIKE_MESSAGE_OPEN },
+  { type: UNBOOKMARK_MESSAGE_OPEN },
   messageModal('북마크 취소에 실패하였습니다.'),
 );
 

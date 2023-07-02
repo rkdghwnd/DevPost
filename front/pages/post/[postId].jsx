@@ -22,7 +22,7 @@ import DesktopHeader from '../../components/Common/DesktopHeader/DesktopHeader';
 import { LOADING, REJECTED, SUCCEEDED } from '../../reducers';
 import { useRouter } from 'next/router';
 import NestedComment from '../../components/Post/NestedComment/NestedComment';
-import CommentPagination from '../../components/Free/ComentPagination/CommentPagination';
+import ListPagination from '../../components/Free/ListPagination/ListPagination';
 
 const post = () => {
   const dispatch = useDispatch();
@@ -99,7 +99,7 @@ const post = () => {
             }
           }).slice((currentPage - 1) * 20, (currentPage - 1) * 20 + 20)
         )}
-        <CommentPagination
+        <ListPagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           totalPageCount={totalPageCount}
