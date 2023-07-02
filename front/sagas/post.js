@@ -81,6 +81,11 @@ import {
 } from '../reducers/modal';
 import { UPDATE_POST_MODAL_CLOSE_REQUEST } from '../reducers/modal';
 import createRequestSaga from '../hooks/createRequestSaga';
+import {
+  BOOKMARK_MESSAGE_OPEN,
+  LIKE_MESSAGE_OPEN,
+  UNLIKE_MESSAGE_OPEN,
+} from '../reducers/message';
 
 function addPostAPI(data) {
   return axios.post(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post`, data);
@@ -261,7 +266,7 @@ const likePost = createRequestSaga(
   LIKE_POST_SUCCESS,
   LIKE_POST_FAILURE,
   likePostAPI,
-  undefined,
+  { type: LIKE_MESSAGE_OPEN },
   messageModal('좋아요 추가에 실패하였습니다.'),
 );
 
@@ -275,7 +280,7 @@ const unlikePost = createRequestSaga(
   UNLIKE_POST_SUCCESS,
   UNLIKE_POST_FAILURE,
   unlikePostAPI,
-  undefined,
+  { type: UNLIKE_MESSAGE_OPEN },
   messageModal('좋아요 취소에 실패하였습니다.'),
 );
 
@@ -289,7 +294,7 @@ const addBookmark = createRequestSaga(
   ADD_BOOKMARK_SUCCESS,
   ADD_BOOKMARK_FAILURE,
   addBookmarkAPI,
-  undefined,
+  { type: BOOKMARK_MESSAGE_OPEN },
   messageModal('북마크 추가에 실패하였습니다.'),
 );
 
@@ -303,7 +308,7 @@ const removeBookmark = createRequestSaga(
   REMOVE_BOOKMARK_SUCCESS,
   REMOVE_BOOKMARK_FAILURE,
   removeBookmarkAPI,
-  undefined,
+  { type: UNLIKE_MESSAGE_OPEN },
   messageModal('북마크 취소에 실패하였습니다.'),
 );
 

@@ -19,6 +19,7 @@ import { LOADING } from '../../reducers';
 import wrapper from '../../store/configureStore';
 import axios from 'axios';
 import { END } from 'redux-saga';
+import { LOAD_MY_BOOKMARK_REQUEST } from '../../reducers/post';
 
 const myprofile = () => {
   const dispatch = useDispatch();
@@ -52,6 +53,11 @@ const myprofile = () => {
   if (loadMyInfoStatus === LOADING) {
     return <MyProfileLoading />;
   }
+
+  useEffect(() => {
+    setBookmarkVisible(true);
+    dispatch({ type: LOAD_MY_BOOKMARK_REQUEST });
+  }, []);
 
   return (
     <>

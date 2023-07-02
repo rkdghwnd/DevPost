@@ -94,11 +94,6 @@ const Comment = ({ comment }) => {
       </CommentForm>
       {replyVisible ? <>{<CommentInputDesktop info={replyInfo} />}</> : null}
       {updateVisible ? <>{<CommentInputDesktop info={updateInfo} />}</> : null}
-      {/* {comment.Nested_Comments.map(v => {
-        return (
-          <NestedComment key={v.id} nestedComment={v} commentId={comment.id} />
-        );
-      })} */}
     </>
   );
 };

@@ -5,6 +5,7 @@ import post from './post';
 import modal from './modal';
 import option from './option';
 import posts from './posts';
+import message from './message';
 
 export const LOADING = 'loading';
 export const SUCCEEDED = 'succeeded';
@@ -21,6 +22,7 @@ const rootReducer = (state, action) => {
         posts,
         option,
         modal,
+        message,
       });
       return combinedReducer(state, action);
     }
