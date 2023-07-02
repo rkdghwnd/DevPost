@@ -1,4 +1,4 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, delay } from 'redux-saga/effects';
 import {
   ADD_BOOKMARK_SUCCESS,
   ADD_COMMENT_SUCCESS,
@@ -15,6 +15,16 @@ import {
 } from '../reducers/post';
 import { messageModal } from '../reducers/modal';
 import { LOG_OUT_SUCCESS, SIGN_UP_SUCCESS } from '../reducers/user';
+import {
+  BOOKMARK_MESSAGE_CLOSE,
+  BOOKMARK_MESSAGE_OPEN,
+  LIKE_MESSAGE_CLOSE,
+  LIKE_MESSAGE_OPEN,
+  UNBOOKMARK_MESSAGE_CLOSE,
+  UNBOOKMARK_MESSAGE_OPEN,
+  UNLIKE_MESSAGE_CLOSE,
+  UNLIKE_MESSAGE_OPEN,
+} from '../reducers/message';
 
 export default function createRequestSaga(
   successType,
@@ -60,6 +70,19 @@ export default function createRequestSaga(
 
       if (successAdditionalAction) {
         yield put(successAdditionalAction);
+        if (successAdditionalAction.type === LIKE_MESSAGE_OPEN) {
+          yield delay(4000);
+          yield put({ type: LIKE_MESSAGE_CLOSE });
+        } else if (successAdditionalAction.type === UNLIKE_MESSAGE_OPEN) {
+          yield delay(4000);
+          yield put({ type: UNLIKE_MESSAGE_CLOSE });
+        } else if (successAdditionalAction.type === BOOKMARK_MESSAGE_OPEN) {
+          yield delay(4000);
+          yield put({ type: BOOKMARK_MESSAGE_CLOSE });
+        } else if (successAdditionalAction.type === UNBOOKMARK_MESSAGE_OPEN) {
+          yield delay(4000);
+          yield put({ type: UNBOOKMARK_MESSAGE_CLOSE });
+        }
       }
     } catch (error) {
       yield put({ type: failureType, error: error.response.data });

@@ -22,7 +22,7 @@ import DesktopHeader from '../../components/Common/DesktopHeader/DesktopHeader';
 import { LOADING, REJECTED, SUCCEEDED } from '../../reducers';
 import { useRouter } from 'next/router';
 import NestedComment from '../../components/Post/NestedComment/NestedComment';
-import CommentPagination from '../../components/Free/CommentPagination';
+import CommentPagination from '../../components/Free/ComentPagination/CommentPagination';
 
 const post = () => {
   const dispatch = useDispatch();
@@ -33,10 +33,8 @@ const post = () => {
   );
   const { me } = useSelector(state => state.user);
 
-  const totalPageCount = parseInt(currentPost?.Comments.length / 20) + 1;
+  const totalPageCount = (parseInt(currentPost?.Comments.length / 20) || 0) + 1;
   const [currentPage, setCurrentPage] = useState(1);
-  console.log(totalPageCount);
-  console.log(currentPage);
 
   const addInfo = {
     user: me,
@@ -46,7 +44,6 @@ const post = () => {
   };
 
   useEffect(() => {
-    console.log(totalPageCount);
     setCurrentPage(totalPageCount);
   }, [totalPageCount]);
 
@@ -59,12 +56,6 @@ const post = () => {
       router.push(`${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}`);
     }
   }, [removePostStatus, router]);
-
-  useEffect(() => {
-    dispatch({
-      type: LOAD_MY_INFO_REQUEST,
-    });
-  }, []);
 
   useEffect(() => {
     dispatch({
@@ -124,21 +115,21 @@ const post = () => {
   );
 };
 
-// export const getServerSideProps = wrapper.getServerSideProps(async context => {
-//   const cookie = context.req ? context.req.headers.cookie : '';
-//   axios.defaults.headers.Cookie = '';
-//   if (context.req && cookie) {
-//     axios.defaults.headers.Cookie = cookie;
-//   }
-//   context.store.dispatch({
-//     type: LOAD_POST_REQUEST,
-//     data: context.params.postId,
-//   });
-//   context.store.dispatch({
-//     type: LOAD_MY_INFO_REQUEST, // 로그인 유지
-//   });
-//   context.store.dispatch(END);
-//   await context.store.sagaTask.toPromise();
-// });
+export const getServerSideProps = wrapper.getServerSideProps(async context => {
+  const cookie = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
+  if (context.req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
+  context.store.dispatch({
+    type: LOAD_POST_REQUEST,
+    data: context.params.postId,
+  });
+  context.store.dispatch({
+    type: LOAD_MY_INFO_REQUEST, // 로그인 유지
+  });
+  context.store.dispatch(END);
+  await context.store.sagaTask.toPromise();
+});
 
 export default post;

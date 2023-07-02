@@ -10,6 +10,7 @@ import CommentInner from '../CommentInner/CommentInner';
 import { ModalBackdrop, CommentForm, CloseButton, LogInBox } from './styles';
 
 const CommentModal = () => {
+  const dispatch = useDispatch();
   const { commentModalSlideUp } = useSelector(state => state.modal);
   const { currentPost } = useSelector(state => state.post);
   const { me } = useSelector(state => state.user);
@@ -20,7 +21,6 @@ const CommentModal = () => {
     purpose: 'add',
     onClose: () => {},
   };
-  const dispatch = useDispatch();
 
   const onStopEventBubbling = useCallback(e => {
     e.stopPropagation();

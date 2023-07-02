@@ -26,6 +26,8 @@ import ConfirmCancelPostModal from '../components/Post/ConfirmCancelPostModal/Co
 import ConfirmRemoveAccountModal from '../components/MyProfile/Edit/ConfirmRemoveAccountModal/ConfirmRemoveAccountModal';
 import InfoModal from '../components/Common/InfoModal/InfoModal';
 import '../cssVariable.scss';
+import LikeMessage from '../components/Common/LikeMessage';
+import BookmarkMessage from '../components/Common/BookmarkMessage';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -74,6 +76,12 @@ const DevPost = ({ Component }) => {
     verifyPasswordModalVisual,
     confirmRemoveAccountModalVisual,
   } = useSelector(state => state.modal);
+  const {
+    likeMessageVisual,
+    unlikeMessageVisual,
+    bookmarkMessageVisual,
+    unbookmarkMessageVisual,
+  } = useSelector(state => state.message);
 
   // kakao SDK import하기
   const status = useScript('https://developers.kakao.com/sdk/js/kakao.js');
@@ -154,6 +162,26 @@ const DevPost = ({ Component }) => {
       {confirmCancelPostModalVisual ? <ConfirmCancelPostModal /> : ''}
       {verifyPasswordModalVisual ? <VerifyPasswordModal /> : ''}
       {confirmRemoveAccountModalVisual ? <ConfirmRemoveAccountModal /> : ''}
+      {likeMessageVisual ? (
+        <LikeMessage message={'좋아요를 눌렀습니다.'} />
+      ) : (
+        ''
+      )}
+      {unlikeMessageVisual ? (
+        <LikeMessage message={'좋아요를 취소했습니다.'} />
+      ) : (
+        ''
+      )}
+      {bookmarkMessageVisual ? (
+        <BookmarkMessage message={'북마크에 추가했습니다.'} />
+      ) : (
+        ''
+      )}
+      {unbookmarkMessageVisual ? (
+        <BookmarkMessage message={'북마크에서 제거했습니다.'} />
+      ) : (
+        ''
+      )}
     </>
   );
 };
