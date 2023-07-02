@@ -24,10 +24,10 @@ const PostModal = () => {
   const [title, onChangeTitle] = useInput('');
   const [mainText, onChangeMainText] = useInput('');
 
-  const { newPostModalSlideUp, addPostStatus } = useSelector(
-    state => state.modal,
+  const { newPostModalSlideUp } = useSelector(state => state.modal);
+  const { currentPost, imagePaths, addPostStatus } = useSelector(
+    state => state.post,
   );
-  const { currentPost, imagePaths } = useSelector(state => state.post);
 
   const onStopEventBubbling = useCallback(e => {
     e.stopPropagation();
@@ -59,11 +59,12 @@ const PostModal = () => {
 
   useEffect(() => {
     if (addPostStatus === SUCCEEDED) {
+      console.log('제발..');
       router.push(
         `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/post/${currentPost?.id}`,
       );
     }
-  }, [router, currentPost?.id, addPostStatus]);
+  }, [router, currentPost, addPostStatus]);
 
   return (
     <ModalBackdrop>

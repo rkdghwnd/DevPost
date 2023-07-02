@@ -24,7 +24,6 @@
     "immer": "^9.0.17",
     "next": "^12.3.4",
     "next-redux-wrapper": "^6.0.2",
-    "node-sass": "^7.0.3",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",

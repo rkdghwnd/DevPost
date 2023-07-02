@@ -10,7 +10,6 @@ import { LOAD_MY_INFO_REQUEST } from '../../reducers/user';
 import Head from 'next/head';
 import ProfileImage from '../../components/MyProfile/ProfileImage/ProfileImage';
 import MyProfileRecordButton from '../../components/MyProfile/MyProfileRecordButton/MyProfileRecordButton';
-import { MyProfileForm, MyProfileHeader, Spinner } from './styles';
 import ShortComment from '../../components/Free/ShortComment/ShortComment';
 import MyProfileLoading from '../../components/MyProfile/MyProfileLoading/MyProfileLoading';
 import MyProfileOption from '../../components/MyProfile/MyProfileOption/MyProfileOption';
@@ -21,6 +20,50 @@ import axios from 'axios';
 import { END } from 'redux-saga';
 import { LOAD_MY_BOOKMARK_REQUEST } from '../../reducers/post';
 import ListPagination from '../../components/Free/ListPagination/ListPagination';
+import { Spin } from 'antd';
+import styled from 'styled-components';
+
+const MyProfileForm = styled.div`
+  background-color: white;
+  padding: 20px 20px 0 20px;
+  min-height: 960px;
+
+  @media (min-width: 765px) {
+    max-width: 800px;
+    min-height: 920px;
+    margin: 0 auto;
+    transform: translateY(80px);
+  }
+`;
+
+const MyProfileHeader = styled.div`
+  position: relative;
+  margin-bottom: 10px;
+
+  span {
+    display: block;
+    margin: 0 auto;
+    width: 75px;
+    text-align: center;
+    font-size: 18px;
+  }
+  & > :last-child {
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    cursor: pointer;
+  }
+`;
+
+const Spinner = styled(Spin)`
+  font-size: 20px;
+  text-align: center;
+  color: #46a6ff;
+  position: absolute;
+  left: 45%;
+  bottom: 50%;
+`;
 
 const myprofile = () => {
   const dispatch = useDispatch();
@@ -39,7 +82,6 @@ const myprofile = () => {
   const [commentsVisible, setCommentsVisible] = useState(false);
   const [bookmarkVisible, setBookmarkVisible] = useState(false);
 
-  // currentPage, setCurrentPage, totalPageCount
   const [totalPageCount, setTotalPageCount] = useState(
     (parseInt(myBookmark.length / 20) || 0) + 1,
   );
