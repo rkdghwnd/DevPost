@@ -7,6 +7,7 @@ import {
   PostBody,
   ViewsCommentsLiked,
 } from './styles';
+import Image from 'next/image';
 
 const PostMainText = () => {
   const { currentPost } = useSelector(state => state.post);
@@ -18,10 +19,13 @@ const PostMainText = () => {
   return (
     <MainTextForm>
       <PostUserInfo>
-        <img
-          src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${currentPost.User.profile_img}`}
-        />
-
+        <div>
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${currentPost.User.profile_img}`}
+            width={40}
+            height={40}
+          />
+        </div>
         <span>{currentPost.User.nickname}</span>
         <span>{`${year}년 ${month}월 ${day}일`}</span>
       </PostUserInfo>
@@ -35,9 +39,6 @@ const PostMainText = () => {
               <img
                 key={image.id}
                 src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${image.src}`}
-                style={{
-                  maxWidth: '100%',
-                }}
               ></img>
             );
           })}

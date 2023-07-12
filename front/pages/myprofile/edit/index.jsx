@@ -22,8 +22,12 @@ import {
   usePasswordValidate,
 } from '../../../hooks/validate';
 import { LOADING } from '../../../reducers';
-import { EditForm, EditFormHeader } from '../../../pageStyles/editStyles';
-import { ProfileImage } from '../../../components/Common/DesktopHeader/styles';
+import {
+  EditForm,
+  EditFormHeader,
+  ProfileImage,
+} from '../../../pageStyles/editStyles';
+import Image from 'next/image';
 
 const edit = () => {
   const dispatch = useDispatch();
@@ -130,10 +134,14 @@ const edit = () => {
               onChange={onChangeUploadImage}
             />
             <ProfileImage>
-              <img
-                src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${profileImage}`}
-                onClick={onAddImage}
-              />
+              <div>
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${profileImage}`}
+                  onClick={onAddImage}
+                  width={100}
+                  height={100}
+                />
+              </div>
               <FcCameraIdentification />
             </ProfileImage>
             <ProfileEditInput

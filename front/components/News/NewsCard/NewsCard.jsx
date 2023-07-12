@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import NewsCardMainText from '../NewsCardMainTest/NewsCardMainText';
 import PropTypes from 'prop-types';
 import { NewsCardForm, NewsCardHeader } from './styles';
+import Image from 'next/image';
 
 const NewsCard = ({ post }) => {
   const offset = 1000 * 60 * 60 * 9;
@@ -14,8 +15,10 @@ const NewsCard = ({ post }) => {
     <NewsCardForm newsName={post.news_name} image={post.image}>
       <ul>
         <NewsCardHeader>
-          <img
+          <Image
             src={`${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/${post.news_name}.png`}
+            width={15}
+            height={15}
           />
           <span>{post.news_name}</span>
           <div>{postTime}</div>

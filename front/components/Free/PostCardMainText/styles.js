@@ -29,9 +29,7 @@ export const MainTextForm = styled.div`
     margin-bottom: 10px;
     line-height: 17px;
   }
-  img {
-    width: 60px;
-    height: 60px;
+  & > div:last-child {
     padding: 10px;
   }
 `;

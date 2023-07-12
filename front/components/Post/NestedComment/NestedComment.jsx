@@ -8,6 +8,7 @@ import {
   CONFIRM_REMOVE_COMMENT_MODAL_OPEN,
   LOG_IN_MODAL_OPEN,
 } from '../../../reducers/modal';
+import Image from 'next/image';
 
 const NestedComment = ({ nestedComment }) => {
   const dispatch = useDispatch();
@@ -68,9 +69,13 @@ const NestedComment = ({ nestedComment }) => {
     <>
       <CommentForm>
         <ReplyIcon />
-        <img
-          src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${nestedComment.User.profile_img}`}
-        />
+        <div>
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${nestedComment.User.profile_img}`}
+            width={35}
+            height={35}
+          />
+        </div>
         <div>
           <h4>{nestedComment.User.nickname}</h4>
           <CommentBody>

@@ -6,9 +6,7 @@ export const ProfileImageForm = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
-  img {
-    width: 100px;
-    height: 100px;
+  & > span {
     border-radius: 30px;
     margin-bottom: 10px;
     cursor: pointer;

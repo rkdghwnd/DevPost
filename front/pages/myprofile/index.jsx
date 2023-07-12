@@ -20,8 +20,6 @@ import axios from 'axios';
 import { END } from 'redux-saga';
 import { LOAD_MY_BOOKMARK_REQUEST } from '../../reducers/post';
 import ListPagination from '../../components/Free/ListPagination/ListPagination';
-import MyProfileEditLoading from '../../components/MyProfile/Edit/MyProfileEditLoading/MyProfileEditLoading';
-import Custom404 from '../404';
 import {
   MyProfileForm,
   MyProfileHeader,
@@ -30,7 +28,7 @@ import {
 
 const myprofile = () => {
   const dispatch = useDispatch();
-  const Router = useRouter();
+  const router = useRouter();
   const { myProfileOptionVisible } = useSelector(state => state.option);
   const {
     myPosts,
@@ -51,26 +49,16 @@ const myprofile = () => {
   );
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    me?.id ? '' : Router.replace('/');
-  }, [me?.id]);
-
   const onClickOption = useCallback(e => {
     dispatch({ type: MY_PROFILE_OPTION_TOGGLE_REQUEST });
     e.stopPropagation();
   }, []);
 
-  if (!me) {
-    return;
-  }
-  if (loadMyInfoStatus === LOADING) {
-    return <MyProfileLoading />;
-  }
-
   useEffect(() => {
-    setBookmarkVisible(true);
-    dispatch({ type: LOAD_MY_BOOKMARK_REQUEST });
-  }, []);
+    if (!me?.id) {
+      router.replace('/');
+    }
+  }, [me?.id]);
 
   useEffect(() => {
     let pageTarget = 1;
@@ -92,11 +80,16 @@ const myprofile = () => {
     myComments,
   ]);
 
+  useEffect(() => {
+    setBookmarkVisible(true);
+    dispatch({ type: LOAD_MY_BOOKMARK_REQUEST });
+  }, []);
+
   if (!me) {
-    return <Custom404 />;
+    return;
   }
   if (loadMyInfoStatus === LOADING) {
-    return <MyProfileEditLoading />;
+    return <MyProfileLoading />;
   }
 
   return (

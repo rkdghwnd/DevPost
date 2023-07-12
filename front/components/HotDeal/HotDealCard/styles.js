@@ -10,10 +10,7 @@ export const HotDealCardForm = styled.article`
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.22);
     transition: box-shadow 0.15s ease-out;
   }
-  img {
-    width: 80px;
-    height: 80px;
-  }
+
   & > div:last-child {
     margin-left: 10px;
     flex: 1 1 auto;

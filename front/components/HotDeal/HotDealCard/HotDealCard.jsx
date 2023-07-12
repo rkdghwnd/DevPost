@@ -7,6 +7,7 @@ import {
   SiteLabel,
   HotDealTitle,
 } from './styles';
+import Image from 'next/image';
 
 const HotDealCard = ({ post }) => {
   const siteColor = {
@@ -24,12 +25,15 @@ const HotDealCard = ({ post }) => {
 
   return (
     <HotDealCardForm>
-      <img
+      <Image
         src={
           post.image
             ? `${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/${post.image}`
             : `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/no-image-icon2.PNG`
         }
+        width={80}
+        height={80}
+        layout="fixed"
       />
       <div>
         <HotDealCardHeader>

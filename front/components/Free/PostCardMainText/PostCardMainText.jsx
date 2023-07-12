@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { USER_INFO_MODAL_CLOSE_REQUEST } from '../../../reducers/modal';
 import { MainTextForm, MainTextWrapper } from './styles';
+import Image from 'next/image';
 
 const PostCardMainText = ({ post }) => {
   const dispatch = useDispatch();
@@ -24,9 +25,11 @@ const PostCardMainText = ({ post }) => {
             </div>
             <div>
               {post?.Images.length === 0 ? null : (
-                <img
+                <Image
                   src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${post?.Images[0].src}`}
-                ></img>
+                  width={60}
+                  height={60}
+                />
               )}
             </div>
           </MainTextForm>
