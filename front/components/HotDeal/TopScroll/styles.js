@@ -15,6 +15,7 @@ export const TopButton = styled.button`
   cursor: pointer;
   font-size: 20px;
   color: rgb(200, 200, 200);
+
   @media (min-width: 765px) {
     bottom: 50px;
   }

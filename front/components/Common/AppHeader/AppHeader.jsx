@@ -1,17 +1,14 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import {
-  LOG_IN_MODAL_OPEN,
-  NEW_POST_MODAL_OPEN,
-} from '../../../reducers/modal';
+import { LOG_IN_MODAL_OPEN, POST_MODAL_OPEN } from '../../../reducers/modal';
 import HeaderOption from '../HederOption/HeaderOption';
 import { HEADER_OPTION_TOGGLE_REQUEST } from '../../../reducers/option';
 import { RESET_IMAGE } from '../../../reducers/post';
 import SearchInput from '../SearchInput/SearchInput';
 import { Header, HeaderInner, ProfileWrapper, ProfileImage } from './styles';
 
-const DesktopHeader = () => {
+const AppHeader = () => {
   const dispatch = useDispatch();
   const { me } = useSelector(state => state.user);
   const { headerOptionVisible } = useSelector(state => state.option);
@@ -20,10 +17,10 @@ const DesktopHeader = () => {
     dispatch({ type: LOG_IN_MODAL_OPEN });
   }, []);
 
-  const onClickNewPostModal = useCallback(() => {
+  const onClickPostModal = useCallback(() => {
     if (me) {
       dispatch({ type: RESET_IMAGE });
-      dispatch({ type: NEW_POST_MODAL_OPEN });
+      dispatch({ type: POST_MODAL_OPEN, data: 'new' });
     } else {
       dispatch({ type: LOG_IN_MODAL_OPEN });
     }
@@ -51,10 +48,10 @@ const DesktopHeader = () => {
             {headerOptionVisible && <HeaderOption />}
           </ProfileWrapper>
         )}
-        {me && <button onClick={onClickNewPostModal}>글쓰기</button>}
+        {me && <button onClick={onClickPostModal}>글쓰기</button>}
       </HeaderInner>
     </Header>
   );
 };
 
-export default DesktopHeader;
+export default AppHeader;

@@ -22,8 +22,8 @@ export const WritePostForm = styled.section`
   height: 90%;
   flex-direction: column;
   padding: 20px;
-
-  @keyframes newPostModalSlideUp {
+  border-radius: 10px;
+  @keyframes postModalSlideUp {
     from {
       transform: translateY(1000px);
     }
@@ -32,7 +32,7 @@ export const WritePostForm = styled.section`
     }
   }
 
-  @keyframes newPostModalSlideDown {
+  @keyframes postModalSlideDown {
     from {
       transform: translateY(0);
     }
@@ -41,8 +41,8 @@ export const WritePostForm = styled.section`
     }
   }
 
-  animation-name: ${({ newPostModalSlideUp }) =>
-    newPostModalSlideUp ? 'newPostModalSlideUp' : 'newPostModalSlideDown'};
+  animation-name: ${({ postModalSlideUp }) =>
+    postModalSlideUp ? 'postModalSlideUp' : 'postModalSlideDown'};
   animation-duration: 0.3s;
   animation-delay: 0s;
   animation-timing-function: ease-in-out;

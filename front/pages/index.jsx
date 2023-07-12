@@ -13,11 +13,20 @@ import NavBar from '../components/Common/NavBar/NavBar';
 import AppLayout from '../components/Common/AppLayout';
 import PostsLoading from '../components/Free/PostsLoading/PostsLoading';
 import Paginations from '../components/Common/Paginations/Paginations';
-import { LOADING } from '../reducers';
+import { LOADING, REJECTED } from '../reducers';
+import Custom404 from './404';
 
 const free = () => {
   const { freePosts, loadFreePostsStatus, postTotal, addPostStatus } =
     useSelector(state => state.post);
+
+  if (loadFreePostsStatus === REJECTED) {
+    return <Custom404 />;
+  }
+
+  if (loadFreePostsStatus === LOADING) {
+    return <PostsLoading />;
+  }
 
   return (
     <>

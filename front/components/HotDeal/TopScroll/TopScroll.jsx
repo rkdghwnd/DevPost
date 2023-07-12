@@ -11,8 +11,7 @@ const TopScroll = () => {
     const onButtonVisible = () => {
       gsap.to(topButton.current, {
         duration: 0.3,
-        y: window.scrollY > 500 ? 0 : 100,
-        display: '',
+        display: window.scrollY > 500 ? '' : 'none',
       });
     };
 
@@ -23,7 +22,11 @@ const TopScroll = () => {
   }, [topButton]);
 
   useEffect(() => {
-    topButton.current.style.display = 'none';
+    if (window.scrollY < 500) {
+      topButton.current.style.display = 'none';
+    } else {
+      topButton.current.style.display = '';
+    }
   }, []);
 
   const onScrollTop = useCallback(() => {

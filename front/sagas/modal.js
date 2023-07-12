@@ -9,12 +9,10 @@ import {
   INFO_MODAL_CLOSE_SUCCESS,
   LOG_IN_MODAL_CLOSE_REQUEST,
   LOG_IN_MODAL_CLOSE_SUCCESS,
-  NEW_POST_MODAL_CLOSE_REQUEST,
-  NEW_POST_MODAL_CLOSE_SUCCESS,
+  POST_MODAL_CLOSE_REQUEST,
+  POST_MODAL_CLOSE_SUCCESS,
   SHARE_MODAL_CLOSE_REQUEST,
   SHARE_MODAL_CLOSE_SUCCESS,
-  UPDATE_POST_MODAL_CLOSE_REQUEST,
-  UPDATE_POST_MODAL_CLOSE_SUCCESS,
   USER_INFO_MODAL_CLOSE_REQUEST,
   USER_INFO_MODAL_CLOSE_SUCCESS,
 } from '../reducers/modal';
@@ -34,10 +32,10 @@ function* commentModalClose() {
   });
 }
 
-function* newPostModalClose() {
+function* postModalClose() {
   yield delay(250);
   yield put({
-    type: NEW_POST_MODAL_CLOSE_SUCCESS,
+    type: POST_MODAL_CLOSE_SUCCESS,
   });
 }
 
@@ -45,13 +43,6 @@ function* logInModalClose() {
   yield delay(250);
   yield put({
     type: LOG_IN_MODAL_CLOSE_SUCCESS,
-  });
-}
-
-function* updatePostModalClose() {
-  yield delay(250);
-  yield put({
-    type: UPDATE_POST_MODAL_CLOSE_SUCCESS,
   });
 }
 
@@ -90,14 +81,12 @@ function* watchCommentModalClose() {
   yield takeLatest(COMMENT_MODAL_CLOSE_REQUEST, commentModalClose);
 }
 function* watchNewPostModalClose() {
-  yield takeLatest(NEW_POST_MODAL_CLOSE_REQUEST, newPostModalClose);
+  yield takeLatest(POST_MODAL_CLOSE_REQUEST, postModalClose);
 }
 function* watchLogInModalClose() {
   yield takeLatest(LOG_IN_MODAL_CLOSE_REQUEST, logInModalClose);
 }
-function* watchUpdatePostModalClose() {
-  yield takeLatest(UPDATE_POST_MODAL_CLOSE_REQUEST, updatePostModalClose);
-}
+
 function* watchShareModalClose() {
   yield takeLatest(SHARE_MODAL_CLOSE_REQUEST, shareModalClose);
 }
@@ -118,7 +107,7 @@ export default function* postSaga() {
     fork(watchCommentModalOpen),
     fork(watchNewPostModalClose),
     fork(watchLogInModalClose),
-    fork(watchUpdatePostModalClose),
+    // fork(watchUpdatePostModalClose),
     fork(watchShareModalClose),
     fork(watchUserInfoModalClose),
     fork(watchInfoModalClose),

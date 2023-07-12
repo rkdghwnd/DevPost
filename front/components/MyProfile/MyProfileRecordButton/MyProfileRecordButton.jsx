@@ -27,7 +27,7 @@ const MyProfileRecordButton = ({
 
   const onClickPosts = useCallback(() => {
     dispatch({ type: LOAD_MY_POSTS_REQUEST });
-    setPostsVisible(state => !state);
+    setPostsVisible(true);
     setCommentsVisible(false);
     setBookmarkVisible(false);
   }, []);
@@ -35,7 +35,7 @@ const MyProfileRecordButton = ({
   const onClickComments = useCallback(() => {
     dispatch({ type: LOAD_MY_COMMENTS_REQUEST });
     setPostsVisible(false);
-    setCommentsVisible(state => !state);
+    setCommentsVisible(true);
     setBookmarkVisible(false);
   }, []);
 
@@ -43,7 +43,7 @@ const MyProfileRecordButton = ({
     dispatch({ type: LOAD_MY_BOOKMARK_REQUEST });
     setPostsVisible(false);
     setCommentsVisible(false);
-    setBookmarkVisible(state => !state);
+    setBookmarkVisible(true);
   }, []);
 
   return (

@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { BsGithub } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { ModalBackdrop, InfoForm } from 'styled-components';
 import { INFO_MODAL_CLOSE_REQUEST } from '../../../reducers/modal';
+import { InfoForm, ModalBackdrop } from './styles';
 
 const InfoModal = () => {
   const dispatch = useDispatch();
@@ -36,11 +35,6 @@ const InfoModal = () => {
       </InfoForm>
     </ModalBackdrop>
   );
-};
-
-InfoModal.propTypes = {
-  onClickAppInfo: PropTypes.func.isRequired,
-  infoOpened: PropTypes.bool.isRequired,
 };
 
 export default InfoModal;

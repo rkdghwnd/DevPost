@@ -14,14 +14,27 @@ import axios from 'axios';
 import { END } from 'redux-saga';
 import { useFilter } from '../hooks/useFilter';
 import SideFilter from '../components/Common/SideFilter/SideFilter';
+import { LOADING, REJECTED } from '../reducers';
+import Custom404 from './404';
+import PostsLoading from '../components/Free/PostsLoading/PostsLoading';
 
 const blog = () => {
-  const { blogPosts, filteredList } = useSelector(state => state.posts);
+  const { blogPosts, filteredList, loadBlogPostsStatus } = useSelector(
+    state => state.posts,
+  );
   const [tags, visiblePosts] = useFilter(
     blogPosts[0],
     filteredList,
     'blog_name',
   );
+
+  if (loadBlogPostsStatus === REJECTED) {
+    return <Custom404 />;
+  }
+
+  if (loadBlogPostsStatus === LOADING) {
+    return <PostsLoading />;
+  }
 
   return (
     <>

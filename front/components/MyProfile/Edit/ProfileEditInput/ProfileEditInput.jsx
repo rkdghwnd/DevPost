@@ -28,6 +28,7 @@ const ProfileEditForm = ({
   const onOpenVerifyPasswordModal = useCallback(() => {
     dispatch({ type: VERIFY_PASSWORD_MODAL_OPEN });
   }, []);
+
   return (
     <EditForm>
       <InputLabel>

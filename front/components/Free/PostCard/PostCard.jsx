@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PostCardMainText from '../PostCardMainText/PostCardMainText';
 import PostCardFooter from '../PostCardFooter/PostCardFooter';
 import { useDispatch } from 'react-redux';
@@ -9,7 +9,10 @@ import { PostCardForm, PostCardHeader } from './styles';
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
-  const createdAt = post.createdAt.slice(0, 10).split('-');
+  const createdAt = useMemo(
+    () => post.createdAt.slice(0, 10).split('-'),
+    [post.createdAt],
+  );
   const onClickUser = useCallback(() => {
     dispatch({ type: USER_INFO_MODAL_OPEN });
     dispatch({ type: LOAD_YOUR_INFO_REQUEST, data: post.User.id });

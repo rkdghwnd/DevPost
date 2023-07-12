@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { BlogCardForm, BlogCardHeader, BlogTitle } from './styles';
 
 const BlogCard = ({ post }) => {
   const offset = 1000 * 60 * 60 * 9;
-  const postTime = new Date(post.time + offset).toISOString().slice(0, 10);
+  const postTime = useMemo(
+    () => new Date(post.time + offset).toISOString().slice(0, 10),
+    [post.time],
+  );
 
   return (
     <BlogCardForm>

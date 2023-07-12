@@ -17,25 +17,14 @@ import SideFilter from '../../components/Common/SideFilter/SideFilter';
 import { List } from 'react-virtualized';
 import { useFilter } from '../../hooks/useFilter';
 import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
-import { LOADING } from '../../reducers';
-import styled from 'styled-components';
-import { Spin } from 'antd';
-
-const Spinner = styled(Spin)`
-  text-align: center;
-  color: #46a6ff;
-  width: 100%;
-  margin: 20px auto 0 auto;
-`;
-
-const WhiteSpace = styled.div`
-  @media (max-width: 765px) {
-    height: 60px;
-  }
-`;
+import { LOADING, REJECTED } from '../../reducers';
+import PostsLoading from '../../components/Free/PostsLoading/PostsLoading';
+import Custom404 from '../404';
+import { Spinner } from '../../components/HotDeal/styles';
 
 const hotdeal = () => {
   const dispatch = useDispatch();
+
   const {
     hotDealPosts,
     hasMoreHotDealPosts,
@@ -79,6 +68,14 @@ const hotdeal = () => {
     [visiblePosts],
   );
 
+  if (loadHotDealPostsStatus === REJECTED) {
+    return <Custom404 />;
+  }
+
+  if (loadHotDealPostsStatus === LOADING) {
+    return <PostsLoading />;
+  }
+
   return (
     <>
       <Head>
@@ -107,8 +104,8 @@ const hotdeal = () => {
           />
           <SideFilter tags={tags} />
         </MainContentsWrapper>
-        <TopScroll />
       </AppLayout>
+      <TopScroll />
     </>
   );
 };

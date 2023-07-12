@@ -1,10 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-// import {
-//   CONFIRM_REMOVE_COMMENT_MODAL_OPEN,
-//   LOG_IN_MODAL_OPEN,
-// } from '../../../reducers/modal';
 import { NESTED_COMMENT_INPUT_VISIBLE } from '../../../reducers/option';
 import { CommentForm, ReplyIcon, CommentBody, CommentSubMenu } from './styles';
 import CommentInputDesktop from '../CommentInputDesktop/CommentInputDesktop';

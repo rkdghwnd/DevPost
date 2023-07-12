@@ -77,6 +77,7 @@ import {
 import {
   MESSAGE_MODAL_TOGGLE_REQUEST,
   NEW_POST_MODAL_CLOSE_REQUEST,
+  POST_MODAL_CLOSE_REQUEST,
   messageModal,
 } from '../reducers/modal';
 import { UPDATE_POST_MODAL_CLOSE_REQUEST } from '../reducers/modal';
@@ -96,7 +97,7 @@ const addPost = createRequestSaga(
   ADD_POST_SUCCESS,
   ADD_POST_FAILURE,
   addPostAPI,
-  { type: NEW_POST_MODAL_CLOSE_REQUEST },
+  { type: POST_MODAL_CLOSE_REQUEST },
   messageModal('글 작성에 실패했습니다.'),
 );
 
@@ -165,7 +166,7 @@ const updatePost = createRequestSaga(
   UPDATE_POST_SUCCESS,
   UPDATE_POST_FAILURE,
   updatePostAPI,
-  { type: UPDATE_POST_MODAL_CLOSE_REQUEST },
+  { type: POST_MODAL_CLOSE_REQUEST },
   messageModal('글 수정에 실패하였습니다'),
 );
 

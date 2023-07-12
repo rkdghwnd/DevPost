@@ -1,12 +1,12 @@
 import React from 'react';
-import DesktopHeader from './DesktopHeader/DesktopHeader';
 import Footer from './Footer/Footer';
 import PropTypes from 'prop-types';
+import AppHeader from './AppHeader/AppHeader';
 
 const AppLayout = ({ children }) => {
   return (
     <>
-      <DesktopHeader />
+      <AppHeader />
       {children}
       <Footer />
     </>

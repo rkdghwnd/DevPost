@@ -15,17 +15,8 @@ import { REJECTED, SUCCEEDED } from '../../../reducers';
 const MessageModal = () => {
   const dispatch = useDispatch();
   const { message } = useSelector(state => state.modal);
-  const {
-    // signUpDone,
-    // signUpError,
-    signUpStatus,
-    // logInError,
-    logInStatus,
-    // updateMyInfoError,
-    // updateMyInfoDone,
-    updateMyInfoStatus,
-    removeAccountStatus,
-  } = useSelector(state => state.user);
+  const { signUpStatus, logInStatus, updateMyInfoStatus, removeAccountStatus } =
+    useSelector(state => state.user);
 
   // 확인 눌렀을때 닫히도록
   const onToggleMessageInfo = useCallback(() => {
