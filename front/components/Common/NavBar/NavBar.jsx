@@ -8,17 +8,20 @@ const NavBar = () => {
       <ul>
         <li>
           <Link href="/">
-            <a>자유</a>
+            {/* <a>자유</a> */}
+            자유
           </Link>
         </li>
         <li>
           <Link href="/news">
-            <a>뉴스</a>
+            {/* <a>뉴스</a> */}
+            뉴스
           </Link>
         </li>
         <li>
           <Link href="/blog">
-            <a>블로그</a>
+            {/* <a>블로그</a> */}
+            블로그
           </Link>
         </li>
         <li>
