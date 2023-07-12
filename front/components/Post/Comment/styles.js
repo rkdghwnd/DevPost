@@ -4,12 +4,10 @@ export const CommentForm = styled.article`
   display: flex;
   padding: 10px;
   border-bottom: 1px solid #f5f6f7;
-  img {
-    width: 35px;
-    height: 35px;
+  & > div:first-child > span {
     border-radius: 13px;
   }
-  & > div {
+  & > div:last-child {
     margin-left: 10px;
     font-size: 14px;
   }

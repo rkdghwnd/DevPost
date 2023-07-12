@@ -15,6 +15,7 @@ import {
   CloseInputButton,
   AddCommentButton,
 } from './styles';
+import Image from 'next/image';
 
 const CommentInputDesktop = ({ info }) => {
   const dispatch = useDispatch();
@@ -93,9 +94,13 @@ const CommentInputDesktop = ({ info }) => {
   return (
     <CommentInputWrapper purpose={info.purpose}>
       <CommentInput>
-        <img
-          src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${info.user.profile_img}`}
-        ></img>
+        <div>
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${info.user.profile_img}`}
+            width={35}
+            height={35}
+          />
+        </div>
         <textarea
           placeholder="댓글을 입력하세요"
           ref={textarea}

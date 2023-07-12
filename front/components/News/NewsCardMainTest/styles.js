@@ -26,8 +26,4 @@ export const MainTextForm = styled.li`
     line-height: 17px;
     margin-top: 5px;
   }
-  img {
-    width: 80px;
-    height: 80px;
-  }
 `;

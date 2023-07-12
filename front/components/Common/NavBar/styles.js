@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
 export const Nav = styled.nav`
-  position: sticky;
   top: 0;
   background-color: white;
   border-bottom: 1px solid rgb(240, 240, 240);
-  /* margin-bottom: 6px; */
+
   ul {
     display: flex;
     padding: 0;
@@ -30,8 +29,5 @@ export const Nav = styled.nav`
   ul > li > a:hover {
     color: rgb(130, 130, 130);
     transition: color 0.3s ease-out;
-  }
-  @media (min-width: 765px) {
-    position: static;
   }
 `;

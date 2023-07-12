@@ -7,6 +7,7 @@ import {
   LOG_IN_MODAL_OPEN,
 } from '../../../reducers/modal';
 import { CommentForm, CommentBody, CommentSubMenu } from './styles';
+import Image from 'next/image';
 
 const Comment = ({ comment }) => {
   const dispatch = useDispatch();
@@ -73,9 +74,13 @@ const Comment = ({ comment }) => {
   return (
     <>
       <CommentForm>
-        <img
-          src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${comment.User.profile_img}`}
-        />
+        <div>
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${comment.User.profile_img}`}
+            width={35}
+            height={35}
+          />
+        </div>
         <div>
           <h4>{comment.User.nickname}</h4>
           <CommentBody>{comment.content}</CommentBody>

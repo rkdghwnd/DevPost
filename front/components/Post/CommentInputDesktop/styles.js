@@ -13,10 +13,10 @@ export const CommentInput = styled.div`
   align-items: center;
   margin-bottom: 10px;
 
-  & > img {
-    width: 35px;
-    height: 35px;
+  & > div:first-child {
     margin-right: 20px;
+  }
+  & > div:first-child > span {
     border-radius: 10px;
   }
 

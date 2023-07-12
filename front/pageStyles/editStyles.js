@@ -32,13 +32,13 @@ export const ProfileImage = styled.div`
   position: relative;
   margin-top: 10px;
 
-  img {
-    display: block;
-    width: 100px;
-    height: 100px;
-    border-radius: 30px;
-    margin: 0 auto 10px auto;
+  & > div:first-child {
+    display: flex;
+    justify-content: center;
     cursor: pointer;
+  }
+  & > div:first-child > span {
+    border-radius: 15px;
   }
   & > :last-child {
     font-size: 25px;

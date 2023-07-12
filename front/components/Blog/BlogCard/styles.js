@@ -15,10 +15,7 @@ export const BlogCardForm = styled.article`
     margin-left: 10px;
     flex: 1 1 auto;
   }
-  img {
-    width: 80px;
-    height: 80px;
-  }
+
   a {
     text-decoration: none;
   }

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { USER_INFO_MODAL_OPEN } from '../../../reducers/modal';
 import { LOAD_YOUR_INFO_REQUEST } from '../../../reducers/post';
 import { PostCardForm, PostCardHeader } from './styles';
+import Image from 'next/image';
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
@@ -21,9 +22,11 @@ const PostCard = ({ post }) => {
   return (
     <PostCardForm>
       <PostCardHeader>
-        <img
+        <Image
           src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${post.User.profile_img}`}
           onClick={onClickUser}
+          width={25}
+          height={25}
         />
         <span onClick={onClickUser}>{post.User.nickname}</span>
         <div>{`${createdAt[0]}년 ${createdAt[1]}월 ${createdAt[2]}일`}</div>

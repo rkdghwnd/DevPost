@@ -11,12 +11,13 @@ export const PostUserInfo = styled.div`
   align-items: center;
   margin-bottom: 20px;
 
-  img {
-    width: 40px;
-    height: 40px;
-    border-radius: 15px;
+  & > div:first-child {
     margin-right: 10px;
   }
+  & > div:first-child > span {
+    border-radius: 15px;
+  }
+
   span:last-child {
     position: absolute;
     right: 0;
@@ -32,6 +33,9 @@ export const PostBody = styled.article`
   margin-top: 20px;
   & > div:first-child {
     white-space: pre-wrap;
+  }
+  img {
+    width: 100%;
   }
 `;
 

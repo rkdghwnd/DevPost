@@ -3,19 +3,12 @@ import { LOADING, REJECTED, SUCCEEDED } from '.';
 
 export const initialState = {
   me: null,
-
   loadMyInfoStatus: 'idle',
-
   logInStatus: 'idle',
-
   logOutStatus: 'idle',
-
   signUpStatus: 'idle',
-
   updateMyInfoStatus: 'idle',
-
   verifyPasswordStatus: 'idle',
-
   removeAccountStatus: 'idle',
 };
 
@@ -96,13 +89,6 @@ const reducer = (state = initialState, action) => {
         break;
       case LOAD_MY_INFO_SUCCESS:
         draft.loadMyInfoStatus = SUCCEEDED;
-        if (action.data) {
-          draft.logInDone = true;
-          draft.logOutDone = false;
-        } else {
-          draft.logInDone = false;
-          draft.logOutDone = true;
-        }
         draft.me = action.data;
         break;
       case LOAD_MY_INFO_FAILURE:
