@@ -107,7 +107,6 @@ const myprofile = () => {
       <AppLayout>
         <MyProfileForm>
           <MyProfileHeader>
-            {' '}
             <span>프로필</span>
             <IoEllipsisHorizontalSharp onClick={onClickOption} />
           </MyProfileHeader>

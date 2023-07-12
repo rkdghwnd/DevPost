@@ -35,7 +35,8 @@ const AppHeader = () => {
     <Header>
       <HeaderInner>
         <Link href="/">
-          <a>DEVPOST</a>
+          {/* <a>DEVPOST</a> */}
+          DEVPOST
         </Link>
         <SearchInput />
         {me === null && <button onClick={onClickLogInModal}>로그인</button>}

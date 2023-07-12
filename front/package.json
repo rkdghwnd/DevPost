@@ -22,7 +22,7 @@
     "fs": "^0.0.1-security",
     "gsap": "^3.11.5",
     "immer": "^9.0.17",
-    "next": "^12.3.4",
+    "next": "^13.4.9",
     "next-redux-wrapper": "^6.0.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
