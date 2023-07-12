@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MessageBox = styled.div`
-  width: 300px;
+  width: 330px;
   height: 50px;
   position: fixed;
   display: flex;
@@ -12,14 +12,15 @@ export const MessageBox = styled.div`
   border-radius: 10px;
   right: calc(50% - 150px);
 
-  & > span {
+  & > span:first-child {
     color: white;
   }
 
-  & > a {
+  & > span:last-child {
     margin-left: 10px;
     color: skyblue;
     text-decoration: none;
+    cursor: pointer;
   }
 
   @keyframes likeMessageSlideUp {

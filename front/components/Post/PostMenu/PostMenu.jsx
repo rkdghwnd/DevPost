@@ -1,39 +1,15 @@
 import React, { useCallback } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { BsBookmark, BsThreeDots } from 'react-icons/bs';
-import styled from 'styled-components';
-import { POST_OPTION_TOGGLE_REQUEST } from '../../reducers/option';
+import { POST_OPTION_TOGGLE_REQUEST } from '../../../reducers/option';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   ADD_BOOKMARK_REQUEST,
   REMOVE_BOOKMARK_REQUEST,
-} from '../../reducers/post';
-import { LOG_IN_MODAL_OPEN } from '../../reducers/modal';
+} from '../../../reducers/post';
+import { LOG_IN_MODAL_OPEN } from '../../../reducers/modal';
 import { useRouter } from 'next/router';
-
-const Menu = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  position: relative;
-  font-size: 20px;
-
-  & > :nth-child(1) {
-    cursor: pointer;
-    position: absolute;
-    left: 0;
-  }
-  & > :nth-child(2) {
-    margin-right: 10px;
-    cursor: pointer;
-  }
-  & > :nth-child(3) {
-    cursor: pointer;
-    margin-right: 10px;
-  }
-
-  border-bottom: 1px solid rgb(250, 250, 250);
-  padding-bottom: 20px;
-`;
+import { Menu } from './styles';
 
 const PostMenu = () => {
   const dispatch = useDispatch();

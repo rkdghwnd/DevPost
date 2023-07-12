@@ -38,7 +38,7 @@ const Paginations = ({ total }) => {
   const onClickPage = useCallback(
     page => () => {
       if (currentPage !== page) {
-        router.push(`/${router.pathname}?page=${page}`);
+        router.push(`${router.pathname}?page=${page}`);
       }
     },
     [currentPage, router.pathname],

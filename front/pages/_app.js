@@ -5,13 +5,11 @@ import { Normalize } from 'styled-normalize';
 import { useDispatch, useSelector } from 'react-redux';
 import LogInModal from '../components/Common/LogInModal/LogInModal';
 import MessageModal from '../components/Common/MessageModal/MessageModal';
-import UpdatePostModal from '../components/Post/UpdatePostModal/UpdatePostModal';
 import Script from 'next/script';
 import Head from 'next/head';
 import ShareModal from '../components/Post/ShareModal/ShareModal';
 import useScript from '../hooks/useScript';
 import CommentModal from '../components/Free/CommentModal/CommentModal';
-import NewPostModal from '../components/Post/NewPostModal/NewPostModal';
 import { createGlobalStyle } from 'styled-components';
 import VerifyPasswordModal from '../components/MyProfile/Edit/VerifyPasswordModal/VerifyPasswordModal';
 import ConfirmRemovePostModal from '../components/Post/ConfirmRemovePostModal/ConfirmRemovePostModal';
@@ -28,6 +26,7 @@ import InfoModal from '../components/Common/InfoModal/InfoModal';
 import '../cssVariable.scss';
 import LikeMessage from '../components/Common/LikeMessage/LikeMessage';
 import BookmarkMessage from '../components/Common/BookmarkMessage/BookmarkMessage';
+import PostModal from '../components/Post/PostModal/PostModal';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -64,10 +63,9 @@ const DevPost = ({ Component }) => {
   const {
     commentModalVisual,
     infoModalVisual,
-    newPostModalVisual,
+    postModalVisual,
     logInModalVisual,
     messageModalVisual,
-    updatePostModalVisual,
     shareModalVisual,
     userInfoModalVisual,
     confirmRemoveCommentVisual,
@@ -151,10 +149,9 @@ const DevPost = ({ Component }) => {
       <Script src="//developers.kakao.com/sdk/js/kakao.min.js"></Script>
       {commentModalVisual ? <CommentModal /> : ''}
       {infoModalVisual ? <InfoModal /> : ''}
-      {newPostModalVisual ? <NewPostModal /> : ''}
+      {postModalVisual ? <PostModal /> : ''}
       {logInModalVisual ? <LogInModal /> : ''}
       {messageModalVisual ? <MessageModal /> : ''}
-      {updatePostModalVisual ? <UpdatePostModal /> : ''}
       {shareModalVisual ? <ShareModal /> : ''}
       {userInfoModalVisual ? <UserInfoModal /> : ''}
       {confirmRemoveCommentVisual ? <ConfirmRemoveCommentModal /> : ''}

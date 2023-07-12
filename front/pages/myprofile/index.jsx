@@ -20,50 +20,13 @@ import axios from 'axios';
 import { END } from 'redux-saga';
 import { LOAD_MY_BOOKMARK_REQUEST } from '../../reducers/post';
 import ListPagination from '../../components/Free/ListPagination/ListPagination';
-import { Spin } from 'antd';
-import styled from 'styled-components';
-
-const MyProfileForm = styled.div`
-  background-color: white;
-  padding: 20px 20px 0 20px;
-  min-height: 960px;
-
-  @media (min-width: 765px) {
-    max-width: 800px;
-    min-height: 920px;
-    margin: 0 auto;
-    transform: translateY(80px);
-  }
-`;
-
-const MyProfileHeader = styled.div`
-  position: relative;
-  margin-bottom: 10px;
-
-  span {
-    display: block;
-    margin: 0 auto;
-    width: 75px;
-    text-align: center;
-    font-size: 18px;
-  }
-  & > :last-child {
-    font-size: 20px;
-    position: absolute;
-    right: 10px;
-    top: 0;
-    cursor: pointer;
-  }
-`;
-
-const Spinner = styled(Spin)`
-  font-size: 20px;
-  text-align: center;
-  color: #46a6ff;
-  position: absolute;
-  left: 45%;
-  bottom: 50%;
-`;
+import MyProfileEditLoading from '../../components/MyProfile/Edit/MyProfileEditLoading/MyProfileEditLoading';
+import Custom404 from '../404';
+import {
+  MyProfileForm,
+  MyProfileHeader,
+  Spinner,
+} from '../../pageStyles/myprofileStyles';
 
 const myprofile = () => {
   const dispatch = useDispatch();
@@ -77,6 +40,7 @@ const myprofile = () => {
     loadMyCommentsStatus,
     loadMyBookmarkStatus,
   } = useSelector(state => state.post);
+
   const { me, loadMyInfoStatus } = useSelector(state => state.user);
   const [postsVisible, setPostsVisible] = useState(false);
   const [commentsVisible, setCommentsVisible] = useState(false);
@@ -128,6 +92,13 @@ const myprofile = () => {
     myComments,
   ]);
 
+  if (!me) {
+    return <Custom404 />;
+  }
+  if (loadMyInfoStatus === LOADING) {
+    return <MyProfileEditLoading />;
+  }
+
   return (
     <>
       <Head>
@@ -136,6 +107,7 @@ const myprofile = () => {
       <AppLayout>
         <MyProfileForm>
           <MyProfileHeader>
+            {' '}
             <span>프로필</span>
             <IoEllipsisHorizontalSharp onClick={onClickOption} />
           </MyProfileHeader>

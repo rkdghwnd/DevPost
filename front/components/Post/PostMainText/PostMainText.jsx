@@ -14,10 +14,6 @@ const PostMainText = () => {
   const month = currentPost.createdAt.slice(5, 7);
   const day = currentPost.createdAt.slice(8, 10);
   const commentCount = currentPost.Comments.length;
-  // currentPost.Comments.reduce(
-  //   (acc, cur) => acc + cur?.Nested_Comments.length,
-  //   0,
-  // );
 
   return (
     <MainTextForm>

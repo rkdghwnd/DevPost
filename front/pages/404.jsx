@@ -29,7 +29,7 @@ export default function Custom404() {
         감사하겠습니다.
       </p>
       <br />
-      <span>post-moa 드림</span>
+      <span>devpost 드림</span>
     </>
   );
 }

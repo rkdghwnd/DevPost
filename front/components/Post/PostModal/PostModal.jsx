@@ -4,7 +4,11 @@ import { AiOutlineClose, AiOutlineCheck } from 'react-icons/ai';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { CONFIRM_CANCEL_POST_MODAL_OPEN } from '../../../reducers/modal';
-import { ADD_POST_REQUEST } from '../../../reducers/post';
+import {
+  ADD_POST_REQUEST,
+  LOAD_IMAGE,
+  UPDATE_POST_REQUEST,
+} from '../../../reducers/post';
 import {
   ModalBackdrop,
   WritePostForm,
@@ -20,24 +24,38 @@ import { useRouter } from 'next/router';
 const PostModal = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const [title, onChangeTitle] = useInput('');
-  const [mainText, onChangeMainText] = useInput('');
-
-  const { newPostModalSlideUp } = useSelector(state => state.modal);
+  const { postModalSlideUp, postModalStatus } = useSelector(
+    state => state.modal,
+  );
   const { currentPost, imagePaths, addPostStatus } = useSelector(
     state => state.post,
   );
+
+  const [title, onChangeTitle, setTitle] = useInput('');
+  const [mainText, onChangeMainText, setMainText] = useInput('');
+
+  useEffect(() => {
+    if (postModalStatus === 'update') {
+      dispatch({ type: LOAD_IMAGE, images: currentPost?.Images });
+      setTitle(currentPost?.title);
+      setMainText(currentPost?.content);
+    }
+  }, [
+    currentPost?.Images,
+    postModalStatus,
+    currentPost?.title,
+    currentPost?.content,
+  ]);
 
   const onStopEventBubbling = useCallback(e => {
     e.stopPropagation();
   }, []);
 
-  const onCancelNewPost = useCallback(() => {
+  const onCancelPost = useCallback(() => {
     dispatch({ type: CONFIRM_CANCEL_POST_MODAL_OPEN });
   }, []);
 
-  const onNewPost = useCallback(() => {
+  const onPost = useCallback(() => {
     if (!title || !title.trim()) {
       return alert('제목을 입력하세요');
     }
@@ -51,15 +69,22 @@ const PostModal = () => {
     formData.append('title', title);
     formData.append('content', mainText); // req.body에 들어감
 
-    dispatch({
-      type: ADD_POST_REQUEST,
-      data: formData,
-    });
+    if (postModalStatus === 'update') {
+      formData.append('postId', currentPost.id);
+      dispatch({
+        type: UPDATE_POST_REQUEST,
+        data: formData,
+      });
+    } else if (postModalStatus === 'new') {
+      dispatch({
+        type: ADD_POST_REQUEST,
+        data: formData,
+      });
+    }
   }, [title, mainText, imagePaths]);
 
   useEffect(() => {
     if (addPostStatus === SUCCEEDED) {
-      console.log('제발..');
       router.push(
         `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/post/${currentPost?.id}`,
       );
@@ -69,16 +94,16 @@ const PostModal = () => {
   return (
     <ModalBackdrop>
       <WritePostForm
-        newPostModalSlideUp={newPostModalSlideUp}
+        postModalSlideUp={postModalSlideUp}
         onClick={onStopEventBubbling}
       >
         <WritePostHeader>
-          <AiOutlineClose onClick={onCancelNewPost} />
-          <span>글 작성</span>
+          <AiOutlineClose onClick={onCancelPost} />
+          <span>글 {postModalStatus === 'new' ? '작성' : '수정'}</span>
           {addPostStatus === LOADING ? (
             <Spinner indicator={<LoadingOutlined />} />
           ) : (
-            <AiOutlineCheck onClick={onNewPost} />
+            <AiOutlineCheck onClick={onPost} />
           )}
         </WritePostHeader>
         <WritePostTitle>

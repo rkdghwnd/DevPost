@@ -10,51 +10,23 @@ import wrapper from '../../store/configureStore';
 import { LOAD_MY_INFO_REQUEST } from '../../reducers/user';
 import Custom404 from '../404';
 import Head from 'next/head';
-import PostMenu from '../../components/Post/PostMenu';
+import PostMenu from '../../components/Post/PostMenu/PostMenu';
 import PostMainText from '../../components/Post/PostMainText/PostMainText';
 import PostFooter from '../../components/Post/PostFooter/PostFooter';
 import CommentInputDesktop from '../../components/Post/CommentInputDesktop/CommentInputDesktop';
 import PostOption from '../../components/Post/PostOption/PostOption';
 import PostLoading from '../../components/Post/PostLoading/PostLoading';
 import TopScroll from '../../components/HotDeal/TopScroll/TopScroll';
-import DesktopHeader from '../../components/Common/DesktopHeader/DesktopHeader';
 import { LOADING, REJECTED, SUCCEEDED } from '../../reducers';
 import { useRouter } from 'next/router';
 import NestedComment from '../../components/Post/NestedComment/NestedComment';
 import ListPagination from '../../components/Free/ListPagination/ListPagination';
-import styled from 'styled-components';
-
-const PostForm = styled.section`
-  padding: 20px;
-  background-color: white;
-  max-width: 800px;
-  margin: 0 auto;
-  @media (min-width: 765px) {
-    transform: translateY(80px);
-  }
-`;
-
-const EmptyCommentForm = styled.div`
-  border-top: 2px solid #f5f6f7;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: rgb(217, 217, 217);
-  border-bottom: 1px solid #f5f6f7;
-
-  & > :first-child {
-    font-size: 35px;
-    margin-bottom: 20px;
-  }
-`;
-
-const LogInBox = styled.div`
-  padding: 20px;
-  color: rgb(200, 200, 200);
-  cursor: pointer;
-`;
+import {
+  EmptyCommentForm,
+  LogInBox,
+  PostForm,
+} from '../../pageStyles/postStyles';
+import AppHeader from '../../components/Common/AppHeader/AppHeader';
 
 const post = () => {
   const dispatch = useDispatch();
@@ -89,15 +61,6 @@ const post = () => {
     }
   }, [removePostStatus, router]);
 
-  useEffect(() => {
-    dispatch({
-      type: LOAD_POST_REQUEST,
-      data: window.location.pathname.split('/')[
-        window.location.pathname.split('/').length - 1
-      ],
-    });
-  }, [router.query.postId]);
-
   if (loadPostStatus === REJECTED) {
     return <Custom404 />;
   }
@@ -111,7 +74,7 @@ const post = () => {
       <Head>
         <title>{currentPost.title} - DevPost</title>
       </Head>
-      <DesktopHeader />
+      <AppHeader />
       <PostForm>
         <PostMenu />
         {postOptionVisible ? <PostOption /> : null}

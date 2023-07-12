@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   CONFIRM_CANCEL_POST_MODAL_CLOSE,
-  NEW_POST_MODAL_CLOSE_REQUEST,
-  UPDATE_POST_MODAL_CLOSE_REQUEST,
+  POST_MODAL_CLOSE_REQUEST,
+  // UPDATE_POST_MODAL_CLOSE_REQUEST,
 } from '../../../reducers/modal';
 import { ModalBackdrop, MessageForm } from './styles';
 
@@ -11,8 +11,7 @@ const ConfirmCancelPostModal = () => {
   const dispatch = useDispatch();
 
   const onClickCancel = useCallback(() => {
-    dispatch({ type: NEW_POST_MODAL_CLOSE_REQUEST });
-    dispatch({ type: UPDATE_POST_MODAL_CLOSE_REQUEST });
+    dispatch({ type: POST_MODAL_CLOSE_REQUEST });
     dispatch({ type: CONFIRM_CANCEL_POST_MODAL_CLOSE });
   }, []);
 

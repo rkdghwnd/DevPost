@@ -1,5 +1,4 @@
 import React from 'react';
-import DesktopHeader from '../../Common/DesktopHeader/DesktopHeader';
 import CommentSkeleton from '../../Post/CommentSkeleton/CommentSkeleton';
 import {
   PostForm,
@@ -11,11 +10,12 @@ import {
   ViewsCommentsLiked,
   PostFooterButtonForm,
 } from './styles';
+import AppHeader from '../../Common/AppHeader/AppHeader';
 
 const post = () => {
   return (
     <>
-      <DesktopHeader />
+      <AppHeader />
       <PostForm>
         <PostMenu>
           <span></span>

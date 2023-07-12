@@ -3,12 +3,11 @@ import produce from 'immer';
 export const initialState = {
   shareModalVisual: false,
   shareModalSlideUp: false,
-  updatePostModalVisual: false,
-  updatePostModalSlideUp: false,
+  postModalVisual: false,
+  postModalSlideUp: false,
+  postModalStatus: 'idle',
   message: '',
   messageModalVisual: false,
-  newPostModalVisual: false,
-  newPostModalSlideUp: false,
   commentModalVisual: false,
   commentModalSlideUp: false,
   infoModalVisual: false,
@@ -69,21 +68,15 @@ export const SHARE_MODAL_OPEN = 'SHARE_MODAL_OPEN';
 export const SHARE_MODAL_CLOSE_REQUEST = 'SHARE_MODAL_CLOSE_REQUEST';
 export const SHARE_MODAL_CLOSE_SUCCESS = 'SHARE_MODAL_CLOSE_SUCCESS';
 
-export const UPDATE_POST_MODAL_OPEN = 'UPDATE_POST_MODAL_OPEN';
-export const UPDATE_POST_MODAL_CLOSE_REQUEST =
-  'UPDATE_POST_MODAL_CLOSE_REQUEST';
-export const UPDATE_POST_MODAL_CLOSE_SUCCESS =
-  'UPDATE_POST_MODAL_CLOSE_SUCCESS';
-
 export const MESSAGE_MODAL_TOGGLE_REQUEST = 'MESSAGE_MODAL_TOGGLE_REQUEST';
 
 export const LOG_IN_MODAL_OPEN = 'LOG_IN_MODAL_OPEN';
 export const LOG_IN_MODAL_CLOSE_REQUEST = 'LOG_IN_MODAL_CLOSE_REQUEST';
 export const LOG_IN_MODAL_CLOSE_SUCCESS = 'LOG_IN_MODAL_CLOSE_SUCCESS';
 
-export const NEW_POST_MODAL_OPEN = 'NEW_POST_MODAL_OPEN';
-export const NEW_POST_MODAL_CLOSE_REQUEST = 'NEW_POST_MODAL_CLOSE_REQUEST';
-export const NEW_POST_MODAL_CLOSE_SUCCESS = 'NEW_POST_MODAL_CLOSE_SUCCESS';
+export const POST_MODAL_OPEN = 'POST_MODAL_OPEN';
+export const POST_MODAL_CLOSE_REQUEST = 'POST_MODAL_CLOSE_REQUEST';
+export const POST_MODAL_CLOSE_SUCCESS = 'POST_MODAL_CLOSE_SUCCESS';
 
 export const COMMENT_MODAL_OPEN = 'COMMENT_MODAL_OPEN';
 export const COMMENT_MODAL_CLOSE_REQUEST = 'COMMENT_MODAL_CLOSE_REQUEST';
@@ -161,16 +154,6 @@ const reducer = (state = initialState, action) => {
       case SHARE_MODAL_CLOSE_SUCCESS:
         draft.shareModalVisual = false;
         break;
-      case UPDATE_POST_MODAL_OPEN:
-        draft.updatePostModalSlideUp = true;
-        draft.updatePostModalVisual = true;
-        break;
-      case UPDATE_POST_MODAL_CLOSE_REQUEST:
-        draft.updatePostModalSlideUp = false;
-        break;
-      case UPDATE_POST_MODAL_CLOSE_SUCCESS:
-        draft.updatePostModalVisual = false;
-        break;
       case MESSAGE_MODAL_TOGGLE_REQUEST:
         draft.messageModalVisual = !draft.messageModalVisual;
         draft.message = action.message;
@@ -185,15 +168,17 @@ const reducer = (state = initialState, action) => {
       case LOG_IN_MODAL_CLOSE_SUCCESS:
         draft.logInModalVisual = false;
         break;
-      case NEW_POST_MODAL_OPEN:
-        draft.newPostModalSlideUp = true;
-        draft.newPostModalVisual = true;
+      case POST_MODAL_OPEN:
+        draft.postModalSlideUp = true;
+        draft.postModalVisual = true;
+        draft.postModalStatus = action.data; // 'new' or 'update'
         break;
-      case NEW_POST_MODAL_CLOSE_REQUEST:
-        draft.newPostModalSlideUp = false;
+      case POST_MODAL_CLOSE_REQUEST:
+        draft.postModalSlideUp = false;
         break;
-      case NEW_POST_MODAL_CLOSE_SUCCESS:
-        draft.newPostModalVisual = false;
+      case POST_MODAL_CLOSE_SUCCESS:
+        draft.postModalVisual = false;
+        draft.postModalStatus = 'idle';
         break;
       case COMMENT_MODAL_OPEN:
         draft.commentModalSlideUp = true;

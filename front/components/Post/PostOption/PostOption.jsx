@@ -2,7 +2,8 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   CONFIRM_REMOVE_POST_MODAL_OPEN,
-  UPDATE_POST_MODAL_OPEN,
+  NEW_POST_MODAL_OPEN,
+  POST_MODAL_OPEN,
 } from '../../../reducers/modal';
 import { POST_OPTION_TOGGLE_REQUEST } from '../../../reducers/option';
 import { PostOptionForm } from './styles';
@@ -14,7 +15,7 @@ const PostOption = () => {
   const { me } = useSelector(state => state.user);
 
   const onClickUpdate = useCallback(() => {
-    dispatch({ type: UPDATE_POST_MODAL_OPEN });
+    dispatch({ type: POST_MODAL_OPEN, data: 'update' });
     dispatch({ type: POST_OPTION_TOGGLE_REQUEST });
   }, []);
 
