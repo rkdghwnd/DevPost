@@ -33,6 +33,7 @@ import {
 import { HEADER_OPTION_TOGGLE_REQUEST } from '../reducers/option';
 import createRequestSaga from '../hooks/createRequestSaga';
 
+// POST /user/local/auth
 function logInAPI(data) {
   return axios.post(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/local/auth`,
@@ -48,6 +49,7 @@ const logIn = createRequestSaga(
   'error_data_response',
 );
 
+// DELETE /user/auth
 function logOutAPI() {
   return axios.delete(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/auth`);
 }
@@ -62,6 +64,7 @@ const logOut = createRequestSaga(
   messageModal('로그아웃에 실패했습니다.'),
 );
 
+// POST /user/info
 function signUpAPI(data) {
   return axios.post(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/info`,
@@ -77,6 +80,7 @@ const signUp = createRequestSaga(
   messageModal('회원가입에 실패하였습니다.'),
 );
 
+// GET /user/me
 function loadMyInfoAPI() {
   return axios.get(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/me`);
 }
@@ -89,6 +93,7 @@ const loadMyInfo = createRequestSaga(
   messageModal('내 정보를 불러오지 못했습니다.'),
 );
 
+// PATCH /user/me
 function updateMyInfoAPI(data) {
   return axios.patch(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/me`,
@@ -104,6 +109,7 @@ const updateMyInfo = createRequestSaga(
   messageModal('내 정보 수정 실패'),
 );
 
+// POST /user/password/validate
 function verifyPasswordAPI(data) {
   return axios.post(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/password/validate`,
@@ -136,6 +142,7 @@ function* verifyPassword(action) {
   }
 }
 
+// DELETE /user/me
 function removeAccountAPI(data) {
   return axios.delete(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/me`,

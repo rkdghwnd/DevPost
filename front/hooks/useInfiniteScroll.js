@@ -21,7 +21,6 @@ export function useInfiniteScroll(
         hasMoreHotDealPosts &&
         !(loadHotDealPostsStatus === LOADING)
       ) {
-        console.log('인피니트 스크롤링 !');
         const lastId = hotDealPosts[hotDealPosts.length - 1]?.id;
         dispatch({
           type: LOAD_MORE_HOTDEAL_POSTS_REQUEST,

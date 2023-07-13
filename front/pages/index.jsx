@@ -24,10 +24,6 @@ const free = () => {
     return <Custom404 />;
   }
 
-  if (loadFreePostsStatus === LOADING) {
-    return <PostsLoading />;
-  }
-
   return (
     <>
       <Head>

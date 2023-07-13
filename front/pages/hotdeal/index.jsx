@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_EARLY_HOTDEAL_POSTS_REQUEST } from '../../reducers/posts';
-import { LoadingOutlined } from '@ant-design/icons';
 import wrapper from '../../store/configureStore';
 import axios from 'axios';
 import { END } from 'redux-saga';
@@ -20,11 +19,9 @@ import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 import { LOADING, REJECTED } from '../../reducers';
 import PostsLoading from '../../components/Free/PostsLoading/PostsLoading';
 import Custom404 from '../404';
-import { Spinner } from '../../components/HotDeal/styles';
 
 const hotdeal = () => {
   const dispatch = useDispatch();
-
   const {
     hotDealPosts,
     hasMoreHotDealPosts,
@@ -72,10 +69,6 @@ const hotdeal = () => {
     return <Custom404 />;
   }
 
-  if (loadHotDealPostsStatus === LOADING) {
-    return <PostsLoading />;
-  }
-
   return (
     <>
       <Head>
@@ -92,9 +85,7 @@ const hotdeal = () => {
             rowRenderer={rowRenderer}
             list={visiblePosts}
           />
-          {loadHotDealPostsStatus === LOADING && (
-            <Spinner indicator={<LoadingOutlined spin />}></Spinner>
-          )}
+          {loadHotDealPostsStatus === LOADING && <PostsLoading />}
           <div
             ref={
               hasMoreHotDealPosts && !(loadHotDealPostsStatus === LOADING)

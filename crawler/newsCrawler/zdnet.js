@@ -54,7 +54,7 @@ const zdnet = async () => {
                   ]
                 );
           } else {
-            formedTime = new Date(time).getTime();
+            formedTime = new Date(time.slice(-10)).getTime();
           }
 
           posts.push({

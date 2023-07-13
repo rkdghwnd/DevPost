@@ -29,6 +29,7 @@ const upload = multer({
   limits: { fileSize: 20 * 1024 * 1024 },
 });
 
+// 게시글 추가
 router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
   // POST /post
   try {
@@ -57,13 +58,13 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
       order: [[{ model: Comment }, "createdAt", "ASC"]],
       include: [
         {
-          model: User, // 게시글 작성자
+          model: User,
         },
         {
           model: Image,
         },
         {
-          model: Comment, // 댓글 작성자
+          model: Comment,
           include: [
             {
               model: User,
@@ -71,7 +72,7 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
           ],
         },
         {
-          model: User, // 좋아요 누른 사람
+          model: User,
           as: "Likers",
           attributes: ["id"],
         },
@@ -86,6 +87,7 @@ router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
   }
 });
 
+// 이미지 업로드
 router.post(
   "/images",
   isLoggedIn,
@@ -99,7 +101,7 @@ router.post(
 
 // 게시글 불러오기
 router.get("/free", async (req, res, next) => {
-  // /post/free?postId=${postId}
+  // /post/free?postId=${data}
   try {
     const previousViews = await Post.findOne({
       where: { id: parseInt(req.query.postId) },
@@ -184,14 +186,14 @@ router.get("/free", async (req, res, next) => {
 
 // 게시글 삭제
 router.delete("/:postId", isLoggedIn, async (req, res) => {
-  //DELETE /post
+  //DELETE /post/:postId
   try {
     await Comment.destroy({
       where: { PostId: parseInt(req.params.postId) },
     });
 
     await Post.destroy({
-      // UserId를 추가한 이유는 보안(다른사람이 삭제하지 못하게 하기 위해)
+      // 다른사람이 삭제하지 못하게 하기 위해 UserId 추가
       where: { id: parseInt(req.params.postId), UserId: req.user.id },
     });
 
@@ -241,7 +243,7 @@ router.patch("/", isLoggedIn, upload.none(), async (req, res, next) => {
       order: [[{ model: Comment }, "createdAt", "ASC"]],
       include: [
         {
-          model: User, // 게시글 작성자
+          model: User,
         },
         {
           model: Image,
@@ -250,12 +252,12 @@ router.patch("/", isLoggedIn, upload.none(), async (req, res, next) => {
           model: Comment,
           include: [
             {
-              model: User, // 댓글 작성자
+              model: User,
             },
           ],
         },
         {
-          model: User, // 좋아요 누른 사람
+          model: User,
           as: "Likers",
           attributes: ["id"],
         },
@@ -274,7 +276,6 @@ router.patch("/", isLoggedIn, upload.none(), async (req, res, next) => {
 router.post("/:postId/comment", isLoggedIn, async (req, res, next) => {
   // POST /post/:postId/comment
   try {
-    // 존재하는 게시글인지 검사
     const post = await Post.findOne({
       where: { id: req.params.postId },
     });
@@ -402,7 +403,7 @@ router.delete("/:postId/comment/:commentId", isLoggedIn, async (req, res) => {
 
 // 댓글 수정
 router.patch("/:postId/comment/:commentId", isLoggedIn, async (req, res) => {
-  //DELETE /post/:postId/comment
+  // PATCH /post/:postId/comment/:commentId
   try {
     await Comment.update(
       {
@@ -472,7 +473,6 @@ router.post(
   async (req, res, next) => {
     // POST /post/:postId/comment/:commentId/nested_comment
     try {
-      // 존재하는 게시글인지 검사
       const post = await Post.findOne({
         where: { id: parseInt(req.params.postId) },
       });
@@ -498,10 +498,7 @@ router.post(
 
       const fullComments = await Comment.findAll({
         where: { PostId: parseInt(req.params.postId) },
-        order: [
-          ["createdAt", "ASC"],
-          // [{ model: Nested_Comment }, "createdAt", "ASC"],
-        ],
+        order: [["createdAt", "ASC"]],
         include: [
           { model: User, attributes: ["id", "nickname", "profile_img"] },
         ],
@@ -551,7 +548,7 @@ router.delete(
   "/:postId/comment/:commentId/nested_comment/:nestedCommentId",
   isLoggedIn,
   async (req, res) => {
-    //DELETE /post/:postId/comment/:commentId/nested_comment/:nestedCommentId
+    // DELETE /post/:postId/comment/:commentId/nested_comment/:nestedCommentId
     try {
       await Comment.destroy({
         where: {
@@ -614,7 +611,7 @@ router.patch(
   "/:postId/comment/:commentId/nested_comment/:nestedCommentId",
   isLoggedIn,
   async (req, res) => {
-    //DELETE /post/:postId/comment/:commentId/nested_comment/:nestedCommentId
+    // PATCH /post/:postId/comment/:commentId/nested_comment/:nestedCommentId
     try {
       await Comment.update(
         {
@@ -682,6 +679,7 @@ router.patch(
 
 // 좋아요 추가
 router.patch("/:postId/like", isLoggedIn, async (req, res, next) => {
+  // PATCH /post/:postId/like
   try {
     const post = await Post.findOne({
       where: { id: parseInt(req.params.postId) },
@@ -700,6 +698,7 @@ router.patch("/:postId/like", isLoggedIn, async (req, res, next) => {
 
 // 좋아요 취소
 router.delete("/:postId/like", isLoggedIn, async (req, res, next) => {
+  // DELETE /post/:postId/like
   try {
     const post = await Post.findOne({
       where: { id: parseInt(req.params.postId) },
@@ -718,6 +717,7 @@ router.delete("/:postId/like", isLoggedIn, async (req, res, next) => {
 
 // 북마크 추가
 router.patch("/:postId/bookmark", isLoggedIn, async (req, res, next) => {
+  // PATCH /post/:postId/bookmark
   try {
     const post = await Post.findOne({
       where: { id: parseInt(req.params.postId) },
@@ -736,6 +736,7 @@ router.patch("/:postId/bookmark", isLoggedIn, async (req, res, next) => {
 
 // 북마크 취소
 router.delete("/:postId/bookmark", isLoggedIn, async (req, res, next) => {
+  // DELETE /post/:postId/bookmark
   try {
     const post = await Post.findOne({
       where: { id: parseInt(req.params.postId) },

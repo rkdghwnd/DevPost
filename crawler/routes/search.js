@@ -3,6 +3,7 @@ const { Blog, News, HotDeal } = require("../models");
 const { Op } = require("sequelize");
 const router = express.Router();
 
+// 뉴스, 블로그, 핫딜 검색
 router.get("/", async (req, res, next) => {
   // GET /search?keyword=${keyword}
   try {
