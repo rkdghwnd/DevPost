@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const { User, Post, Comment, Image } = require("../models");
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
-const router = express.Router(); // express 라우터 기능 가져오기
+const router = express.Router();
 const passport = require("passport");
 const multer = require("multer");
 const path = require("path");
@@ -18,7 +18,7 @@ try {
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, done) {
-      done(null, "uploads"); // uploads 폴더에 저장하기
+      done(null, "uploads"); // uploads 폴더에 저장
     },
     filename(req, file, done) {
       const ext = path.extname(file.originalname); // 확장자 추출(.png)
@@ -32,12 +32,11 @@ const upload = multer({
 
 // 로그인 정보 유지
 router.get("/me", async (req, res, next) => {
-  // GET /user
+  // GET /me
   try {
     if (req.user) {
       const fullUserWithoutPassword = await User.findOne({
         where: { id: req.user.id },
-
         attributes: { exclude: ["password", "createdAt", "updatedAt"] }, // password 제외하고 가져오기
         include: [
           { model: Post, as: "Liked", attributes: ["id"] },
@@ -64,7 +63,6 @@ router.get("/me", async (req, res, next) => {
 router.post("/local/auth", isNotLoggedIn, (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     // POST /user/auth
-    // 매개변수 : passport local.js 에서 done으로 전달된 인자들
     if (err) {
       console.error(err);
       next(err);
@@ -72,20 +70,18 @@ router.post("/local/auth", isNotLoggedIn, (req, res, next) => {
     if (info) {
       // 클라이언트 쪽 에러
       console.log(info);
-      return res.status(401).send(info.message); // 401 : 허가되지 않음
+      return res.status(401).send(info.message);
     }
-    // passport 로그인
-    // index.js의 serializeUser(user, done) => {...} 실행
+
     return req.login(user, async (loginErr) => {
-      // passport 로그인에서 에러가 날 경우
       if (loginErr) {
+        // passport 에러
         console.error(loginErr);
         return next(loginErr);
       }
 
       const fullUserWithoutPassword = await User.findOne({
         where: { id: user.id },
-
         attributes: { exclude: ["password", "createdAt", "updatedAt"] }, // password 제외하고 가져오기
         include: [
           { model: Post, attributes: ["id"] },
@@ -145,6 +141,7 @@ router.get(
 
 // 로그아웃
 router.delete("/auth", isLoggedIn, (req, res, next) => {
+  // DELETE /user/auth
   req.logout(() => {
     req.session.destroy();
   });
@@ -226,7 +223,7 @@ router.get("/posts", isLoggedIn, async (req, res, next) => {
 
 // 내가 쓴 댓글
 router.get("/comments", isLoggedIn, async (req, res, next) => {
-  // GET /user/bookmark
+  // GET /user/comments
   try {
     if (req.user) {
       const comments = await Comment.findAll({
@@ -308,7 +305,6 @@ router.patch("/me", upload.none(), isLoggedIn, async (req, res, next) => {
             model: Comment,
             attributes: ["id"],
           },
-
           { model: Post, as: "Bookmarked", attributes: ["id"] },
         ],
       });
@@ -378,7 +374,7 @@ router.get("/you", async (req, res, next) => {
 });
 
 // 비밀번호 유효성 검증
-router.post("/password/validate", async (req, res, next) => {
+router.post("/password/validate", isLoggedIn, async (req, res, next) => {
   // POST `/user/password/validate`
   try {
     if (req.user) {
@@ -398,7 +394,7 @@ router.post("/password/validate", async (req, res, next) => {
 });
 
 // 회원 탈퇴
-router.delete("/me", async (req, res, next) => {
+router.delete("/me", isLoggedIn, async (req, res, next) => {
   // DELETE `/user/me
   try {
     if (req.user) {

@@ -3,17 +3,18 @@ const { Post, User, Image, Comment } = require("../models");
 const { Op } = require("sequelize");
 const router = express.Router();
 
+// 자유게시판 글목록 로드
 router.get("/free", async (req, res, next) => {
-  // GET /free?page={page || 1}
+  // GET /free?page={data || 1}
   try {
     const count = await Post.count();
     const posts = await Post.findAll({
       offset: 30 * (parseInt(req.query.page, 10) - 1),
-      limit: 30, // 개수 제한
+      limit: 30,
       order: [
         ["createdAt", "DESC"],
         [Comment, "createdAt", "ASC"],
-      ], // 내림차순 정렬
+      ],
       include: [
         {
           model: User,
@@ -46,8 +47,6 @@ router.get("/free", async (req, res, next) => {
   }
 });
 
-// `/posts/search?keyword=${keyword}`
-
 router.get("/search", async (req, res, next) => {
   // GET /posts/search?keyword=${keyword}
   try {
@@ -61,7 +60,7 @@ router.get("/search", async (req, res, next) => {
       order: [
         ["createdAt", "DESC"],
         [Comment, "createdAt", "ASC"],
-      ], // 내림차순 정렬
+      ],
       include: [
         {
           model: User,

@@ -32,10 +32,6 @@ const blog = () => {
     return <Custom404 />;
   }
 
-  if (loadBlogPostsStatus === LOADING) {
-    return <PostsLoading />;
-  }
-
   return (
     <>
       <Head>

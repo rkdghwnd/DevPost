@@ -17,6 +17,7 @@ import {
 import { messageModal } from '../reducers/modal';
 import createRequestSaga from '../hooks/createRequestSaga';
 
+// GET /hotdeal?lastId=${lastId || 0}
 function loadMoreHotDealPostsAPI(lastId) {
   return axios.get(
     `${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/hotdeal?lastId=${lastId || 0}`,
@@ -31,6 +32,7 @@ const loadMoreHotDealPosts = createRequestSaga(
   messageModal('핫딜 게시판 추가로드 실패'),
 );
 
+// GET /hotdeal?lastId=${lastId || 0}
 function loadEarlyHotDealPostsAPI(lastId) {
   return axios.get(
     `${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/hotdeal?lastId=${lastId || 0}`,
@@ -45,6 +47,7 @@ const loadEarlyHotDealPosts = createRequestSaga(
   messageModal('핫딜 게시판 초기로드 실패'),
 );
 
+// GET /blog?page=${page || 1}
 function loadBlogPostsAPI(page) {
   return axios.get(
     `${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/blog?page=${page || 1}`,
@@ -59,6 +62,7 @@ const loadBlogPosts = createRequestSaga(
   messageModal('블로그 게시판 로드 실패'),
 );
 
+// GET /news?page=${page || 1}
 function loadNewsPostsAPI(page) {
   return axios.get(
     `${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/news?page=${page || 1}`,

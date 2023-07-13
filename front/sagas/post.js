@@ -76,11 +76,9 @@ import {
 } from '../reducers/post';
 import {
   MESSAGE_MODAL_TOGGLE_REQUEST,
-  NEW_POST_MODAL_CLOSE_REQUEST,
   POST_MODAL_CLOSE_REQUEST,
   messageModal,
 } from '../reducers/modal';
-import { UPDATE_POST_MODAL_CLOSE_REQUEST } from '../reducers/modal';
 import createRequestSaga from '../hooks/createRequestSaga';
 import {
   BOOKMARK_MESSAGE_OPEN,
@@ -89,6 +87,7 @@ import {
   UNLIKE_MESSAGE_OPEN,
 } from '../reducers/message';
 
+// POST /post
 function addPostAPI(data) {
   return axios.post(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post`, data);
 }
@@ -101,6 +100,7 @@ const addPost = createRequestSaga(
   messageModal('글 작성에 실패했습니다.'),
 );
 
+// DELETE /post/:postId
 function removePostAPI(data) {
   return axios.delete(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/${data}`,
@@ -115,6 +115,7 @@ const removePost = createRequestSaga(
   messageModal('글 삭제에 실패했습니다.'),
 );
 
+// GET /free?page={data || 1}
 function loadFreePostsAPI(data) {
   return axios.get(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/posts/free?page=${data || 1}`,
@@ -129,6 +130,7 @@ const loadFreePosts = createRequestSaga(
   messageModal('자유게시판 불러오기 실패'),
 );
 
+// GET /post/free?postId=${data}
 function loadPostAPI(data) {
   return axios.get(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/free?postId=${data}`,
@@ -143,6 +145,7 @@ const loadPost = createRequestSaga(
   messageModal('게시글 불러오기 실패'),
 );
 
+// POST /post/images
 function uploadImagesAPI(data) {
   return axios.post(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/images`,
@@ -158,6 +161,7 @@ const uploadImages = createRequestSaga(
   messageModal('이미지 업로드 실패'),
 );
 
+// PATCH /post
 function updatePostAPI(data) {
   return axios.patch(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post`, data);
 }
@@ -170,11 +174,12 @@ const updatePost = createRequestSaga(
   messageModal('글 수정에 실패하였습니다'),
 );
 
+// POST /post/:postId/comment
 function addCommentAPI(data) {
   return axios.post(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/${data.postId}/comment`,
     data,
-  ); // POST /post/:postId/comment
+  );
 }
 
 const addComment = createRequestSaga(
@@ -185,10 +190,11 @@ const addComment = createRequestSaga(
   messageModal('댓글 추가에 실패하였습니다'),
 );
 
+// DELETE /post/:postId/comment/:commentId
 function removeCommentAPI(data) {
   return axios.delete(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/${data.postId}/comment/${data.commentId}`,
-  ); // DELETE /post/:postId/comment
+  );
 }
 
 const removeComment = createRequestSaga(
@@ -199,11 +205,12 @@ const removeComment = createRequestSaga(
   messageModal('댓글 삭제에 실패하였습니다.'),
 );
 
+// PATCH /post/:postId/comment/:commentId
 function updateCommentAPI(data) {
   return axios.patch(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/${data.postId}/comment/${data.commentId}`,
     data,
-  ); // DELETE /post/:postId/comment
+  );
 }
 
 const updateComment = createRequestSaga(
@@ -214,11 +221,12 @@ const updateComment = createRequestSaga(
   messageModal('댓글 수정에 실패하였습니다.'),
 );
 
+// POST /post/:postId/comment/:commentId/nested_comment
 function addNestedCommentAPI(data) {
   return axios.post(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/${data.postId}/comment/${data.commentId}/nested_comment`,
     data,
-  ); // POST /post/:postId/comment
+  );
 }
 
 const addNestedComment = createRequestSaga(
@@ -229,10 +237,11 @@ const addNestedComment = createRequestSaga(
   messageModal('대댓글 추가에 실패하였습니다'),
 );
 
+// DELETE /post/:postId/comment/:commentId/nested_comment/:nestedCommentId
 function removeNestedCommentAPI(data) {
   return axios.delete(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/${data.postId}/comment/${data.commentId}/nested_comment/${data.nestedCommentId}`,
-  ); // DELETE /post/:postId/comment/:commentId/nested_comment/:nestedCommentId
+  );
 }
 
 const removeNestedComment = createRequestSaga(
@@ -243,11 +252,12 @@ const removeNestedComment = createRequestSaga(
   messageModal('대댓글 삭제에 실패하였습니다.'),
 );
 
+// PATCH /post/:postId/comment/:commentId/nested_comment/:nestedCommentId
 function updateNestedCommentAPI(data) {
   return axios.patch(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/${data.postId}/comment/${data.commentId}/nested_comment/${data.nestedCommentId}`,
     data,
-  ); // DELETE /post/:postId/comment/:commentId/nested_comment/:nestedCommentId
+  );
 }
 
 const updateNestedComment = createRequestSaga(
@@ -258,6 +268,7 @@ const updateNestedComment = createRequestSaga(
   messageModal('대댓글 수정에 실패하였습니다.'),
 );
 
+// PATCH /post/:postId/like
 function likePostAPI(postId) {
   return axios.patch(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/${postId}/like`,
@@ -272,6 +283,7 @@ const likePost = createRequestSaga(
   messageModal('좋아요 추가에 실패하였습니다.'),
 );
 
+// DELETE /post/:postId/like
 function unlikePostAPI(postId) {
   return axios.delete(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/${postId}/like`,
@@ -286,6 +298,7 @@ const unlikePost = createRequestSaga(
   messageModal('좋아요 취소에 실패하였습니다.'),
 );
 
+// PATCH /post/:postId/bookmark
 function addBookmarkAPI(postId) {
   return axios.patch(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/${postId}/bookmark`,
@@ -300,6 +313,7 @@ const addBookmark = createRequestSaga(
   messageModal('북마크 추가에 실패하였습니다.'),
 );
 
+// DELETE /post/:postId/bookmark
 function removeBookmarkAPI(postId) {
   return axios.delete(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/${postId}/bookmark`,
@@ -314,6 +328,7 @@ const removeBookmark = createRequestSaga(
   messageModal('북마크 취소에 실패하였습니다.'),
 );
 
+// GET /user/posts
 function loadMyPostsAPI() {
   return axios.get(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/posts`);
 }
@@ -326,6 +341,7 @@ const loadMyPosts = createRequestSaga(
   messageModal('내 게시글 목록 로드 실패'),
 );
 
+// GET /user/comments
 function loadMyCommentsAPI() {
   return axios.get(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/comments`);
 }
@@ -338,6 +354,7 @@ const loadMyComments = createRequestSaga(
   messageModal('내 댓글 목록 로드 실패'),
 );
 
+// GET /user/bookmark
 function loadMyBookmarkAPI() {
   return axios.get(`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/bookmark`);
 }
@@ -350,16 +367,19 @@ const loadMyBookmark = createRequestSaga(
   messageModal('내 북마크 목록 로드 실패'),
 );
 
+// GET /posts/search?keyword=${keyword}
 function searchPostsAPI(keyword) {
   return axios.get(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/posts/search?keyword=${keyword}`,
   );
 }
+// GET /search?keyword=${keyword}
 function searchCrawlingAPI(keyword) {
   return axios.get(
     `${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/search?keyword=${keyword}`,
   );
 }
+
 function* searchPosts(action) {
   try {
     const searchPostResult = yield call(searchPostsAPI, action.keyword);
@@ -390,6 +410,7 @@ function* searchPosts(action) {
   }
 }
 
+// GET /user/you?userId=${userId}
 function loadYourInfoAPI(userId) {
   return axios.get(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/user/you?userId=${userId}`,

@@ -3,6 +3,7 @@ const { News } = require("../models");
 const { Op } = require("sequelize");
 const router = express.Router();
 
+// 뉴스 목록 로드
 router.get("/", async (req, res, next) => {
   // GET /news?page={page || 1}
   try {
