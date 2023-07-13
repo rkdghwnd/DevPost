@@ -88,7 +88,7 @@ router.get("/search", async (req, res, next) => {
       ],
     });
 
-    const userSearchResult = await User.findAll({
+    const userSearchResults = await User.findAll({
       where: { nickname: { [Op.like]: `%${req.query.keyword}%` } },
       include: [
         {
@@ -121,7 +121,7 @@ router.get("/search", async (req, res, next) => {
       ],
     });
 
-    const jsonUser = JSON.parse(JSON.stringify(userSearchResult));
+    const jsonUser = JSON.parse(JSON.stringify(userSearchResults));
     let result = JSON.parse(JSON.stringify(postSearchResults));
     for (let i = 0; i < jsonUser.length; ++i) {
       result = result.concat(jsonUser[i].Posts);

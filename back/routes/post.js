@@ -29,7 +29,6 @@ const upload = multer({
   limits: { fileSize: 20 * 1024 * 1024 },
 });
 
-// upload.none() -> 이미지가 없고 다른것(텍스트 등)이 있다
 router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
   // POST /post
   try {
@@ -204,7 +203,6 @@ router.delete("/:postId", isLoggedIn, async (req, res) => {
 });
 
 // 게시글 수정
-// upload.none() -> 이미지가 없고 다른것(텍스트 등)이 있다
 router.patch("/", isLoggedIn, upload.none(), async (req, res, next) => {
   // PATCH /post
   try {

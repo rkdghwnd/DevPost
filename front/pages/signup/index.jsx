@@ -19,7 +19,7 @@ import {
   SignUpForm,
   SignupWrapper,
 } from '../../pageStyles/signupStyles';
-import Input from '../../hooks/input';
+import UserInfoInputs from '../../components/Signup/UserInfoInputs';
 
 const signup = () => {
   const dispatch = useDispatch();
@@ -48,7 +48,6 @@ const signup = () => {
     setPasswordMatchError,
     password,
   );
-
   const [emailValidateError, setEmailValidateError] = useState(false);
 
   const isEmailValidate = useCallback(email => {
@@ -78,7 +77,6 @@ const signup = () => {
     const verify3 = isNicknameValidate(nickname);
     // +
     // 중복된 이메일인지 -> 요청시 backend 에서 검증
-
     if (verify1 && verify2 && verify3 && !passwordMatchError) {
       dispatch({
         type: SIGN_UP_REQUEST,
@@ -95,6 +93,21 @@ const signup = () => {
     router.back();
   }, [router]);
 
+  const signUpInputObject = {
+    email,
+    onChangeEmail,
+    emailValidateError,
+    nickname,
+    onChangeNickname,
+    nicknameValidateError,
+    password,
+    onChangePassword,
+    passwordValidateError,
+    passwordCheck,
+    onChangePasswordCheck,
+    passwordMatchError,
+  };
+
   return (
     <>
       <Head>
@@ -105,52 +118,7 @@ const signup = () => {
           <SignUpForm>
             <h2>Sign up</h2>
             <BackButton onClick={onClickBack} />
-            <Input
-              type="email"
-              placeholder="아이디"
-              value={email}
-              onChange={onChangeEmail}
-              validateError={emailValidateError}
-            />
-            {emailValidateError ? (
-              <div>이메일 형식을 만족하지 않습니다.</div>
-            ) : null}
-            {signUpStatus === '이미 사용중인 아이디입니다.' ? (
-              <div>{signUpStatus}</div>
-            ) : null}
-            <Input
-              type="text"
-              placeholder="닉네임"
-              value={nickname}
-              onChange={onChangeNickname}
-              validateError={nicknameValidateError}
-            />
-            {nicknameValidateError ? (
-              <div>닉네임은 최소 2글자 이상이어야 합니다.</div>
-            ) : null}
-            <Input
-              type="password"
-              placeholder="비밀번호"
-              value={password}
-              onChange={onChangePassword}
-              validateError={passwordValidateError}
-            />
-            {passwordValidateError ? (
-              <div>
-                비밀번호는 문자, 숫자, 특수문자를 포함한 8자 이상의 형식이여야
-                합니다.
-              </div>
-            ) : null}
-            <Input
-              type="password"
-              placeholder="비밀번호 확인"
-              value={passwordCheck}
-              onChange={onChangePasswordCheck}
-              validateError={passwordMatchError}
-            />
-            {passwordMatchError ? (
-              <div>비밀번호가 일치하지 않습니다.</div>
-            ) : null}
+            <UserInfoInputs {...signUpInputObject} />
             <SignUpButton
               ref={submitButton}
               signUpStatus={signUpStatus}
