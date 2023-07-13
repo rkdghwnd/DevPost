@@ -90,7 +90,12 @@ const edit = () => {
     formData.append('nickname', nickname);
     formData.append('introduce', introduce);
     formData.append('password', password);
-    if (me.provider === 'local' && verify1 && verify2 && !passwordMatchError) {
+    if (
+      me.provider === 'local' &&
+      verify1 &&
+      verify2 &&
+      passwordCheck === password
+    ) {
       dispatch({ type: UPDATE_MY_INFO_REQUEST, data: formData });
     } else if (me.provider !== 'local' && verify1) {
       dispatch({ type: UPDATE_MY_INFO_REQUEST, data: formData });
@@ -111,6 +116,20 @@ const edit = () => {
   if (loadMyInfoStatus === LOADING) {
     return <MyProfileEditLoading />;
   }
+
+  const editInputObject = {
+    nickname,
+    introduce,
+    password,
+    passwordCheck,
+    onChangeNickname,
+    onChangeIntroduce,
+    onChangePassword,
+    onChangePasswordCheck,
+    nicknameValidateError,
+    passwordValidateError,
+    passwordMatchError,
+  };
 
   return (
     <>
@@ -144,19 +163,7 @@ const edit = () => {
               </div>
               <FcCameraIdentification />
             </ProfileImage>
-            <ProfileEditInput
-              nickname={nickname}
-              introduce={introduce}
-              password={password}
-              passwordCheck={passwordCheck}
-              onChangeNickname={onChangeNickname}
-              onChangeIntroduce={onChangeIntroduce}
-              onChangePassword={onChangePassword}
-              onChangePasswordCheck={onChangePasswordCheck}
-              nicknameValidateError={nicknameValidateError}
-              passwordValidateError={passwordValidateError}
-              passwordMatchError={passwordMatchError}
-            />
+            <ProfileEditInput {...editInputObject} />
           </EditForm>
         )}
       </AppLayout>
