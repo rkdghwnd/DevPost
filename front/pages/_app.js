@@ -27,6 +27,7 @@ import '../cssVariable.scss';
 import LikeMessage from '../components/Common/LikeMessage/LikeMessage';
 import BookmarkMessage from '../components/Common/BookmarkMessage/BookmarkMessage';
 import PostModal from '../components/Post/PostModal/PostModal';
+import AppLayout from '../components/Common/AppLayout';
 
 const GlobalStyle = createGlobalStyle`
 

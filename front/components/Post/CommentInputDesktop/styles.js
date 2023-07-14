@@ -6,6 +6,9 @@ export const CommentInputWrapper = styled.section`
   border-radius: 5px;
   border: ${({ purpose }) =>
     purpose.includes('reply') ? '1px solid rgb(180,180,180)' : ''};
+  @media (max-width: 765px) {
+    margin-bottom: 50px;
+  }
 `;
 
 export const CommentInput = styled.div`

@@ -28,6 +28,9 @@ import {
   ProfileImage,
 } from '../../../pageStyles/editStyles';
 import Image from 'next/image';
+import wrapper from '../../../store/configureStore';
+import axios from 'axios';
+import { END } from 'redux-saga';
 
 const edit = () => {
   const dispatch = useDispatch();
@@ -170,5 +173,18 @@ const edit = () => {
     </>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(async context => {
+  const cookie = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
+  if (context.req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
+  context.store.dispatch({
+    type: LOAD_MY_INFO_REQUEST, // 로그인 유지
+  });
+  context.store.dispatch(END);
+  await context.store.sagaTask.toPromise();
+});
 
 export default edit;
