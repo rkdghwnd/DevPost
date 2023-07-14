@@ -19,7 +19,6 @@ import Custom404 from './404';
 const free = () => {
   const { freePosts, loadFreePostsStatus, postTotal, addPostStatus } =
     useSelector(state => state.post);
-
   if (loadFreePostsStatus === REJECTED) {
     return <Custom404 />;
   }

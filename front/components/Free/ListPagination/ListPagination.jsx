@@ -3,7 +3,12 @@ import shortid from 'shortid';
 import PropTypes from 'prop-types';
 import { PageButton, PaginationContainer } from './style';
 
-const ListPagination = ({ currentPage, setCurrentPage, totalPageCount }) => {
+const ListPagination = ({
+  currentPage,
+  setCurrentPage,
+  totalPageCount,
+  isCurrentPost,
+}) => {
   const prevButton = useRef();
   const lastButton = useRef();
 
@@ -40,7 +45,11 @@ const ListPagination = ({ currentPage, setCurrentPage, totalPageCount }) => {
   );
 
   return (
-    <PaginationContainer isFirstPage={isFirstPage} isLastPage={isLastPage}>
+    <PaginationContainer
+      isFirstPage={isFirstPage}
+      isLastPage={isLastPage}
+      isCurrentPost={isCurrentPost}
+    >
       <button ref={prevButton} onClick={onPrevPage}>
         <span>{'<'}</span>
       </button>
@@ -67,6 +76,7 @@ ListPagination.propTypes = {
   currentPage: PropTypes.number,
   setCurrentPage: PropTypes.func,
   totalPageCount: PropTypes.number,
+  isCurrentPost: PropTypes.bool,
 };
 
 export default ListPagination;

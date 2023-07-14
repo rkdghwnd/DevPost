@@ -5,16 +5,18 @@ import { AiFillInfoCircle, AiOutlineComment } from 'react-icons/ai';
 import { FaPencilAlt } from 'react-icons/fa';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { FooterForm, InfoLink, WritePostButton } from './styles';
 import {
   INFO_MODAL_OPEN,
   LOG_IN_MODAL_OPEN,
-  NEW_POST_MODAL_OPEN,
+  POST_MODAL_OPEN,
 } from '../../../reducers/modal';
+import { RESET_IMAGE } from '../../../reducers/post';
+import { useRouter } from 'next/router';
 
 const Footer = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { me } = useSelector(state => state.user);
   const onOpenAppInfo = useCallback(() => {
     dispatch({ type: INFO_MODAL_OPEN });
@@ -22,11 +24,14 @@ const Footer = () => {
 
   const onOpenNewPostModal = useCallback(() => {
     if (me) {
-      dispatch({ type: NEW_POST_MODAL_OPEN });
+      dispatch({ type: RESET_IMAGE });
+      dispatch({ type: POST_MODAL_OPEN, data: 'new' });
     } else {
       dispatch({ type: LOG_IN_MODAL_OPEN });
     }
   }, [me]);
+
+  console.log(router.pathname);
 
   return (
     <FooterForm>
@@ -62,9 +67,11 @@ const Footer = () => {
           </div>
         </a>
       </Link>
-      <WritePostButton onClick={onOpenNewPostModal}>
-        <FaPencilAlt />
-      </WritePostButton>
+      {router.pathname.includes('/post') || (
+        <WritePostButton onClick={onOpenNewPostModal}>
+          <FaPencilAlt />
+        </WritePostButton>
+      )}
     </FooterForm>
   );
 };

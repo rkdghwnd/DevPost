@@ -27,6 +27,7 @@ import {
   PostForm,
 } from '../../pageStyles/postStyles';
 import AppHeader from '../../components/Common/AppHeader/AppHeader';
+import AppLayout from '../../components/Common/AppLayout';
 
 const post = () => {
   const dispatch = useDispatch();
@@ -74,37 +75,42 @@ const post = () => {
       <Head>
         <title>{currentPost.title} - DevPost</title>
       </Head>
-      <AppHeader />
-      <PostForm>
-        <PostMenu />
-        {postOptionVisible ? <PostOption /> : null}
-        <PostMainText />
-        <PostFooter />
-        {currentPost?.Comments.length === 0 ? (
-          <EmptyCommentForm>
-            <FaRegCommentDots />
-            <span>첫 댓글을 남겨주세요</span>
-          </EmptyCommentForm>
-        ) : (
-          currentPost?.Comments.map(comment => {
-            if (comment.CommentId) {
-              return <NestedComment key={comment.id} nestedComment={comment} />;
-            } else {
-              return <Comment key={comment.id} comment={comment} />;
-            }
-          }).slice((currentPage - 1) * 20, (currentPage - 1) * 20 + 20)
-        )}
-        <ListPagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPageCount={totalPageCount}
-        />
-        {me ? (
-          <CommentInputDesktop info={addInfo} />
-        ) : (
-          <LogInBox onClick={onClickLogInBox}>로그인이 필요합니다.</LogInBox>
-        )}
-      </PostForm>
+      <AppLayout>
+        <PostForm>
+          <PostMenu />
+          {postOptionVisible ? <PostOption /> : null}
+          <PostMainText />
+          <PostFooter />
+          {currentPost?.Comments.length === 0 ? (
+            <EmptyCommentForm>
+              <FaRegCommentDots />
+              <span>첫 댓글을 남겨주세요</span>
+            </EmptyCommentForm>
+          ) : (
+            currentPost?.Comments.map(comment => {
+              if (comment.CommentId) {
+                return (
+                  <NestedComment key={comment.id} nestedComment={comment} />
+                );
+              } else {
+                return <Comment key={comment.id} comment={comment} />;
+              }
+            }).slice((currentPage - 1) * 20, (currentPage - 1) * 20 + 20)
+          )}
+          <ListPagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPageCount={totalPageCount}
+            isCurrentPost={true}
+          />
+          {me ? (
+            <CommentInputDesktop info={addInfo} />
+          ) : (
+            <LogInBox onClick={onClickLogInBox}>로그인이 필요합니다.</LogInBox>
+          )}
+        </PostForm>
+      </AppLayout>
+
       <TopScroll />
     </>
   );

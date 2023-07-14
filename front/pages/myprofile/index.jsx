@@ -142,6 +142,7 @@ const myprofile = () => {
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             totalPageCount={totalPageCount}
+            isCurrentPost={false}
           />
         </MyProfileForm>
       </AppLayout>

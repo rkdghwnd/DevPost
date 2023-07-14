@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const PaginationContainer = styled.section`
   @media (max-width: 765px) {
-    margin-bottom: 50px;
+    margin-bottom: ${({ isCurrentPost }) => (isCurrentPost ? '0' : '50px')};
   }
 
   display: flex;
