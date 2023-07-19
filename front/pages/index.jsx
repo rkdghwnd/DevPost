@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PostCard from '../components/Free/PostCard/PostCard';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_FREE_POSTS_REQUEST } from '../reducers/post';
 import shortId from 'shortid';
 import axios from 'axios';
@@ -19,6 +19,7 @@ import Custom404 from './404';
 const free = () => {
   const { freePosts, loadFreePostsStatus, postTotal, addPostStatus } =
     useSelector(state => state.post);
+
   if (loadFreePostsStatus === REJECTED) {
     return <Custom404 />;
   }
@@ -52,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async context => {
     axios.defaults.headers.Cookie = cookie;
   }
   context.store.dispatch({
-    type: LOAD_MY_INFO_REQUEST, // 로그인 유지
+    type: LOAD_MY_INFO_REQUEST,
   });
   context.store.dispatch({
     type: LOAD_FREE_POSTS_REQUEST,

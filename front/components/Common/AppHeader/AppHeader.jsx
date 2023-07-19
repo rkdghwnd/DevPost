@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { LOG_IN_MODAL_OPEN, POST_MODAL_OPEN } from '../../../reducers/modal';
@@ -38,7 +38,7 @@ const AppHeader = () => {
           <a>DEVPOST</a>
         </Link>
         <SearchInput />
-        {me === null && <button onClick={onClickLogInModal}>로그인</button>}
+        {!me && <button onClick={onClickLogInModal}>로그인</button>}
         {me && (
           <ProfileWrapper>
             <ProfileImage

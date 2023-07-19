@@ -34,7 +34,7 @@ export const FooterForm = styled.section`
   }
 `;
 
-export const InfoLink = styled.div`
+export const GithubInfo = styled.div`
   cursor: pointer;
 `;
 

@@ -10,6 +10,8 @@ import { LOG_IN_REQUEST } from '../../../reducers/user';
 import OauthLogos from '../OauthLogo/OauthLogos';
 import LogInButton from '../LogInButton/LogInButton';
 import { ModalBackdrop, LogInForm, CloseButton, Input } from './styles';
+import axios from 'axios';
+import useSWR, { mutate } from 'swr';
 
 const LogInModal = () => {
   const dispatch = useDispatch();

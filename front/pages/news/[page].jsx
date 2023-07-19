@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NewsCard from '../../components/News/NewsCard/NewsCard';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_NEWS_POSTS_REQUEST } from '../../reducers/posts';
 import shortId from 'shortid';
 import wrapper from '../../store/configureStore';
@@ -17,8 +17,10 @@ import SideFilter from '../../components/Common/SideFilter/SideFilter';
 import PostsLoading from '../../components/Free/PostsLoading/PostsLoading';
 import { LOADING, REJECTED } from '../../reducers';
 import Custom404 from '../404';
+import { useRouter } from 'next/router';
 
 const news = () => {
+  const dispatch = useDispatch();
   const { newsPosts, filteredList, loadNewsPostsStatus } = useSelector(
     state => state.posts,
   );
@@ -27,6 +29,10 @@ const news = () => {
     filteredList,
     'news_name',
   );
+
+  useEffect(() => {
+    dispatch({ type: LOAD_MY_INFO_REQUEST });
+  }, []);
 
   if (loadNewsPostsStatus === REJECTED) {
     return <Custom404 />;
@@ -51,21 +57,52 @@ const news = () => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(async context => {
-  const cookie = context.req ? context.req.headers.cookie : '';
-  axios.defaults.headers.Cookie = '';
-  if (context.req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
-  context.store.dispatch({
-    type: LOAD_MY_INFO_REQUEST, // 로그인 유지
-  });
+// export const getServerSideProps = wrapper.getServerSideProps(async context => {
+//   const cookie = context.req ? context.req.headers.cookie : '';
+//   axios.defaults.headers.Cookie = '';
+//   if (context.req && cookie) {
+//     axios.defaults.headers.Cookie = cookie;
+//   }
+//   context.store.dispatch({
+//     type: LOAD_MY_INFO_REQUEST, // 로그인 유지
+//   });
+//   context.store.dispatch({
+//     type: LOAD_NEWS_POSTS_REQUEST,
+//     data: Number(context.query.page),
+//   });
+//   context.store.dispatch(END);
+//   await context.store.sagaTask.toPromise();
+// });
+
+export const getStaticPaths = async () => {
+  const count = await axios
+    .get(`${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/news/count`)
+    .then(result => result.data);
+  const pages =
+    parseInt(count / 30) === count / 30
+      ? parseInt(count / 30)
+      : parseInt(count / 30) + 1;
+  const paths = Array(pages)
+    .fill()
+    .map((v, i) => ({ params: { page: String(i + 1) } }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps = wrapper.getStaticProps(async context => {
   context.store.dispatch({
     type: LOAD_NEWS_POSTS_REQUEST,
-    data: Number(context.query.page),
+    data: Number(context.params.page) || 1,
   });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
+
+  return {
+    revalidate: 1000 * 60 * 60 * 24,
+  };
 });
 
 export default news;

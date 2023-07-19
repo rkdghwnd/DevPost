@@ -11,12 +11,20 @@ const Paginations = ({ total }) => {
 
   const currentPage = Number(router.query.page) || 1;
   const isFirstPage = currentPage === 1;
-  const isLastPage = currentPage === parseInt(total / 30) + 1;
+  const isLastPage =
+    currentPage ===
+    (parseInt(total / 30) === total / 30
+      ? parseInt(total / 30)
+      : parseInt(total / 30) + 1);
 
   const firstPage = currentPage - 2 <= 0 ? 1 : currentPage - 2;
   const lastPage = currentPage + 2;
 
-  const pageNumbers = Array(parseInt(total / 30) + 1)
+  const pageNumbers = Array(
+    parseInt(total / 30) === total / 30
+      ? parseInt(total / 30)
+      : parseInt(total / 30) + 1,
+  )
     .fill()
     .map((v, i) => i + 1)
     .slice(firstPage - 1, lastPage);
