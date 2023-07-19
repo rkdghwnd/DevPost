@@ -5,7 +5,7 @@ import { AiFillInfoCircle, AiOutlineComment } from 'react-icons/ai';
 import { FaPencilAlt } from 'react-icons/fa';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { FooterForm, InfoLink, WritePostButton } from './styles';
+import { FooterForm, GithubInfo, WritePostButton } from './styles';
 import {
   INFO_MODAL_OPEN,
   LOG_IN_MODAL_OPEN,
@@ -51,14 +51,14 @@ const Footer = () => {
           </div>
         </a>
       </Link>
-      <InfoLink onClick={onOpenAppInfo}>
+      <GithubInfo onClick={onOpenAppInfo}>
         <a>
           <div>
             <AiFillInfoCircle />
             <span>정보</span>
           </div>
         </a>
-      </InfoLink>
+      </GithubInfo>
       <Link href="/myprofile">
         <a>
           <div>

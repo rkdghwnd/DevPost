@@ -27,7 +27,8 @@ import '../cssVariable.scss';
 import LikeMessage from '../components/Common/LikeMessage/LikeMessage';
 import BookmarkMessage from '../components/Common/BookmarkMessage/BookmarkMessage';
 import PostModal from '../components/Post/PostModal/PostModal';
-import AppLayout from '../components/Common/AppLayout';
+import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
+import { useRouter } from 'next/router';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -81,6 +82,7 @@ const DevPost = ({ Component }) => {
     bookmarkMessageVisual,
     unbookmarkMessageVisual,
   } = useSelector(state => state.message);
+  const router = useRouter();
 
   // kakao SDK import하기
   const status = useScript('https://developers.kakao.com/sdk/js/kakao.js');

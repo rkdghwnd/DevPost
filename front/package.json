@@ -1,7 +1,7 @@
 {
   "name": "dev-post",
   "version": "1.0.0",
-  "description": "provides community news using crawling",
+  "description": "community, news, blog, hotdeal using crawling",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -39,6 +39,7 @@
     "shortid": "^2.2.16",
     "styled-components": "^5.3.6",
     "styled-normalize": "^8.0.7",
+    "swr": "^2.2.0",
     "underscore": "^1.13.6"
   },
   "devDependencies": {

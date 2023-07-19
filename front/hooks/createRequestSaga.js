@@ -33,6 +33,7 @@ export default function createRequestSaga(
     try {
       const result = yield call(request, action.data);
       const successAction = { type: successType, data: result.data };
+
       const addedModeTypes = [
         UPLOAD_IMAGES_SUCCESS,
         LIKE_POST_SUCCESS,
@@ -49,6 +50,7 @@ export default function createRequestSaga(
         UPDATE_NESTED_COMMENT_SUCCESS,
       ];
       const deletedDataTypes = [LOG_OUT_SUCCESS, SIGN_UP_SUCCESS];
+
       if (addedModeTypes.includes(successType)) {
         successAction['mode'] = action.mode;
       } else if (changeCommentsTypes.includes(successType)) {

@@ -35,6 +35,10 @@ const signup = () => {
     }
   }, [signUpStatus]);
 
+  useEffect(() => {
+    dispatch({ type: LOAD_MY_INFO_REQUEST });
+  }, []);
+
   const [email, setEmail] = useState('');
   const [nicknameValidateError, isNicknameValidate] =
     useNicknameValidate(false); // 닉네임 최소2 글자 이상인지
@@ -133,17 +137,17 @@ const signup = () => {
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(async context => {
-  const cookie = context.req ? context.req.headers.cookie : '';
-  axios.defaults.headers.Cookie = '';
-  if (context.req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
-  context.store.dispatch({
-    type: LOAD_MY_INFO_REQUEST, // 로그인 유지
-  });
-  context.store.dispatch(END);
-  await context.store.sagaTask.toPromise();
-});
+// export const getServerSideProps = wrapper.getServerSideProps(async context => {
+//   const cookie = context.req ? context.req.headers.cookie : '';
+//   axios.defaults.headers.Cookie = '';
+//   if (context.req && cookie) {
+//     axios.defaults.headers.Cookie = cookie;
+//   }
+//   context.store.dispatch({
+//     type: LOAD_MY_INFO_REQUEST, // 로그인 유지
+//   });
+//   context.store.dispatch(END);
+//   await context.store.sagaTask.toPromise();
+// });
 
 export default signup;
