@@ -25,6 +25,8 @@ const NewsCardMainText = ({ post }) => {
               width={80}
               height={80}
               layout="fixed"
+              alt="news_image"
+              objectFit="cover"
             />
           </div>
         </MainTextForm>

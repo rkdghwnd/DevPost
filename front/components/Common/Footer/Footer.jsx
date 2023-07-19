@@ -31,8 +31,6 @@ const Footer = () => {
     }
   }, [me]);
 
-  console.log(router.pathname);
-
   return (
     <FooterForm>
       <Link href="/">

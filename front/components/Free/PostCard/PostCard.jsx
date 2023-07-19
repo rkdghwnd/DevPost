@@ -27,6 +27,8 @@ const PostCard = ({ post }) => {
           onClick={onClickUser}
           width={25}
           height={25}
+          alt="profile_image"
+          objectFit="cover"
         />
         <span onClick={onClickUser}>{post.User.nickname}</span>
         <div>{`${createdAt[0]}년 ${createdAt[1]}월 ${createdAt[2]}일`}</div>

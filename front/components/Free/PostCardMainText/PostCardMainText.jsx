@@ -29,6 +29,8 @@ const PostCardMainText = ({ post }) => {
                   src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${post?.Images[0].src}`}
                   width={60}
                   height={60}
+                  alt="post_image"
+                  objectFit="cover"
                 />
               )}
             </div>

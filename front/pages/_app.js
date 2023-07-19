@@ -110,7 +110,11 @@ const DevPost = ({ Component }) => {
   return (
     <>
       <Head>
-        <meta charSet="utf-8"></meta>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content="개발 관련 게시글, 뉴스, 블로그, 핫딜 게시글 모았습니다."
+        />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="DevPost" />
         <meta property="og:title" content="collect dev articles" />
