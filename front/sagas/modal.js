@@ -107,7 +107,6 @@ export default function* postSaga() {
     fork(watchCommentModalOpen),
     fork(watchNewPostModalClose),
     fork(watchLogInModalClose),
-    // fork(watchUpdatePostModalClose),
     fork(watchShareModalClose),
     fork(watchUserInfoModalClose),
     fork(watchInfoModalClose),

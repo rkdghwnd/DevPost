@@ -12,27 +12,48 @@ export const initialState = {
   searchPosts: [],
   postTotal: 0,
   loadFreePostsStatus: 'idle',
+  loadFreePostsError: null,
   you: null,
   loadYourInfoStatus: 'idle',
+  loadYourInfoError: null,
   addPostStatus: 'idle',
+  addPostError: null,
   removePostStatus: 'idle',
+  removePostError: null,
   addCommentStatus: 'idle',
+  addCommentError: null,
   removeCommentStatus: 'idle',
+  removeCommentError: null,
   updateCommentStatus: 'idle',
+  updateCommentError: null,
   addNestedCommentStatus: 'idle',
+  addNestedCOmmentError: null,
   removeNestedCommentStatus: 'idle',
+  removeNestedCommentError: null,
   updateNestedCommentStatus: 'idle',
+  updateNestedCommentError: null,
   loadPostStatus: 'idle',
+  loadPostError: null,
   uploadImagesStatus: 'idle',
+  uploadImagesError: null,
   unlikePostStatus: 'idle',
+  unlikePostError: null,
   likePostStatus: 'idle',
+  likePostError: null,
   addBookmarkStatus: 'idle',
+  addBookmarkError: null,
   removeBookmarkStatus: 'idle',
+  removeBookmarkError: null,
   loadMyPostsStatus: 'idle',
+  loadMyPostsError: null,
   loadMyCommentsStatus: 'idle',
+  loadMyCommentError: null,
   loadMyBookmarkStatus: 'idle',
+  loadMyBookmarkError: null,
   searchPostsStatus: 'idle',
+  searchPostsError: null,
   updatePostStatus: 'idle',
+  updatePostError: null,
 };
 
 export const CHANGE_COMMENTS = 'CHANGE_COMMENTS';
@@ -156,6 +177,7 @@ const reducer = (state = initialState, action) => {
         break;
       case LOAD_YOUR_INFO_FAILURE:
         draft.loadYourInfoStatus = REJECTED;
+        draft.loadYourInfoError = action.error;
         break;
       case SEARCH_POSTS_REQUEST:
         draft.searchPostsStatus = LOADING;
@@ -166,6 +188,7 @@ const reducer = (state = initialState, action) => {
         break;
       case SEARCH_POSTS_FAILURE:
         draft.searchPostsStatus = REJECTED;
+        draft.searchPostsError = action.error;
         break;
       case LOAD_PROFILE_IMAGE:
         draft.profileImage = [];
@@ -183,6 +206,7 @@ const reducer = (state = initialState, action) => {
         break;
       case LOAD_MY_POSTS_FAILURE:
         draft.loadMyPostsStatus = REJECTED;
+        draft.loadMyPostsError = action.error;
         break;
       case LOAD_MY_COMMENTS_REQUEST:
         draft.loadMyCommentsStatus = LOADING;
@@ -193,6 +217,7 @@ const reducer = (state = initialState, action) => {
         break;
       case LOAD_MY_COMMENTS_FAILURE:
         draft.loadMyCommentsStatus = REJECTED;
+        draft.loadMyCommentsError - action.error;
         break;
       case LOAD_MY_BOOKMARK_REQUEST:
         draft.loadMyBookmarkStatus = LOADING;
@@ -203,6 +228,7 @@ const reducer = (state = initialState, action) => {
         break;
       case LOAD_MY_BOOKMARK_FAILURE:
         draft.loadMyBookmarkStatus = REJECTED;
+        draft.loadMyBookmarkError = action.error;
         break;
       case REMOVE_BOOKMARK_REQUEST:
         draft.removeBookmarkStatus = LOADING;
@@ -240,6 +266,7 @@ const reducer = (state = initialState, action) => {
       }
       case REMOVE_BOOKMARK_FAILURE:
         draft.removeBookmarkStatus = REJECTED;
+        draft.removeBookmarkError = action.error;
         break;
       case ADD_BOOKMARK_REQUEST:
         draft.addBookmarkStatus = LOADING;
@@ -275,6 +302,7 @@ const reducer = (state = initialState, action) => {
       }
       case ADD_BOOKMARK_FAILURE:
         draft.addBookmarkStatus = REJECTED;
+        draft.addBookmarkError = action.error;
         break;
       case UNLIKE_POST_REQUEST:
         draft.unlikePostStatus = LOADING;
@@ -309,6 +337,7 @@ const reducer = (state = initialState, action) => {
       }
       case UNLIKE_POST_FAILURE:
         draft.unlikePostStatus = REJECTED;
+        draft.unlikePostError = action.error;
         break;
       case LIKE_POST_REQUEST:
         draft.likePostStatus = LOADING;
@@ -342,6 +371,7 @@ const reducer = (state = initialState, action) => {
       }
       case LIKE_POST_FAILURE:
         draft.likePostStatus = REJECTED;
+        draft.likePostError = action.error;
         break;
       case UPDATE_NESTED_COMMENT_REQUEST:
         draft.updateNestedCommentStatus = LOADING;
@@ -352,6 +382,7 @@ const reducer = (state = initialState, action) => {
       }
       case UPDATE_NESTED_COMMENT_FAILURE:
         draft.updateNestedCommentStatus = REJECTED;
+        draft.updateNestedCommentError = action.error;
         break;
       case REMOVE_NESTED_COMMENT_REQUEST:
         draft.removeNestedCommentStatus = LOADING;
@@ -362,6 +393,7 @@ const reducer = (state = initialState, action) => {
       }
       case REMOVE_NESTED_COMMENT_FAILURE:
         draft.removeNestedCommentStatus = REJECTED;
+        draft.removeNestedCommentError = action.error;
         break;
       case ADD_NESTED_COMMENT_REQUEST:
         draft.addNestedCommentStatus = LOADING;
@@ -372,6 +404,7 @@ const reducer = (state = initialState, action) => {
       }
       case ADD_NESTED_COMMENT_FAILURE:
         draft.addNestedCommentStatus = REJECTED;
+        draft.addNestedCommentError = action.error;
         break;
       case UPDATE_COMMENT_REQUEST:
         draft.updateCommentStatus = LOADING;
@@ -382,6 +415,7 @@ const reducer = (state = initialState, action) => {
       }
       case UPDATE_COMMENT_FAILURE:
         draft.updateCommentStatus = REJECTED;
+        draft.updateCommentError = action.error;
         break;
       case REMOVE_COMMENT_REQUEST:
         draft.removeCommentStatus = LOADING;
@@ -392,6 +426,7 @@ const reducer = (state = initialState, action) => {
       }
       case REMOVE_COMMENT_FAILURE:
         draft.removeCommentStatus = REJECTED;
+        draft.removeCommentError = action.error;
         break;
       case LOAD_IMAGE:
         draft.imagePaths = action.images.map(image => image.src);
@@ -428,6 +463,7 @@ const reducer = (state = initialState, action) => {
       }
       case ADD_COMMENT_FAILURE:
         draft.addCommentStatus = REJECTED;
+        draft.addCommentError = action.error;
         break;
       case UPDATE_POST_REQUEST:
         draft.updatePostStatus = LOADING;
@@ -440,6 +476,7 @@ const reducer = (state = initialState, action) => {
         break;
       case UPDATE_POST_FAILURE:
         draft.updatePostStatus = REJECTED;
+        draft.updatePostError = action.error;
         break;
       case REMOVE_IMAGE:
         draft.imagePaths = draft.imagePaths.filter((v, i) => i != action.data);
@@ -458,6 +495,7 @@ const reducer = (state = initialState, action) => {
         break;
       case UPLOAD_IMAGES_FAILURE:
         draft.uploadImagesStatus = REJECTED;
+        draft.uploadImagesError = action.error;
         break;
       case LOAD_POST_REQUEST:
         draft.loadPostStatus = LOADING;
@@ -469,6 +507,7 @@ const reducer = (state = initialState, action) => {
         break;
       case LOAD_POST_FAILURE:
         draft.loadPostStatus = REJECTED;
+        draft.loadPostError = action.error;
         break;
       case LOAD_FREE_POSTS_REQUEST:
         draft.loadFreePostsStatus = LOADING;
@@ -481,6 +520,7 @@ const reducer = (state = initialState, action) => {
         break;
       case LOAD_FREE_POSTS_FAILURE:
         draft.loadFreePostsStatus = REJECTED;
+        draft.loadFreePostsError = action.error;
         break;
       case ADD_POST_REQUEST:
         draft.addPostStatus = LOADING;
@@ -494,6 +534,7 @@ const reducer = (state = initialState, action) => {
         break;
       case ADD_POST_FAILURE:
         draft.addPostStatus = REJECTED;
+        draft.addPostError = action.error;
         break;
       case REMOVE_POST_REQUEST:
         draft.removePostStatus = LOADING;
@@ -506,6 +547,7 @@ const reducer = (state = initialState, action) => {
         break;
       case REMOVE_POST_FAILURE:
         draft.removePostStatus = REJECTED;
+        draft.removePostError = action.error;
         break;
       default:
         break;

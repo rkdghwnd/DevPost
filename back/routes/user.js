@@ -32,7 +32,7 @@ const upload = multer({
 
 // 로그인 정보 유지
 router.get("/me", async (req, res, next) => {
-  // GET /me
+  // GET /user/me
   try {
     if (req.user) {
       const fullUserWithoutPassword = await User.findOne({

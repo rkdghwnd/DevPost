@@ -141,8 +141,9 @@ router.get("/free", async (req, res, next) => {
         { model: User, as: "Bookmarkers", attributes: ["id"] },
       ],
     });
+
     if (!post) {
-      res.status(404).send("게시글이 존재하지 않습니다.");
+      return res.status(404).send("게시글이 존재하지 않습니다.");
     }
     const comments = [];
     const nested_comments = [];
@@ -191,7 +192,9 @@ router.delete("/:postId", isLoggedIn, async (req, res) => {
     await Comment.destroy({
       where: { PostId: parseInt(req.params.postId) },
     });
-
+    await Image.destroy({
+      where: { PostId: parseInt(req.params.postId) },
+    });
     await Post.destroy({
       // 다른사람이 삭제하지 못하게 하기 위해 UserId 추가
       where: { id: parseInt(req.params.postId), UserId: req.user.id },

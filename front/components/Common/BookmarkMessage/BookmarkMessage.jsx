@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 import { MessageBox } from './styles';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
