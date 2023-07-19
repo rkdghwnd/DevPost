@@ -11,7 +11,7 @@ const fs = require("fs");
 const blogCrawling = async () => {
   try {
     const jojolduPosts = await jojoldu();
-    const popeMachinePosts = await popeMachine();
+    // const popeMachinePosts = await popeMachine();
     const baakingDogPosts = await baakingDog();
     const outsidersDevPosts = await outsidersDev();
     const velopertPosts = await velopert();
@@ -19,7 +19,7 @@ const blogCrawling = async () => {
 
     const allPosts = [
       ...jojolduPosts,
-      ...popeMachinePosts,
+      // ...popeMachinePosts,
       ...baakingDogPosts,
       ...outsidersDevPosts,
       ...velopertPosts,

@@ -58,17 +58,24 @@ fs.readdir("images", (err) => {
   }
 });
 
-const crawling = async () => {
+const crawler = async () => {
   await blogCrawling();
   await newsCrawling();
-  await hotdealCrawling();
+
   setInterval(async () => {
     await blogCrawling();
     await newsCrawling();
-    await hotdealCrawling();
   }, 1000 * 60 * 60 * 24);
 };
-crawling();
+crawler();
+
+const hotdealCrawler = async () => {
+  await hotdealCrawling();
+  setInterval(async () => {
+    await hotdealCrawling();
+  }, 1000 * 60 * 60);
+};
+hotdealCrawler();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

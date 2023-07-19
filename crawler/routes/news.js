@@ -20,4 +20,17 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// 블로그 게시글 개수 가져오기
+router.get("/count", async (req, res, next) => {
+  // GET /news/count
+  try {
+    const count = await News.count();
+    console.log(count);
+    res.status(201).json(count);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 module.exports = router;
