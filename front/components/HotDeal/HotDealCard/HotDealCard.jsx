@@ -34,6 +34,8 @@ const HotDealCard = ({ post }) => {
         width={80}
         height={80}
         layout="fixed"
+        alt="hotdeal_image"
+        objectFit="cover"
       />
       <div>
         <HotDealCardHeader>

@@ -21,6 +21,8 @@ const BlogCard = ({ post }) => {
           width={80}
           height={80}
           layout="fixed"
+          alt="blog_image"
+          objectFit="cover"
         />
       </a>
       <div>
