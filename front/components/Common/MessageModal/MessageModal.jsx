@@ -23,25 +23,12 @@ const MessageModal = () => {
     // 메세지 초기화
     dispatch({ type: MESSAGE_MODAL_TOGGLE_REQUEST, message: '' });
 
-    // 로그인 에러, 회원가입, 프로필 수정 에러 상태 초기화
-    if (logInStatus === REJECTED) {
-      dispatch({ type: RESET_LOG_IN_ERROR });
-    }
-    if (signUpStatus === REJECTED) {
-      dispatch({ type: RESET_SIGN_UP_ERROR });
-    }
-    if (updateMyInfoStatus === REJECTED) {
-      dispatch({ type: RESET_UPDATE_MY_INFO_ERROR });
-    }
-    // 회원가입 성공시 상태 초기화
     if (signUpStatus === SUCCEEDED) {
-      dispatch({ type: RESET_SIGN_UP_DONE });
       Router.replace('/');
     }
 
     // 프로필 수정 성공시 상태 초기화
     if (updateMyInfoStatus === SUCCEEDED) {
-      dispatch({ type: RESET_UPDATE_MY_INFO_DONE });
       Router.replace('/myprofile');
     }
 

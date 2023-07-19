@@ -4,12 +4,19 @@ import { LOADING, REJECTED, SUCCEEDED } from '.';
 export const initialState = {
   me: null,
   loadMyInfoStatus: 'idle',
+  loadMyInfoError: null,
   logInStatus: 'idle',
+  logInError: null,
   logOutStatus: 'idle',
+  logOutError: null,
   signUpStatus: 'idle',
+  signUpError: null,
   updateMyInfoStatus: 'idle',
+  updateMyInfoError: null,
   verifyPasswordStatus: 'idle',
+  verifyPasswordError: null,
   removeAccountStatus: 'idle',
+  removeAccountError: null,
 };
 
 export const REMOVE_ACCOUNT_REQUEST = 'REMOVE_ACCOUNT_REQUEST';
@@ -20,16 +27,9 @@ export const VERIFY_PASSWORD_REQUEST = 'VERIFY_PASSWORD_REQUEST';
 export const VERIFY_PASSWORD_SUCCESS = 'VERIFY_PASSWORD_SUCCESS';
 export const VERIFY_PASSWORD_FAILURE = 'VERIFY_PASSWORD_FAILURE';
 
-export const RESET_UPDATE_MY_INFO_DONE = 'RESET_UPDATE_MY_INFO_DONE';
-export const RESET_UPDATE_MY_INFO_ERROR = 'RESET_UPDATE_MY_INFO_ERROR';
-
 export const UPDATE_MY_INFO_REQUEST = 'UPDATE_MY_INFO_REQUEST';
 export const UPDATE_MY_INFO_SUCCESS = 'UPDATE_MY_INFO_SUCCESS';
 export const UPDATE_MY_INFO_FAILURE = 'UPDATE_MY_INFO_FAILURE';
-
-export const RESET_SIGN_UP_DONE = 'RESET_SIGN_UP_DONE';
-export const RESET_LOG_IN_ERROR = 'RESET_LOG_IN_ERROR';
-export const RESET_SIGN_UP_ERROR = 'RESET_SIGN_UP_ERROR';
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -58,6 +58,7 @@ const reducer = (state = initialState, action) => {
         break;
       case REMOVE_ACCOUNT_FAILURE:
         draft.removeAccountStatus = REJECTED;
+        draft.removeAccountError = action.error;
         break;
       case VERIFY_PASSWORD_REQUEST:
         draft.verifyPasswordStatus = LOADING;
@@ -67,12 +68,7 @@ const reducer = (state = initialState, action) => {
         break;
       case VERIFY_PASSWORD_FAILURE:
         draft.verifyPasswordStatus = REJECTED;
-        break;
-      case RESET_UPDATE_MY_INFO_DONE:
-        draft.updateMyInfoDone = false;
-        break;
-      case RESET_UPDATE_MY_INFO_ERROR:
-        draft.updateMyInfoError = null;
+        draft.verifyPasswordError = action.error;
         break;
       case UPDATE_MY_INFO_REQUEST:
         draft.updateMyInfoStatus = LOADING;
@@ -83,6 +79,7 @@ const reducer = (state = initialState, action) => {
         break;
       case UPDATE_MY_INFO_FAILURE:
         draft.updateMyInfoStatus = REJECTED;
+        draft.updateMyInfoError = action.error;
         break;
       case LOAD_MY_INFO_REQUEST:
         draft.loadMyInfoStatus = LOADING;
@@ -93,28 +90,22 @@ const reducer = (state = initialState, action) => {
         break;
       case LOAD_MY_INFO_FAILURE:
         draft.loadMyInfoStatus = REJECTED;
-        break;
-      case RESET_LOG_IN_ERROR:
-        draft.logInStatus = 'idle';
-        break;
-      case RESET_SIGN_UP_ERROR:
-        draft.signUpStatus = 'idle';
+        draft.loadMyInfoError = action.error;
         break;
       case LOG_IN_REQUEST:
         draft.logInStatus = LOADING;
         break;
       case LOG_IN_SUCCESS:
         draft.logInStatus = SUCCEEDED;
-
         draft.logOutStatus = 'idle';
         draft.me = action.data;
         break;
       case LOG_IN_FAILURE:
         draft.logInStatus = REJECTED;
+        draft.logInError = action.error;
         break;
       case LOG_OUT_REQUEST:
         draft.logOutStatus = LOADING;
-
         break;
       case LOG_OUT_SUCCESS:
         draft.logOutStatus = SUCCEEDED;
@@ -123,6 +114,7 @@ const reducer = (state = initialState, action) => {
         break;
       case LOG_OUT_FAILURE:
         draft.logOutStatus = REJECTED;
+        draft.logOutError = action.error;
         break;
       case SIGN_UP_REQUEST:
         draft.signUpStatus = LOADING;
@@ -132,6 +124,7 @@ const reducer = (state = initialState, action) => {
         break;
       case SIGN_UP_FAILURE:
         draft.signUpStatus = action.error;
+        draft.signUpError = action.error;
         break;
       default:
         break;

@@ -6,9 +6,12 @@ export const initialState = {
   newsPosts: [],
   hotDealPosts: [],
   loadBlogPostsStatus: 'idle',
+  loadBlogPostsError: null,
   loadNewsPostsStatus: 'idle',
+  loadNewsPostsError: null,
   hasMoreHotDealPosts: false,
   loadHotDealPostsStatus: 'idle',
+  loadHotDealPostsError: null,
   filteredList: [],
 };
 
@@ -57,41 +60,42 @@ const reducer = (state = initialState, action) => {
         break;
       case LOAD_NEWS_POSTS_FAILURE:
         draft.loadNewsPostsStatus = REJECTED;
+        draft.loadNewsPostsError = action.error;
         break;
       case LOAD_BLOG_POSTS_REQUEST:
         draft.loadBlogPostsStatus = LOADING;
         break;
       case LOAD_BLOG_POSTS_SUCCESS:
         draft.blogPosts = action.data;
-
         draft.loadBlogPostsStatus = SUCCEEDED;
         break;
       case LOAD_BLOG_POSTS_FAILURE:
         draft.loadBlogPostsStatus = REJECTED;
+        draft.loadBlogPostsError = action.error;
         break;
       case LOAD_EARLY_HOTDEAL_POSTS_REQUEST:
         draft.loadHotDealPostsStatus = LOADING;
         break;
       case LOAD_EARLY_HOTDEAL_POSTS_SUCCESS:
         draft.hotDealPosts = action.data;
-
         draft.loadHotDealPostsStatus = SUCCEEDED;
         draft.hasMoreHotDealPosts = action.data.length === 10;
         break;
       case LOAD_EARLY_HOTDEAL_POSTS_FAILURE:
         draft.loadHotDealPostsStatus = REJECTED;
+        draft.loadHotDealPostsError = action.error;
         break;
       case LOAD_MORE_HOTDEAL_POSTS_REQUEST:
         draft.loadHotDealPostsStatus = LOADING;
         break;
       case LOAD_MORE_HOTDEAL_POSTS_SUCCESS:
         draft.hotDealPosts = draft.hotDealPosts.concat(action.data);
-
         draft.loadHotDealPostsStatus = SUCCEEDED;
         draft.hasMoreHotDealPosts = action.data.length === 10;
         break;
       case LOAD_MORE_HOTDEAL_POSTS_FAILURE:
         draft.loadHotDealPostsStatus = REJECTED;
+        draft.loadHotDealPostsError = action.error;
         break;
       default:
         break;

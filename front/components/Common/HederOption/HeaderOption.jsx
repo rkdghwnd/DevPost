@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { LOG_OUT_REQUEST } from '../../../reducers/user';
 import { HEADER_OPTION_TOGGLE_REQUEST } from '../../../reducers/option';
 import { MyProfileOptionForm } from './styles';
-import { mutate } from 'swr';
 
 const HeaderOption = () => {
   const dispatch = useDispatch();

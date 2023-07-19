@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import {
   CONFIRM_CANCEL_POST_MODAL_CLOSE,
   POST_MODAL_CLOSE_REQUEST,
-  // UPDATE_POST_MODAL_CLOSE_REQUEST,
 } from '../../../reducers/modal';
 import { ModalBackdrop, MessageForm } from './styles';
 

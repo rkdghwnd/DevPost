@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   CONFIRM_REMOVE_POST_MODAL_OPEN,
-  NEW_POST_MODAL_OPEN,
   POST_MODAL_OPEN,
 } from '../../../reducers/modal';
 import { POST_OPTION_TOGGLE_REQUEST } from '../../../reducers/option';
