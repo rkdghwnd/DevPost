@@ -99,7 +99,7 @@ export const getStaticProps = wrapper.getStaticProps(async context => {
   await context.store.sagaTask.toPromise();
 
   return {
-    revalidate: 1000 * 60 * 60 * 24,
+    revalidate: 60 * 60 * 24,
   };
 });
 

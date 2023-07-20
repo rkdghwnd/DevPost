@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PostCard from '../components/Free/PostCard/PostCard';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { LOAD_FREE_POSTS_REQUEST } from '../reducers/post';
 import shortId from 'shortid';
 import axios from 'axios';
