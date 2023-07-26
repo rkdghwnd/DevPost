@@ -52,10 +52,6 @@ const edit = () => {
     password,
   );
 
-  // useEffect(() => {
-  //   dispatch({ type: LOAD_MY_INFO_REQUEST });
-  // }, []);
-
   useEffect(() => {
     if (!me?.id) {
       Router.replace('/');

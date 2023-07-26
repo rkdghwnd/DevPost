@@ -105,23 +105,6 @@ const hotdeal = () => {
   );
 };
 
-// export const getServerSideProps = wrapper.getServerSideProps(async context => {
-//   const cookie = context.req ? context.req.headers.cookie : '';
-//   axios.defaults.headers.Cookie = '';
-//   if (context.req && cookie) {
-//     axios.defaults.headers.Cookie = cookie;
-//   }
-//   context.store.dispatch({
-//     type: LOAD_MY_INFO_REQUEST, // 로그인 유지
-//   });
-//   context.store.dispatch({
-//     type: LOAD_EARLY_HOTDEAL_POSTS_REQUEST,
-//     data: null,
-//   });
-//   context.store.dispatch(END);
-//   await context.store.sagaTask.toPromise();
-// });
-
 export const getStaticProps = wrapper.getStaticProps(async context => {
   context.store.dispatch({
     type: LOAD_EARLY_HOTDEAL_POSTS_REQUEST,

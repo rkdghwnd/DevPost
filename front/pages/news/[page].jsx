@@ -14,10 +14,8 @@ import AppLayout from '../../components/Common/AppLayout';
 import Paginations from '../../components/Common/Paginations/Paginations';
 import { useFilter } from '../../hooks/useFilter';
 import SideFilter from '../../components/Common/SideFilter/SideFilter';
-import PostsLoading from '../../components/Free/PostsLoading/PostsLoading';
-import { LOADING, REJECTED } from '../../reducers';
+import { REJECTED } from '../../reducers';
 import Custom404 from '../404';
-import { useRouter } from 'next/router';
 
 const news = () => {
   const dispatch = useDispatch();

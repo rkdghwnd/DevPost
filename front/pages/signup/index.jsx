@@ -1,9 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import wrapper from '../../store/configureStore';
 import Head from 'next/head';
-import { END } from 'redux-saga';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import { LOAD_MY_INFO_REQUEST, SIGN_UP_REQUEST } from '../../reducers/user';
 import AppLayout from '../../components/Common/AppLayout';
 import { useRouter } from 'next/router';
@@ -136,18 +133,5 @@ const signup = () => {
     </>
   );
 };
-
-// export const getServerSideProps = wrapper.getServerSideProps(async context => {
-//   const cookie = context.req ? context.req.headers.cookie : '';
-//   axios.defaults.headers.Cookie = '';
-//   if (context.req && cookie) {
-//     axios.defaults.headers.Cookie = cookie;
-//   }
-//   context.store.dispatch({
-//     type: LOAD_MY_INFO_REQUEST, // 로그인 유지
-//   });
-//   context.store.dispatch(END);
-//   await context.store.sagaTask.toPromise();
-// });
 
 export default signup;
