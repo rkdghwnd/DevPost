@@ -106,5 +106,7 @@ dist
 post-moa.pem
 crawler/images
 back/uploads
-/front/build
+front/build
 rootkey.csv
+
+front/analyze
