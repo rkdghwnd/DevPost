@@ -10,7 +10,6 @@ const doc = {
   },
   host: process.env.BACK_END_DOMAIN,
   schemes: ["http", "https"],
-  // schemes: ["https" ,"http"],
 };
 
 const outputFile = "./swagger-output.json"; // 같은 위치에 swagger-output.json을 만든다.
