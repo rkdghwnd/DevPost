@@ -7,7 +7,7 @@ export const TopButton = styled.button`
   height: 40px;
   left: 25px;
   bottom: 80px;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   background-color: white;
