@@ -3,9 +3,9 @@ FROM node:16-buster
 WORKDIR /app
 COPY package*.json ./ 
 RUN npm ci --only=production
-RUN sudo apt-get update
-RUN sudo apt-get install -y mysql-server-8.0
-RUN sudo mysql
+RUN apt-get update
+RUN apt-get install -y mysql-server-8.0
+
 RUN npm install
 # ENV NODE_ENV production
 
