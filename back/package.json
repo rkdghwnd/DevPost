@@ -31,8 +31,8 @@
     "swagger-autogen": "^2.23.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.2"
+    "morgan": "^1.10.0",
   },
   "devDependencies": {
-    "morgan": "^1.10.0"
   }
 }
