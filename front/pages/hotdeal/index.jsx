@@ -61,14 +61,6 @@ const hotdeal = () => {
     dispatch({ type: LOAD_MY_INFO_REQUEST });
   }, []);
 
-  const rowRenderer = useCallback(
-    ({ index, key }) => {
-      const post = visiblePosts[index];
-      return <HotDealCard key={shortId.generate()} post={post} />;
-    },
-    [visiblePosts],
-  );
-
   if (loadHotDealPostsStatus === REJECTED) {
     return <Custom404 />;
   }
@@ -81,14 +73,9 @@ const hotdeal = () => {
       <AppLayout>
         <MainContentsWrapper>
           <NavBar />
-          <List
-            width={800}
-            height={110 * visiblePosts.length}
-            rowCount={visiblePosts.length}
-            rowHeight={110}
-            rowRenderer={rowRenderer}
-            list={visiblePosts}
-          />
+          {visiblePosts.map(post => {
+            return <HotDealCard key={shortId.generate()} post={post} />;
+          })}
           {loadHotDealPostsStatus === LOADING && <PostsLoading />}
           <div
             ref={
