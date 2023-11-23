@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MainTextWrapper, MainTextForm } from './styles';
 import Image from 'next/image';
+import { ThumnailImage } from '../../Blog/BlogCard/styles';
 const NewsCardMainText = ({ post }) => {
   const description = post.description?.includes('...')
     ? post.description
@@ -16,17 +17,12 @@ const NewsCardMainText = ({ post }) => {
             <p>{post.description && description}</p>
           </div>
           <div>
-            <Image
+            <ThumnailImage
               src={
-                post.image
-                  ? `${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/${post.image}`
-                  : `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/no-image-icon2.PNG`
+                post.image ||
+                `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/no-image-icon2.PNG`
               }
-              width={80}
-              height={80}
-              layout="fixed"
               alt="news_image"
-              objectFit="cover"
             />
           </div>
         </MainTextForm>

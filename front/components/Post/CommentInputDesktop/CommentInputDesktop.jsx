@@ -35,7 +35,7 @@ const CommentInputDesktop = ({ info }) => {
         setCommentText(e.currentTarget.value.slice(0, 500));
       }
 
-      textarea.current.style.height = 'auto'; //height 초기화
+      textarea.current.style.height = 'auto'; // height 초기화
       textarea.current.style.height = textarea.current.scrollHeight - 18 + 'px';
     },
     [textarea],

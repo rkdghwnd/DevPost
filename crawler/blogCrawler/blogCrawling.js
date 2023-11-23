@@ -15,7 +15,7 @@ const blogCrawling = async () => {
     const baakingDogPosts = await baakingDog();
     const outsidersDevPosts = await outsidersDev();
     const velopertPosts = await velopert();
-    const velogPosts = await velog();
+    // const velogPosts = await velog();
 
     const allPosts = [
       ...jojolduPosts,
@@ -23,7 +23,7 @@ const blogCrawling = async () => {
       ...baakingDogPosts,
       ...outsidersDevPosts,
       ...velopertPosts,
-      ...velogPosts,
+      // ...velogPosts,
     ];
     allPosts.sort((a, b) => {
       return b.time - a.time;
@@ -39,29 +39,31 @@ const blogCrawling = async () => {
           title: v.title,
           time: v.time,
           link: v.link,
+          image:v.imageSource || null
         },
       });
 
       if (v.imageSource) {
-        const imageName = encodeURIComponent(v.imageSource)
-          .split(".")
-          .join("")
-          .split("?")
-          .join("")
-          .split("%")
-          .join("");
-        const imageExtension =
-          v.imageSource?.split(".")[v.imageSource?.split(".").length - 1];
-        const image = await axios.get(v.imageSource, {
-          responseType: "arraybuffer",
-        });
-        fs.writeFileSync(`images/${imageName}-.${imageExtension}`, image.data);
-        await Blog.update(
-          {
-            image: `${imageName}-.${imageExtension}`,
-          },
-          { where: { link: v.link } }
-        );
+  
+        // const imageName = encodeURIComponent(v.imageSource)
+        //   .split(".")
+        //   .join("")
+        //   .split("?")
+        //   .join("")
+        //   .split("%")
+        //   .join("");
+        // const imageExtension =
+        //   v.imageSource?.split(".")[v.imageSource?.split(".").length - 1];
+        // const image = await axios.get(v.imageSource, {
+        //   responseType: "arraybuffer",
+        // });
+        // fs.writeFileSync(`images/${imageName}-.${imageExtension}`, image.data);
+        // await Blog.update(
+        //   {
+        //     image: `${imageName}-.${imageExtension}`,
+        //   },
+        //   { where: { link: v.link } }
+        // );
       }
     });
     console.log("블로그 크롤링 끝!");

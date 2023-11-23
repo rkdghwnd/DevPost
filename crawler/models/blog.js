@@ -17,11 +17,11 @@ module.exports = class Blog extends Sequelize.Model {
           allowNull: false,
         },
         image: {
-          type: Sequelize.STRING(300),
+          type: Sequelize.TEXT,
           allowNull: true,
         },
         link: {
-          type: Sequelize.STRING(200),
+          type: Sequelize.TEXT,
           allowNull: false,
         },
       },
