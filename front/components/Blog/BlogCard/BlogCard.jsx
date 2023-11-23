@@ -1,7 +1,12 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { BlogCardForm, BlogCardHeader, BlogTitle } from './styles';
-import Image from 'next/image';
+import {
+  BlogCardForm,
+  BlogCardHeader,
+  BlogTitle,
+  ThumnailImage,
+} from './styles';
+
 const BlogCard = ({ post }) => {
   const offset = 1000 * 60 * 60 * 9;
   const postTime = useMemo(
@@ -12,17 +17,12 @@ const BlogCard = ({ post }) => {
   return (
     <BlogCardForm>
       <a href={post.link} target="_blank" rel="noreferrer noopener">
-        <Image
+        <ThumnailImage
           src={
-            post.image
-              ? `${process.env.NEXT_PUBLIC_CRAWLER_DOMAIN}/${post.image}`
-              : `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/no-image-icon2.PNG`
+            post.image ||
+            `${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/no-image-icon2.PNG`
           }
-          width={80}
-          height={80}
-          layout="fixed"
           alt="blog_image"
-          objectFit="cover"
         />
       </a>
       <div>

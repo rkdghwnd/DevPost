@@ -3,6 +3,7 @@ import NewsCardMainText from '../NewsCardMainTest/NewsCardMainText';
 import PropTypes from 'prop-types';
 import { NewsCardForm, NewsCardHeader } from './styles';
 import Image from 'next/image';
+import { ThumnailImage } from '../../Blog/BlogCard/styles';
 
 const NewsCard = ({ post }) => {
   const offset = 1000 * 60 * 60 * 9;

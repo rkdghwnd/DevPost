@@ -52,3 +52,8 @@ export const BlogTitle = styled.h3`
     transition: color 0.3s ease;
   }
 `;
+
+export const ThumnailImage = styled.img`
+  width: 80px;
+  height: 80px;
+`;

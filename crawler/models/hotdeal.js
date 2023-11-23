@@ -17,11 +17,11 @@ module.exports = class HotDeal extends Sequelize.Model {
           allowNull: true,
         },
         image: {
-          type: Sequelize.STRING(200),
+          type: Sequelize.TEXT,
           allowNull: true,
         },
         link: {
-          type: Sequelize.STRING(200),
+          type: Sequelize.TEXT,
           allowNull: false,
         },
       },

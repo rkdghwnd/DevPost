@@ -61,7 +61,6 @@ fs.readdir("images", (err) => {
 const crawler = async () => {
   await blogCrawling();
   await newsCrawling();
-
   setInterval(async () => {
     await blogCrawling();
     await newsCrawling();
