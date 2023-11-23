@@ -13,6 +13,10 @@ export const PostUserInfo = styled.div`
 
   & > div:first-child {
     margin-right: 10px;
+    img {
+      width: 40px;
+      height: 40px;
+    }
   }
   & > div:first-child > span {
     border-radius: 15px;

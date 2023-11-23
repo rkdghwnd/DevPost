@@ -16,12 +16,9 @@ const NewsCard = ({ post }) => {
     <NewsCardForm newsName={post.news_name} image={post.image}>
       <ul>
         <NewsCardHeader>
-          <Image
+          <img
             src={`${process.env.NEXT_PUBLIC_FRONT_END_DOMAIN}/images/${post.news_name}.png`}
-            width={15}
-            height={15}
             alt="news_name"
-            objectFit="cover"
           />
           <span>{post.news_name}</span>
           <div>{postTime}</div>

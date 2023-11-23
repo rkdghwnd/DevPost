@@ -6,6 +6,12 @@ export const CommentForm = styled.article`
   padding: 10px;
   border-bottom: 1px solid #f5f6f7;
   margin-left: 15px;
+  & > div:first-of-type {
+    img {
+      width: 35px;
+      height: 35px;
+    }
+  }
 
   & > div:first-of-type > span {
     border-radius: 13px;

@@ -95,10 +95,9 @@ const CommentInputDesktop = ({ info }) => {
     <CommentInputWrapper purpose={info.purpose}>
       <CommentInput>
         <div>
-          <Image
+          <img
             src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${info.user.profile_img}`}
-            width={35}
-            height={35}
+            alt="my-profile-image"
           />
         </div>
         <textarea

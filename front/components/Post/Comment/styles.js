@@ -7,6 +7,12 @@ export const CommentForm = styled.article`
   & > div:first-child > span {
     border-radius: 13px;
   }
+  & > div:first-child {
+    img {
+      width: 35px;
+      height: 35px;
+    }
+  }
   & > div:last-child {
     margin-left: 10px;
     font-size: 14px;

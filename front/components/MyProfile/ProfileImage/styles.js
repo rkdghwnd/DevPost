@@ -18,4 +18,8 @@ export const ProfileImageForm = styled.div`
   span {
     margin-bottom: 20px;
   }
+  img {
+    width: 100px;
+    height: 100px;
+  }
 `;

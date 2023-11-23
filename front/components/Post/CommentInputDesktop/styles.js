@@ -18,6 +18,10 @@ export const CommentInput = styled.div`
 
   & > div:first-child {
     margin-right: 20px;
+    img {
+      width: 35px;
+      height: 35px;
+    }
   }
   & > div:first-child > span {
     border-radius: 10px;

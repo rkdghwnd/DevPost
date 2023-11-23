@@ -70,10 +70,8 @@ const NestedComment = ({ nestedComment }) => {
       <CommentForm>
         <ReplyIcon />
         <div>
-          <Image
+          <img
             src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${nestedComment.User.profile_img}`}
-            width={35}
-            height={35}
           />
         </div>
         <div>
