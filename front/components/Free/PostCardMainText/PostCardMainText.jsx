@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { USER_INFO_MODAL_CLOSE_REQUEST } from '../../../reducers/modal';
 import { MainTextForm, MainTextWrapper } from './styles';
 import Image from 'next/image';
+import { ThumnailImage } from '../../Blog/BlogCard/styles';
 
 const PostCardMainText = ({ post }) => {
   const dispatch = useDispatch();
@@ -25,12 +26,9 @@ const PostCardMainText = ({ post }) => {
             </div>
             <div>
               {post?.Images.length === 0 ? null : (
-                <Image
+                <ThumnailImage
                   src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${post?.Images[0].src}`}
-                  width={60}
-                  height={60}
                   alt="post_image"
-                  objectFit="cover"
                 />
               )}
             </div>

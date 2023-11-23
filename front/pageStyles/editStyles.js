@@ -36,6 +36,10 @@ export const ProfileImage = styled.div`
     display: flex;
     justify-content: center;
     cursor: pointer;
+    img {
+      width: 100px;
+      height: 100px;
+    }
   }
   & > div:first-child > span {
     border-radius: 15px;

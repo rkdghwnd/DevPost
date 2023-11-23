@@ -153,7 +153,7 @@ const edit = () => {
             />
             <ProfileImage>
               <div>
-                <Image
+                <img
                   src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${profileImage}`}
                   onClick={onAddImage}
                   width={100}
