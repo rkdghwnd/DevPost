@@ -150,6 +150,11 @@ function uploadImagesAPI(data) {
   return axios.post(
     `${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/post/images`,
     data,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
   );
 }
 
