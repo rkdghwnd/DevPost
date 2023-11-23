@@ -83,6 +83,7 @@ const hotdeal = () => {
                 ? scrollTarget
                 : undefined
             }
+            style={{ height: 5 }}
           />
           <SideFilter tags={tags} />
         </MainContentsWrapper>
