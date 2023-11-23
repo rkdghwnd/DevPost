@@ -156,8 +156,6 @@ const edit = () => {
                 <img
                   src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${profileImage}`}
                   onClick={onAddImage}
-                  width={100}
-                  height={100}
                 />
               </div>
               <FcCameraIdentification />

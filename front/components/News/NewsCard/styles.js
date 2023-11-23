@@ -23,6 +23,11 @@ export const NewsCardHeader = styled.li`
   display: flex;
   align-items: center;
 
+  img {
+    width: 15px;
+    height: 15px;
+  }
+
   & > span:first-child {
     border-radius: 50%;
   }

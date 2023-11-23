@@ -20,10 +20,8 @@ const PostMainText = () => {
     <MainTextForm>
       <PostUserInfo>
         <div>
-          <Image
+          <img
             src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${currentPost.User.profile_img}`}
-            width={40}
-            height={40}
           />
         </div>
         <span>{currentPost.User.nickname}</span>

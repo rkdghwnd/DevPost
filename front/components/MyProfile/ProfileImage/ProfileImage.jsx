@@ -9,10 +9,9 @@ const ProfileImage = () => {
   return (
     <ProfileImageForm>
       <Link href="/myprofile/edit">
-        <Image
+        <img
           src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${me?.profile_img}`}
-          width={100}
-          height={100}
+          alt="my-profile-image"
         />
       </Link>
 
