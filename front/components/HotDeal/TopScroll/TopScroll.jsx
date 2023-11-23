@@ -8,7 +8,10 @@ const TopScroll = () => {
 
   useEffect(() => {
     const onButtonVisible = () => {
-      topButton.current.style.display = window.scrollY < 500 ? 'none' : 'flex';
+      if (topButton.current) {
+        topButton.current.style.display =
+          window.scrollY < 500 ? 'none' : 'flex';
+      }
     };
 
     window.addEventListener('scroll', _.throttle(onButtonVisible, 500));
