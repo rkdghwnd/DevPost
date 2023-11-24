@@ -32,15 +32,7 @@ https://devpost.site
 - puppeteer.js
 
 # Run
-
-<pre><code>// front
-package.json의 dependencies 중 react-virtualized 삭제 후 
-npm install
-npm install react-virtualized --legacy-peer-deps
-
-npm run dev
-
-// back, crawler
+<pre><code>
 npm install
 
 npm run dev
