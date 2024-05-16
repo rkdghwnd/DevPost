@@ -17,18 +17,43 @@ import {
   ErrorMessage,
 } from './styles';
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const LogInModal = () => {
   const dispatch = useDispatch();
-  // const [email, onChangeEmail] = useInput('');
-  const [password, onChangePassword] = useInput('');
+
+  const logInSchema = z.object({
+    email: z
+      .string()
+      .nonempty('이메일은 필수 입력입니다.')
+      .email('이메일 형식에 맞지 않습니다.'),
+    nickname: z
+      .string()
+      .nonempty('닉네임은 필수 입력입니다.')
+      .min(2, '닉네임은 최소 2글자 이상이어야 합니다.'),
+    password: z
+      .string()
+      .nonempty('비밀번호는 필수 입력입니다.')
+      .regex(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+        '비밀번호는 문자, 숫자, 특수문자를 포함한 8자 이상의 형식이여야 합니다.',
+      ),
+    passwordConfirm: z
+      .string()
+      .nonempty('비밀번호 확인은 필수 입력입니다.')
+      .refine(val => val === watch('password'), {
+        message: '비밀번호가 일치하지 않습니다.',
+      }),
+  });
+
   const { logInModalSlideUp } = useSelector(state => state.modal);
   const {
     register,
     handleSubmit,
     watch,
     formState: { isSubmitting, errors, isSubmitted },
-  } = useForm({ mode: 'onChange' });
+  } = useForm({ mode: 'onChange', resolver: zodResolver(logInSchema) });
 
   const onToggleLogInModal = useCallback(() => {
     dispatch({ type: LOG_IN_MODAL_CLOSE_REQUEST });
@@ -85,8 +110,6 @@ const LogInModal = () => {
           name="email"
           type="email"
           placeholder="이메일"
-          // value={email}
-          // onChange={onChangeEmail}
           {...register('email', {
             required: '이메일은 필수 입력입니다.',
             pattern: {
@@ -109,8 +132,6 @@ const LogInModal = () => {
           name="password"
           type="password"
           placeholder="비밀번호"
-          // value={password}
-          // onChange={onChangePassword}
           {...register('password', {
             required: '비밀번호는 필수 입력입니다.',
             minLength: {
