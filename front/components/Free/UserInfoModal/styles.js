@@ -64,6 +64,7 @@ export const UserProfile = styled.article`
     width: 100px;
     height: 100px;
     border-radius: 5px;
+    object-fit: cover;
   }
 
   & > h4 {
