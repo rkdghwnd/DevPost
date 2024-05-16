@@ -21,6 +21,7 @@ export const CommentInput = styled.div`
     img {
       width: 35px;
       height: 35px;
+      object-fit: cover;
     }
   }
   & > div:first-child > span {

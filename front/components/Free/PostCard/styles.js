@@ -21,6 +21,7 @@ export const PostCardHeader = styled.li`
     height: 25px;
     border-radius: 50%;
     cursor: pointer;
+    object-fit: cover;
   }
   div {
     flex: 1 1 auto;

@@ -79,9 +79,14 @@ export const CloseButton = styled(AiOutlineClose)`
 
 export const Input = styled.input`
   width: 70%;
-  margin: 20px auto;
+  margin: 15px auto;
   outline: none;
   border: none;
   border-bottom: 1px solid rgb(230, 230, 230);
   padding: 5px 0;
+`;
+
+export const ErrorMessage = styled.small`
+  width: 350px;
+  margin: 0 auto;
 `;

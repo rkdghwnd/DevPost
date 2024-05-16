@@ -26,6 +26,7 @@ export const NewsCardHeader = styled.li`
   img {
     width: 15px;
     height: 15px;
+    object-fit: cover;
   }
 
   & > span:first-child {

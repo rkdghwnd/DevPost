@@ -39,6 +39,7 @@ export const ProfileImage = styled.div`
     img {
       width: 100px;
       height: 100px;
+      object-fit: cover;
     }
   }
   & > div:first-child > span {

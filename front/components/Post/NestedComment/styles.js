@@ -10,6 +10,7 @@ export const CommentForm = styled.article`
     img {
       width: 35px;
       height: 35px;
+      object-fit: cover;
     }
   }
 
