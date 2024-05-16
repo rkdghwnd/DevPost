@@ -2,7 +2,6 @@ import React from 'react';
 import { Input } from './styles';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useForm } from 'react-hook-form';
 
 const UserInfoInputs = ({ register, watch, errors }) => {
   const { signUpStatus } = useSelector(state => state.user);
