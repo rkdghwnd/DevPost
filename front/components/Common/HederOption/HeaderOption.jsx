@@ -23,9 +23,7 @@ const HeaderOption = () => {
       headerOptionVisible={headerOptionVisible}
       onClick={onClickOption}
     >
-      <Link href="/myprofile">
-        <a>내 프로필</a>
-      </Link>
+      <Link href="/myprofile">내 프로필</Link>
       <a onClick={onClickLogOut}>로그아웃</a>
     </MyProfileOptionForm>
   );

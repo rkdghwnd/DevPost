@@ -22,9 +22,7 @@ const MyProfileOption = () => {
       onClick={onClickOption}
     >
       <Link href="/myprofile/edit">
-        <div>
-          <a>프로필 수정</a>
-        </div>
+        <div>프로필 수정</div>
       </Link>
       <div onClick={onClickLogOut}>로그아웃</div>
     </MyProfileOptionForm>
