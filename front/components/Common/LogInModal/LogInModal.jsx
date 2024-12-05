@@ -26,22 +26,19 @@ const LogInModal = () => {
   const logInSchema = z.object({
     email: z
       .string()
-      .nonempty('이메일은 필수 입력입니다.')
+      .min(1, '이메일은 필수 입력입니다')
       .email('이메일 형식에 맞지 않습니다.'),
-    nickname: z
-      .string()
-      .nonempty('닉네임은 필수 입력입니다.')
-      .min(2, '닉네임은 최소 2글자 이상이어야 합니다.'),
+    nickname: z.string().min(2, '닉네임은 최소 2글자 이상이어야 합니다.'),
     password: z
       .string()
-      .nonempty('비밀번호는 필수 입력입니다.')
+      .min(1, '비밀번호는 필수 입력입니다.')
       .regex(
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
         '비밀번호는 문자, 숫자, 특수문자를 포함한 8자 이상의 형식이여야 합니다.',
       ),
     passwordConfirm: z
       .string()
-      .nonempty('비밀번호 확인은 필수 입력입니다.')
+      .min(1, '비밀번호 확인은 필수 입력입니다.')
       .refine(val => val === watch('password'), {
         message: '비밀번호가 일치하지 않습니다.',
       }),
@@ -152,7 +149,7 @@ const LogInModal = () => {
         <LogInButton />
         <OauthLogos />
         <Link href="/signup">
-          <a onClick={onToggleLogInModal}>회원가입</a>
+          <div onClick={onToggleLogInModal}>회원가입</div>
         </Link>
       </LogInForm>
     </ModalBackdrop>

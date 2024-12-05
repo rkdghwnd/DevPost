@@ -7,24 +7,16 @@ const NavBar = () => {
     <Nav>
       <ul>
         <li>
-          <Link href="/">
-            <a>자유</a>
-          </Link>
+          <Link href="/">자유</Link>
         </li>
         <li>
-          <Link href="/news/1">
-            <a>뉴스</a>
-          </Link>
+          <Link href="/news/1">뉴스</Link>
         </li>
         <li>
-          <Link href="/blog/1">
-            <a>블로그</a>
-          </Link>
+          <Link href="/blog/1">블로그</Link>
         </li>
         <li>
-          <Link href="/hotdeal">
-            <a>핫딜</a>
-          </Link>
+          <Link href="/hotdeal">핫딜</Link>
         </li>
       </ul>
     </Nav>

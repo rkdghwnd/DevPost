@@ -18,22 +18,20 @@ const PostCardMainText = ({ post }) => {
   return (
     <MainTextWrapper onClick={onModalClose}>
       <Link href={`/post/${encodeURIComponent(post?.id)}`}>
-        <a>
-          <MainTextForm>
-            <div>
-              <h4>{post?.title}</h4>
-              <p>{cardContent?.length >= 90 ? longCardContent : cardContent}</p>
-            </div>
-            <div>
-              {post?.Images.length === 0 ? null : (
-                <ThumnailImage
-                  src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${post?.Images[0].src}`}
-                  alt="post_image"
-                />
-              )}
-            </div>
-          </MainTextForm>
-        </a>
+        <MainTextForm>
+          <div>
+            <h4>{post?.title}</h4>
+            <p>{cardContent?.length >= 90 ? longCardContent : cardContent}</p>
+          </div>
+          <div>
+            {post?.Images.length === 0 ? null : (
+              <ThumnailImage
+                src={`${process.env.NEXT_PUBLIC_BACK_END_DOMAIN}/${post?.Images[0].src}`}
+                alt="post_image"
+              />
+            )}
+          </div>
+        </MainTextForm>
       </Link>
     </MainTextWrapper>
   );

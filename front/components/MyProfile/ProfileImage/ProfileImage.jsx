@@ -16,9 +16,7 @@ const ProfileImage = () => {
       </Link>
 
       <span>{me?.nickname}</span>
-      <Link href="/myprofile/edit">
-        <a>프로필 소개 추가...</a>
-      </Link>
+      <Link href="/myprofile/edit">프로필 소개 추가...</Link>
     </ProfileImageForm>
   );
 };

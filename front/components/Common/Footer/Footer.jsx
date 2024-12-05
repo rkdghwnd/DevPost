@@ -34,36 +34,28 @@ const Footer = () => {
   return (
     <FooterForm>
       <Link href="/">
-        <a>
-          <div>
-            <AiOutlineComment />
-            <span>커뮤니티</span>
-          </div>
-        </a>
+        <div>
+          <AiOutlineComment />
+          <span>커뮤니티</span>
+        </div>
       </Link>
       <Link href="/search">
-        <a>
-          <div>
-            <BsSearch />
-            <span>검색</span>
-          </div>
-        </a>
+        <div>
+          <BsSearch />
+          <span>검색</span>
+        </div>
       </Link>
       <GithubInfo onClick={onOpenAppInfo}>
-        <a>
-          <div>
-            <AiFillInfoCircle />
-            <span>정보</span>
-          </div>
-        </a>
+        <div>
+          <AiFillInfoCircle />
+          <span>정보</span>
+        </div>
       </GithubInfo>
       <Link href="/myprofile">
-        <a>
-          <div>
-            <CgProfile />
-            <span>프로필</span>
-          </div>
-        </a>
+        <div>
+          <CgProfile />
+          <span>프로필</span>
+        </div>
       </Link>
       {router.pathname.includes('/post') || (
         <WritePostButton onClick={onOpenNewPostModal}>
